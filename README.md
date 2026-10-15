@@ -9,28 +9,32 @@ Claude skills for Onsurity's HR team, packaged as one plugin (`hr-hiring`).
 
 ## Install (once per laptop)
 
-Works in the Claude desktop app (Code tab), Cowork and Claude Code.
+You need Python 3 on the laptop (macOS: install from python.org if `python3` asks for developer tools). The skill also needs web access, for research.
 
+**Claude desktop app / Cowork:** open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and install **hr-hiring**. If the repository is private, the GitHub account connected to Claude needs read access to it.
+
+**Claude Code (terminal):**
 ```
 /plugin marketplace add rishabhrawat-os/hiring
 /plugin install hr-hiring@onsurity-hiring
 ```
+Update with `/plugin marketplace update onsurity-hiring`.
 
-Get updates with `/plugin marketplace update onsurity-hiring`.
-
-The Word files are built with Python. If Claude says `python-docx` is missing, let it run `pip install python-docx`. The skill needs web access for research.
+On first use the skill installs `python-docx` for you (into your user folder, or a private virtual environment if your Python doesn't allow that).
 
 ## Use
 
 Tell it the role in your own words, as much or as little as you have:
 
-- "/jd-builder performance marketing manager, Bengaluru, Google Ads and Meta"
-- "We need a senior Java backend engineer, Kafka and Kubernetes are a must"
+- "/hr-hiring:jd-builder performance marketing manager, Bengaluru, Google Ads and Meta"
+- "Write a JD: senior Java backend engineer, Kafka and Kubernetes are a must"
 - Or paste the hiring manager's notes.
 
-Anything you name (a tool, skill or requirement) is guaranteed to be in the JD. Everything else, including level, experience range, responsibilities and tools, comes from fresh research on the role in India. A VP-level challenger has to score it 95+ before it is written up. The finished `.docx` carries its own fonts, so it looks the same on any laptop.
+Anything you name (a tool, skill or requirement) is guaranteed to appear in the JD. So is any experience range or city you state. Everything else (level, experience, responsibilities, tools, how the role is assessed) comes from fresh research on the role in India. A challenger playing the VP of that function has to score the research 95 or more before anything is written. The writing then goes through a format challenger and a humanizer pass. The JD never mentions salary.
 
-Other commands: `/jd-builder resume` continues an interrupted run; `/jd-builder render <file.json>` re-renders after you edit the content file by hand.
+You get a `.docx` with the fonts built in, plus a folder with every step's output in `~/JD-Builder/jd-runs/` (or your Cowork workspace).
+
+Other commands: `/hr-hiring:jd-builder resume` continues an interrupted run; `/hr-hiring:jd-builder render <file.json>` re-renders after you edit the content file by hand.
 
 ## What every JD looks like
 

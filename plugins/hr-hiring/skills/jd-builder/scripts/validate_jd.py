@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""Check a jd.json against the skeleton before it is rendered.
+"""Check a JD content file before it is rendered.
 
-Checks the shape, the fixed labels, the space limits in
-structure/skeleton.json, AI-writing patterns (em dashes, contrasts,
-rhetorical questions), banned phrases, British/Indian spelling, and that
-every must-include item from the user's input made it in.
+Checks, in order:
+  1. shape: matches structure/jd.schema.json (types, required keys, allowed values)
+  2. space: word and item limits from structure/skeleton.json, plus a total
+     word ceiling that keeps the JD to about 7 pages
+  3. user input: every must-include item appears (word-boundary match), and
+     stated experience and city are the ones printed
+  4. writing: no em dashes, contrast framing, rhetorical questions, staged
+     reveals, banned phrases, salary talk or US spellings. Text the user
+     named and tool names in the toolkit are exempt from the phrase and
+     spelling checks, because user input beats voice rules.
 
-    python3 validate_jd.py jd.json [--must-include intake.json]
+    python3 validate_jd.py jd.json [--intake 01-intake.json]
 
-Exit code 0 = pass. Prints one line per problem, then a JSON summary.
+Exit code 0 = pass. One FAIL line per problem, then a JSON summary.
 """
 import json
 import re
@@ -17,26 +23,34 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SKEL = json.loads((ROOT / "structure/skeleton.json").read_text())
+SCHEMA = json.loads((ROOT / "structure/jd.schema.json").read_text())
 LIM = SKEL["limits"]
 S = SKEL["sections"]
 BANNED = [l.strip().lower() for l in (ROOT / "voice/banned-phrases.txt").read_text().splitlines()
           if l.strip() and not l.startswith("#")]
-REQUIRED = json.loads((ROOT / "structure/jd.schema.json").read_text())["required"]
 
 # Patterns that make text read as machine-written. Any hit fails the JD.
 AI_PATTERNS = [
     ("em dash", r"—"),
     ("dash used as punctuation", r"\s[–-]\s"),
-    ("'not X, Y' contrast", r",\s+not\s+(?!only\b|just\b)\w+"),
-    ("'not just/only' contrast", r"\bnot\s+(just|only|merely|simply)\b"),
+    ("'X, not Y' contrast", r",\s+not\s+(?!only\b|just\b|required\b|needed\b|necessary\b|essential\b|mandatory\b)\w+"),
+    ("'not just / not only' contrast", r"\bnot\s+(just|only|merely|simply)\b"),
     ("sentence opening with 'Not'", r"(^|[.!?]\s+)Not\b"),
-    ("'isn't X, it's Y' contrast", r"\b(isn't|is not|aren't|are not|wasn't|don't|doesn't)\b[^.]{0,60},\s*(it's|it is|they're|we|you)\b"),
-    ("'not X but Y' contrast", r"\bnot\b[^.]{0,40}\bbut\b"),
+    ("'isn't X, it's Y' contrast", r"\b(isn't|is not|it's not|it is not|aren't|are not)\b[^.]{0,60}[,.;]\s*(it's|it is|they're|they are)\b"),
+    ("'not about' framing", r"\b(not|isn't|aren't)\s+about\b"),
+    ("'instead of' contrast", r"\binstead of\b"),
     ("'rather than' contrast", r"\brather than\b"),
+    ("'No X. Just Y' framing", r"(^|[.!?]\s+)No \w+( \w+)?\.\s+Just\b"),
     ("rhetorical question", r"\?"),
     ("exclamation", r"!"),
-    ("staged colon reveal", r"\b(here's|the result|the answer|the catch|the point|the deal|the twist)\b[^.]{0,20}:"),
+    ("staged colon reveal", r"\b(here's|here is|the result|the answer|the catch|the point|the deal|the twist|the secret)\b[^.]{0,20}:"),
+    ("salary or pay", r"(₹|\bINR\b|\b(CTC|LPA|salary|salaries|compensation|stipend|per annum|lakhs?|crores?|pay band|pay range)\b)"),
 ]
+US_OK = {"size", "sizes", "sized", "sizing", "prize", "prizes", "seize", "seized", "seizes", "resize", "resized",
+         "downsize", "downsized", "oversize", "oversized", "capsize", "citizen", "citizens"}
+US_EXTRA = re.compile(r"\b(center|centers|centered|color|colors|behavior|behaviors|favorite|catalog|catalogs|"
+                      r"modeling|modeled|labeled|labeling|traveled|traveling|program(?:s)?(?= (?:manager|management|office))|"
+                      r"judgment|defense|fulfill|enrollment|analog)\b")
 
 problems = []
 
@@ -44,6 +58,53 @@ problems = []
 def bad(where, msg):
     problems.append(f"{where}: {msg}")
 
+
+# ---------- schema (the subset jd.schema.json uses) ----------
+
+def resolve(node):
+    while "$ref" in node:
+        node = SCHEMA["$defs"][node["$ref"].split("/")[-1]]
+    return node
+
+
+def check_schema(x, node, path="$"):
+    node = resolve(node)
+    t = node.get("type")
+    if "const" in node and x != node["const"]:
+        bad(path, f"must be {node['const']!r}")
+    if "enum" in node and x not in node["enum"]:
+        bad(path, f"must be one of {node['enum']}, got {x!r}")
+    if t == "object":
+        if not isinstance(x, dict):
+            return bad(path, "must be an object")
+        for k in node.get("required", []):
+            if k not in x:
+                bad(path, f"missing '{k}'")
+        props = node.get("properties", {})
+        if node.get("additionalProperties") is False:
+            for k in x:
+                if k not in props:
+                    bad(path, f"unexpected key '{k}'")
+        for k, v in x.items():
+            if k in props:
+                check_schema(v, props[k], f"{path}.{k}")
+    elif t == "array":
+        if not isinstance(x, list):
+            return bad(path, "must be a list")
+        if "minItems" in node and len(x) < node["minItems"]:
+            bad(path, f"needs at least {node['minItems']} items")
+        if "maxItems" in node and len(x) > node["maxItems"]:
+            bad(path, f"allows at most {node['maxItems']} items")
+        for i, v in enumerate(x):
+            check_schema(v, node.get("items", {}), f"{path}[{i}]")
+    elif t == "string":
+        if not isinstance(x, str):
+            return bad(path, "must be text")
+        if len(x.strip()) < node.get("minLength", 0):
+            bad(path, "is empty")
+
+
+# ---------- helpers ----------
 
 def plain(s):
     s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
@@ -61,7 +122,7 @@ def span(where, text, rng):
 
 
 def items(where, lst, spec, key=None):
-    lo, hi = spec["count"] if "count" in spec else (0, 999)
+    lo, hi = spec.get("count", (0, 999))
     if not lo <= len(lst) <= hi:
         bad(where, f"{len(lst)} items, want {lo}–{hi}")
     if "words" in spec:
@@ -86,13 +147,25 @@ def all_text(jd):
     return out
 
 
-def check(jd, must_include=()):
-    for k in REQUIRED:
-        if k not in jd:
-            bad(k, "missing")
-    if problems:
-        return
+def term_rx(term):
+    """Word-boundary match; short terms (Go, R, C) must match case exactly."""
+    flags = 0 if len(term) <= 3 else re.I
+    return re.compile(r"(?<![\w.+#])" + re.escape(term) + r"(?![\w+#])", flags)
 
+
+def must_terms(intake):
+    out = []
+    for it in intake.get("must_include", []):
+        if isinstance(it, dict):
+            out.append((it.get("item", ""), it.get("match") or [it.get("item", "")]))
+        else:
+            out.append((it, [it]))
+    return out
+
+
+# ---------- checks ----------
+
+def check_space(jd):
     h = jd["header"]
     span("header.title", h["title"], LIM["header.title"])
     span("header.lead", h["lead"], LIM["header.lead"])
@@ -142,8 +215,8 @@ def check(jd, must_include=()):
         span("minimum.note", m["note"], LIM["minimum.note"])
     items("minimum.items", m["items"], LIM["minimum.items"])
     for i, it in enumerate(m["items"]):
-        if not it.startswith("**") and "**" not in it[:40]:
-            bad(f"minimum.items[{i}]", "needs a short **bold phrase** near the start (layout)")
+        if not re.match(r"^(\S+\s){0,3}\*\*[^*]+\*\*", it):
+            bad(f"minimum.items[{i}]", "needs a short **bold phrase** at or near the start (layout)")
 
     items("preferred.items", jd["preferred"]["items"], LIM["preferred.items"])
 
@@ -166,31 +239,77 @@ def check(jd, must_include=()):
     if jd["footer_tag"] != jd["footer_tag"].upper() or jd["footer_tag"].count(" · ") != 2:
         bad("footer_tag", "must be 'LEVEL · SPECIALISATION · CITY' in upper case")
 
-    # Writing checks: plain, human, no AI patterns
-    text = all_text(jd)
-    for t in text:
+    total = sum(words(t) for t in all_text(jd))
+    if total > LIM["total_words"]:
+        bad("length", f"{total} words in total; the ceiling is {LIM['total_words']} (about 7 pages). Tighten the content.")
+
+
+def check_writing(jd, exempt_terms):
+    texts = all_text(jd)
+    exempt = [term_rx(t) for t in exempt_terms if t]
+
+    def mask(s):
+        for rx in exempt:
+            s = rx.sub(" ", s)
+        return s
+
+    for t in texts:
         p = plain(t)
         for name, rx in AI_PATTERNS:
-            mt = re.search(rx, p)
+            mt = re.search(rx, mask(p), re.I)
             if mt:
-                bad("ai-pattern", f"{name}: '...{p[max(0, mt.start() - 25):mt.end() + 25]}...'")
+                q = mask(p)
+                bad("writing", f"{name}: '...{q[max(0, mt.start() - 30):mt.end() + 30].strip()}...'")
         if "  " in t:
             bad("style", f"double space: '{p[:60]}'")
         if t.count("**") % 2 or t.count("__") % 2:
             bad("markup", f"unbalanced bold markers: '{t[:60]}'")
-    body = " ".join(plain(t) for t in text)
+    body = mask(" ".join(plain(t) for t in texts))
     low = body.lower()
     for phrase in BANNED:
-        if re.search(r"\b" + re.escape(phrase) + r"\b", low):
+        if re.search(r"(?<![\w-])" + re.escape(phrase) + r"(?![\w-])", low):
             bad("banned", f"'{phrase}'")
-    us = re.findall(r"\b(center|centers|judgment|defense|organization|organizations|organize|optimize|optimizing|"
-                    r"prioritize|analyze|analyzing|color|behavior|favorite|license|catalog|modeling)\b", low)
-    for wd in sorted(set(us)):
-        bad("spelling", f"US spelling '{wd}'; use British/Indian English")
+    found = set()
+    for w in re.findall(r"\b[a-z]+(?:iz|yz)(?:e|es|ed|ing|ation|ations|er|ers)\b", body):
+        if w not in US_OK:
+            found.add(w)
+    for w in US_EXTRA.findall(body):          # lower-case words only; proper nouns are skipped
+        found.add(w)
+    for w in sorted(found):
+        bad("spelling", f"US spelling '{w}'; use British/Indian English (-ise, -our, -re)")
 
-    for item in must_include:
-        if item.lower() not in low:
+
+def check_user_input(jd, intake):
+    body = " ".join(plain(t) for t in all_text(jd))
+    for item, terms in must_terms(intake):
+        if not any(term_rx(t).search(body) for t in terms):
             bad("must_include", f"'{item}' from the user's input is missing")
+    stated = intake.get("stated", {}) or {}
+    meta = {m["label"]: m["value"] for m in jd["meta"]}
+    exp = stated.get("experience")
+    if exp:
+        nums_s = re.findall(r"\d+", str(exp))
+        nums_j = re.findall(r"\d+", meta.get("EXPERIENCE", ""))
+        if nums_s and nums_s != nums_j[:len(nums_s)]:
+            bad("meta.EXPERIENCE", f"user stated '{exp}', JD says '{meta.get('EXPERIENCE')}'")
+    city = stated.get("city")
+    if city and city.lower() not in meta.get("LOCATION", "").lower():
+        bad("meta.LOCATION", f"user stated '{city}', JD says '{meta.get('LOCATION')}'")
+
+
+def check(jd, intake=None):
+    check_schema(jd, SCHEMA)
+    if problems:
+        return            # shape is wrong; later checks would only crash
+    check_space(jd)
+    exempt = []
+    if intake:
+        for _, terms in must_terms(intake):
+            exempt += terms
+        check_user_input(jd, intake)
+    for row in jd["toolkit"]["rows"]:
+        exempt += [v.strip() for v in row["value"].split(",")]
+    check_writing(jd, exempt)
 
 
 def main():
@@ -198,11 +317,11 @@ def main():
     if not args:
         sys.exit(__doc__)
     jd = json.loads(Path(args[0]).read_text())
-    must = []
-    if "--must-include" in args:
-        intake = json.loads(Path(args[args.index("--must-include") + 1]).read_text())
-        must = intake.get("must_include", [])
-    check(jd, must)
+    intake = None
+    for flag in ("--intake", "--must-include"):
+        if flag in args:
+            intake = json.loads(Path(args[args.index(flag) + 1]).read_text())
+    check(jd, intake)
     for p in problems:
         print("FAIL", p)
     print(json.dumps({"file": args[0], "pass": not problems, "problems": len(problems)}))

@@ -1,49 +1,79 @@
 ---
 name: jd-builder
-description: Write an Onsurity job description from whatever the user gives (even a one-line comment), using fresh web research on the role in India, a VP-level challenger that must score it 95+, a format challenger, a humanizer pass, and a designer that renders the branded Word file. Use for "write a JD", "create a job description", "JD for <role>", "/jd-builder".
+description: Write an Onsurity job description from whatever the user gives (even a one-line comment), using fresh web research on the role in India, a VP-level challenger that must score it 95+, a format challenger, a humanizer pass, and a designer that renders the branded Word file. Use for "write a JD", "create a job description", "JD for <role>", "/hr-hiring:jd-builder".
 ---
 
 # jd-builder
 
-You are the orchestrator. You run the steps below in order, enforce each gate, keep state on disk, and hand HR the finished `.docx`.
+You are the orchestrator. You run the steps below in order, enforce every gate, keep state on disk, and hand HR the finished `.docx`.
 
-All paths are relative to this skill's folder.
+## Paths
+`SKILL_DIR` is the absolute path of this folder: the base directory shown when the skill loaded, or `${CLAUDE_PLUGIN_ROOT}/skills/jd-builder`. Every path below starts with it. Pass `SKILL_DIR` and the run folder to every role, and write every command with absolute paths, e.g. `python3 "$SKILL_DIR/scripts/validate_jd.py" ...`.
 
-## Two kinds of input, kept apart
-- **Form** (fixed, never researched): the layout in `brand/`, the blueprint in `structure/`, and the company content in `company/company.json`.
-- **Content** (fresh every run): only the user's input plus this run's web research. No earlier JD, earlier run, example or remembered text is used as content. Each run starts from zero.
+## Form and content are kept apart
+- **Form** (fixed): the layout (`brand/`), the blueprint (`structure/`) and the company content (`company/company.json`).
+- **Content**: only the user's input plus this run's web research. No earlier JD, earlier run, example or remembered text is used. Every run starts from zero.
 
 ## Setup (once per machine)
-Check with `python3 -c "import docx"`. If that fails: `pip install python-docx`. LibreOffice is optional; it only adds page images for the designer.
+1. Check: `python3 -c "import docx"`.
+2. If that fails: `python3 -m pip install --user python-docx`.
+3. If that is refused ("externally-managed-environment"):
+   - `python3 -m venv ~/JD-Builder/.venv && ~/JD-Builder/.venv/bin/pip install python-docx`
+   - then use `~/JD-Builder/.venv/bin/python` in place of `python3` for every script.
+
+Web search and page fetch must be available. Without them, stop and tell HR: a JD can't be written from memory.
 
 ## State
-Make a run folder: `<workspace>/jd-runs/<YYYY-MM-DD>-<role-slug>/`, where `<workspace>` is the folder the user picked in Cowork or the desktop app, otherwise `~/JD-Builder`. Every step writes its numbered file there. Keep `run.json` updated: `{"step": "", "status": "", "research_rounds": 0, "scores": [], "format_rounds": 0}`. On "resume", continue from `run.json`.
+- **Run folder:** `<root>/jd-runs/<YYYY-MM-DD>-<role-slug>/`. `<root>` is the Cowork workspace folder when running in Cowork; everywhere else it is `~/JD-Builder`. Never write into a code repository that happens to be open.
+- **run.json:** keep it updated with:
+  ```
+  {"run_date", "step", "status", "research_round", "format_round",
+   "scores": [], "approved_draft", "humanizer_used", "override": null}
+  ```
+- **Resume:** on "resume", continue from `run.json`.
 
 ## Steps
-| # | Step | Role file | Writes | Gate to move on |
+| # | Step | Role | Writes | Gate (run it; never trust a self-reported pass) |
 |---|---|---|---|---|
-| 1 | Intake | `roles/initializer.md` | `01-intake.json` | role identified (ask the user only if it isn't) |
-| 2 | Research | `roles/researcher.md` | `02-research-rN.json` | file written with ≥15 sources |
-| 3 | Challenge | `roles/challenger.md` | `03-challenge-rN.json` | **score ≥ 95 and no blocking or major objection**. Otherwise go back to step 2 with N+1. After 4 rounds, show HR the open objections and ask: accept, add input, or run 2 more rounds |
-| 4 | Structure | `roles/structurer.md` | `04-draft.json` | `validate_jd.py --must-include` passes |
-| 5 | Format challenge | `roles/format-challenger.md` | `05-format-review-rN.json` | **score ≥ 95 and no blocking or major issue**. Otherwise the structurer revises; at most 3 rounds |
-| 6 | Copy | `roles/copy.md` (runs `/humanizer` if installed) | `06-final.json`, `06-copy-notes.md` | `validate_jd.py --must-include` passes |
-| 7 | Design | `roles/designer.md` | `JD-<slug>.docx`, `07-design-review.json` | `check_design.py` passes and the checklist is all ok |
-| 8 | Hand-off | you | — | HR gets the .docx path and a short note covering: level and experience used, the challenger's final score and rounds, any must-include item flagged as outdated, and anything still open |
+| 0 | Save input | you | `00-input.md` (the user's words, verbatim) and `input/` (copies of attachments) | file exists |
+| 1 | Intake | `roles/initializer.md` | `01-intake.json` | the role is identified; ask the user only if it isn't |
+| 2 | Research | `roles/researcher.md` | `02-research-rN.json` | `check_gate.py research <file> --run-date <run_date>` |
+| 3 | Challenge | `roles/challenger.md` | `03-challenge-rN.json` | `check_gate.py challenge <file> --research <02 file>`. If it fails, go back to step 2 with N+1 |
+| 4 | Structure | `roles/structurer.md` | `04-draft-r1.json` | `validate_jd.py <file> --intake 01-intake.json` |
+| 5 | Format challenge | `roles/format-challenger.md` | `05-format-review-rN.json` | `check_gate.py format <file>`. If it fails, the structurer writes `04-draft-r(N+1).json` and the format challenger reviews again |
+| 6 | Copy | `roles/copy.md` | `06-final.json`, `06-copy-notes.md` | `validate_jd.py 06-final.json --intake 01-intake.json`, then the format challenger's facts check (`05-facts-check.json`, pass = no changed facts) |
+| 7 | Design | `roles/designer.md` | `JD-<slug>.docx`, `07-design-review.json` | `check_design.py` passes and every checklist item is ok or "not verified" |
+| 8 | Hand-off | you | — | Give HR the .docx path and a short note: level and experience used (and whether research or the user set them), the challenger's final score and number of rounds, any must-include item flagged as outdated, whether humanizer ran, and anything open |
+
+**Loop limits:**
+- Research rounds: 4.
+- Format rounds: 3.
+- When a limit is reached, show HR the open objections or issues and offer three choices:
+  1. add input, which is appended to `00-input.md`; then rerun from step 1;
+  2. run 2 more rounds;
+  3. override.
+- An override is recorded in `run.json` as `{"step", "score", "by": "HR"}` and printed in the hand-off as "below the 95 bar (score N), approved by HR".
+- Never move past a failed gate without an explicit override.
 
 ## How to run a role
-- If an Agent/Task tool is available, run each role as its own subagent. Give it its role file, the run folder path, and the paths the role file lists. Give it nothing else: no summary of other JDs, no opinions of your own about the content.
-- Researcher and challenger need web search and page fetch. If the session has no web access, stop and tell HR. Don't write a JD from memory.
-- Without a subagent tool, play each role yourself, one at a time. Read only what that role file allows, and write its file before you start the next role.
+- **With an Agent/Task tool**, run each role as its own subagent. Give it:
+  - its role file;
+  - `SKILL_DIR`;
+  - the run folder;
+  - for the initializer only, the path of `00-input.md` and `input/`.
+
+  Give it nothing else: no summary of other JDs and none of your own opinions about the content.
+- **Without a subagent tool**, play each role yourself, one at a time. Read only what that role file allows, and write its file before you start the next role.
 
 ## Rules
-- Every tool, skill or requirement the user named appears in the JD; `--must-include` enforces this.
-- Fixed text is only the section labels, the headings and `company/company.json`. Everything else is written for this role.
-- No salary, compensation, benefits or perks: the blueprint has no place for them.
+- User-named terms come first. Every tool, skill or requirement the user named appears in the JD, even where the writing rules would otherwise flag a word. The validator exempts them.
+- Stated facts are kept. If the user stated an experience range, city or level, the JD uses it.
+- No salary, pay, benefits or perks: the blueprint has no place for them. If the user mentions pay, note it for HR in the hand-off and leave it out of the JD.
+- The only fixed text is the section labels, the headings and `company/company.json`.
 - No company facts beyond `company/company-facts.md`.
-- Never change `brand/` or `structure/` to make content fit. Change the content.
+- Never edit `brand/`, `structure/` or `scripts/` during a run. If something looks wrong there, report it in the hand-off.
 - No personal data in run files: describe roles, never people.
 
 ## Other commands
-- `/jd-builder render <jd.json>`: steps 7 and 8 only, for a content file HR has edited by hand.
-- `/jd-builder resume`: continue the last run from `run.json`.
+- `/hr-hiring:jd-builder resume`: continue the last run.
+- `/hr-hiring:jd-builder render <file.json>`: validate, render and design-check a content file HR edited by hand (steps 7–8).

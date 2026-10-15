@@ -74,10 +74,10 @@ All fonts are embedded in every .docx, so nothing has to be installed. Licence: 
 ## Components, top to bottom
 
 1. **Top bar**: navy, full width, 3.7 pt.
-2. **Eyebrow**: `ONSURITY  ——  ENGINEERING  ——  BENGALURU`.
+2. **Eyebrow**: `ONSURITY  ——  <FUNCTION>  ——  <CITY>`.
 3. **Title**: the role title, in two lines at most.
 4. **Lead + punchline**: one paragraph. The punchline is the last sentence(s), set in Archivo.
-5. **Meta panel**: one row of five equal cells on a `panel` fill with a `rule` border. Each cell has a mono label over an Archivo value. The labels are LEVEL · TRACK · EXPERIENCE · LOCATION · STACK, and the fifth can be TOOLS, FOCUS, MARKETS or REPORTS TO.
+5. **Meta panel**: one row of five equal cells on a `panel` fill with a `rule` border. Each cell has a mono label over an Archivo value. The labels are LEVEL · TRACK · EXPERIENCE · LOCATION, then a fifth chosen per role: STACK, TOOLS, FOCUS, MARKETS or REPORTS TO.
 6. **About us**: the only section without a divider above it.
 7. **Labelled sections**: a divider, the gutter label, then a heading in the body column.
    - **The level**: six rows; a link-blue mono key with hairlines between rows.

@@ -1,11 +1,15 @@
 {
   "name": "onsurity-hiring",
-  "owner": {"name": "Onsurity Technologies"},
+  "owner": {
+    "name": "Onsurity Technologies"
+  },
   "plugins": [
     {
       "name": "hr-hiring",
       "source": "./plugins/hr-hiring",
-      "description": "Onsurity hiring skills: jd-builder (live: format, render, checks; research loop in progress)."
+      "version": "0.2.0",
+      "repository": "https://github.com/rishabhrawat-os/hiring",
+      "description": "Onsurity hiring skills: jd-builder researches a role from the user's input and writes the JD as a branded Word file."
     }
   ]
 }

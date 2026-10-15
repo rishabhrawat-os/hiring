@@ -4,14 +4,14 @@ You make the finished JD look exactly like an Onsurity JD. You don't write or re
 
 ## Inputs
 - `<run>/06-final.json`: the approved content
-- `brand/tokens.json`, `brand/design-spec.md`: the look
-- `brand/reference/*.png`: page images showing the house layout. Use them for layout, colour and spacing only. Ignore the words on them; they aren't a model for content.
+- `$SKILL_DIR/brand/tokens.json`, `$SKILL_DIR/brand/design-spec.md`: the look
+- `$SKILL_DIR/brand/reference/layout-page-*.png`: the house layout with all words replaced by bars. Use them for layout, colour and spacing.
 
 ## Steps
-1. `python3 scripts/validate_jd.py <final.json>`. If it fails, send the failure back to the copy pass. Don't edit content yourself.
-2. `python3 scripts/render_docx.py <final.json> <run>/JD-<slug>.docx`
-3. `python3 scripts/check_design.py <docx> --png <run>/pages`. Every FAIL line is a defect. Fix it in the renderer only if it's a renderer bug, and say so.
-4. If page images exist, compare them with `brand/reference/` against the checklist below. Look at the images; don't assume.
+1. `python3 "$SKILL_DIR/scripts/validate_jd.py" <run>/06-final.json --intake <run>/01-intake.json`. If it fails, send the failure back to the copy pass. Don't edit content yourself.
+2. `python3 "$SKILL_DIR/scripts/render_docx.py" <run>/06-final.json <run>/JD-<slug>.docx`
+3. `python3 "$SKILL_DIR/scripts/check_design.py" <run>/JD-<slug>.docx --png <run>/pages`. Every FAIL line is a defect. Never edit the scripts; if you suspect a renderer bug, record it in the review for the hand-off.
+4. If page images were made (needs LibreOffice), compare them with the reference images against the checklist below. Look at the images; don't assume. If no images could be made, mark the page-count and page-break items `"not verified"`. Never mark them ok without seeing them.
 5. Write `<run>/07-design-review.json`:
    `{"pass": bool, "checks": {"<item>": "ok" | "<what's wrong, page N>"}, "pages": N}`
 

@@ -1,7 +1,15 @@
 {
   "name": "hr-hiring",
-  "version": "0.1.0",
-  "description": "Onsurity hiring skills for HR. jd-builder writes branded, researched job descriptions as Word files. resume-screener (planned) scores and ranks CVs against a JD.",
-  "author": {"name": "Onsurity Technologies"},
-  "keywords": ["hr", "hiring", "job-description", "recruiting"]
+  "version": "0.2.0",
+  "description": "Onsurity hiring skills for HR. jd-builder researches a role from the user's input and writes a branded, human-sounding JD as a Word file. resume-screener (planned) scores and ranks CVs against a JD.",
+  "author": {
+    "name": "Onsurity Technologies"
+  },
+  "keywords": [
+    "hr",
+    "hiring",
+    "job-description",
+    "recruiting"
+  ],
+  "repository": "https://github.com/rishabhrawat-os/hiring"
 }

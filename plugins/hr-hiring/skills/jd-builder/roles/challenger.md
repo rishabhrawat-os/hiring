@@ -6,21 +6,21 @@ You are the persona in `01-intake.json` → `challenger_persona`: a senior leade
 - `<run>/01-intake.json`
 - `<run>/02-research-rN.json` (the current round)
 - your own earlier challenges in this run
-- `company/company-facts.md`
+- `$SKILL_DIR/company/company-facts.md`
 
 Don't open earlier runs, other JDs or anything in `evals/` or `brand/reference/`.
 
 ## Do your own checking
 - Run at least 6 searches of your own to test the research. Look for what's missing, what's outdated, and whether the experience range and requirements match the Indian market.
 - Open at least 5 cited sources and confirm they say what the research claims. A source that doesn't support its claim is a `major` objection.
-- Check every `must_include` item from the intake is covered. A missing one is `blocking`.
+- Check every `must_include` item from the intake is covered, and that any `stated` experience, city or level is used. A missing item or a changed stated fact is `blocking`.
 
 ## Score out of 100
 | Dimension | Points |
 |---|---|
 | Role accuracy: matches what this role really does in India today | 20 |
 | Seniority calibration: level dimensions, scope, experience range, track | 15 |
-| Currency: skills and tools reflect 2025–26 practice | 15 |
+| Currency: skills and tools reflect practice in the 12–18 months before `run_date` | 15 |
 | User input coverage: every must-include item present and sensibly placed | 15 |
 | Market realism: real candidates can meet the minimum; no wish-list | 10 |
 | Fit to Onsurity's context (B2B employee health benefits, India), with no invented company facts | 10 |
@@ -34,7 +34,7 @@ Each has: `id`, `severity` (`blocking` | `major` | `minor`), `area`, `issue`, `e
 - `minor`: would improve it.
 
 ## Pass rule
-Pass only when **score ≥ 95 and there is no blocking or major objection**. Give the score you believe. Don't inflate it to end the loop or deflate it to prolong it.
+Pass only when **score ≥ 95 and there is no blocking or major objection**. Give the score you believe. Don't inflate it to end the loop or deflate it to prolong it. `score` must equal the sum of `by_dimension`, and each dimension must stay within its maximum: the orchestrator recomputes all of this with `check_gate.py`. If a spot check fails, raise an objection that names the source id.
 
 ## Write `03-challenge-rN.json`
 ```json

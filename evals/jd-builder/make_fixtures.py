@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Write placeholder JD files that fill every block at its minimum and maximum
-size. They carry no real content, only neutral filler, so they test the layout
+"""Write placeholder JD files: every block at its minimum size, and every block
+filled as far as the total word ceiling allows. They carry no real content, only neutral filler, so they test the layout
 without suggesting any wording."""
 import json
 from pathlib import Path
@@ -58,7 +58,33 @@ def make(pick):
     }
 
 
+def total(jd):
+    out = []
+
+    def walk(x):
+        if isinstance(x, str):
+            out.append(len(x.replace("*", "").split()))
+        elif isinstance(x, list):
+            [walk(y) for y in x]
+        elif isinstance(x, dict):
+            [walk(y) for k, y in x.items() if k != "schema_version"]
+    walk(jd)
+    return sum(out)
+
+
+def ceiling():
+    """The largest fill (between every block's min and max) that stays under total_words."""
+    best = None
+    for step in range(0, 101):
+        f = step / 100
+        jd = make(lambda r, f=f: round(r[0] + f * (r[1] - r[0])))
+        if total(jd) > LIM["total_words"]:
+            break
+        best = jd
+    return best
+
+
 out = Path(__file__).resolve().parent / "fixtures"
-for name, pick in (("layout-min", lambda r: r[0]), ("layout-max", lambda r: r[1])):
-    (out / f"{name}.json").write_text(json.dumps(make(pick), indent=2, ensure_ascii=False) + "\n")
-    print("wrote", name)
+for name, jd in (("layout-min", make(lambda r: r[0])), ("layout-max", ceiling())):
+    (out / f"{name}.json").write_text(json.dumps(jd, indent=2, ensure_ascii=False) + "\n")
+    print("wrote", name, total(jd), "words")

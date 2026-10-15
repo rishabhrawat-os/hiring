@@ -1,12 +1,17 @@
-# jd-builder evals
+# jd-builder evals (maintainers only)
 
-`run_checks.sh` is the pre-commit gate. It runs four checks:
+Nothing in this folder is read by the skill.
 
-1. Every gold example (`skills/jd-builder/examples/*.json`) and every fixture here passes `validate_jd.py`.
-2. Each one renders to .docx.
-3. Each rendered file passes `check_design.py`.
-4. `extract_pdf_jd.py` reproduces the gold examples from the original PDFs byte for byte.
+`run_checks.sh` is the pre-commit gate. It:
+1. Builds placeholder content (`make_fixtures.py`): every block at its minimum size, and every block filled up to the total word ceiling. The text is neutral filler, so it tests layout without suggesting any wording.
+2. Validates, renders and design-checks both fixtures, and (with LibreOffice) checks the ceiling fixture renders to 7 pages or fewer.
+3. Runs `writing_cases.json` through the validator:
+   - plain English that must pass;
+   - AI patterns, salary and US spelling that must fail;
+   - user-named terms that must be exempt.
+4. Checks the fixed text (company content, labels, headings) follows the same writing rules.
+5. Checks `extract_pdf_jd.py` still reads the blueprint PDFs (`fixtures/originals/`) the same way (`fixtures/extracted/`).
 
-`fixtures/layout-non-engineering.json` is a layout test, not a real JD. It exercises the non-engineering variants: the TOOLS meta cell, OUR TOOLS, a people-manager track, the LEAD group, the TEAM level key, and "mistake" in the last Read-twice line.
-
-Step 3 adds role briefs (engineering, marketing, sales, operations, data) with expected checks for the full research loop.
+Other tools:
+- `greek_reference.py`: rebuilds the skill's `brand/reference/layout-page-*.png` from a blueprint PDF, with every word replaced by a bar.
+- `extract_pdf_jd.py`: reads a PDF in the house layout into the content shape. Needs `pdfplumber`.

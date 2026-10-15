@@ -28,7 +28,7 @@ hiring/
 │       │   ├── tokens.json         page, grid, colours, fonts, type scale
 │       │   ├── design-spec.md      the same, explained
 │       │   ├── fonts/              Archivo, Newsreader, IBM Plex Mono (OFL)
-│       │   └── reference/          page images of the layout (look only)
+│       │   └── reference/          layout page images, words replaced by bars
 │       ├── company/
 │       │   ├── company.json        About us, equal opportunity, footer: the fixed text
 │       │   └── company-facts.md    the only company facts a JD may state
@@ -39,10 +39,13 @@ hiring/
 │           ├── render_docx.py      content file → branded .docx (fonts embedded)
 │           ├── validate_jd.py      blueprint, space, AI patterns, spelling, must-include
 │           ├── check_design.py     reads the .docx back: fonts, colours, sizes, order
-│           └── extract_pdf_jd.py   reads a PDF in this layout (maintainer tool)
+│           └── check_gate.py       recomputes research, challenge and format gates
 └── evals/jd-builder/               maintainer tests; never read by the skill
     ├── run_checks.sh               run before every commit
-    ├── make_fixtures.py            placeholder content at min and max size
+    ├── make_fixtures.py            placeholder content at min size and at the word ceiling
+    ├── writing_cases.json          sentences the validator must pass / fail / exempt
+    ├── greek_reference.py          builds the word-free reference images
+    ├── extract_pdf_jd.py           reads a PDF in the house layout
     └── fixtures/
         ├── layout-min.json, layout-max.json
         ├── originals/              the blueprint PDFs

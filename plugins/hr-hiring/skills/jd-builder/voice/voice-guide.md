@@ -8,9 +8,9 @@ These rules apply to every word written into a JD. They come from plain-language
 - Address the reader as "you" and the company as "we", in present or future tense.
 - Most sentences are under 20 words, and each says one thing.
 - Be specific. Name the actual tools, tasks, teams and outputs that the research found for this role. If a sentence would fit any company's JD, rewrite it or delete it.
-- State facts directly. Write "You will run the monthly payroll close", not "You will play a key role in ensuring payroll excellence".
+- State facts directly. Name the task and its output ("You will <verb> <named output> <how often or at what scale>"), with no padding around it.
 - Describe responsibilities as work someone does, starting with a verb: "Run", "Write", "Review", "Plan", "Fix".
-- Each requirement says what is needed and what level of it, for example "3+ years running paid search campaigns with monthly budgets above ₹10 lakh". Avoid vague adjectives such as "strong", "excellent" or "solid" unless they are followed by what they mean.
+- Each requirement says what is needed and how much of it ("<years> of <task> at <scale>"). Don't use vague adjectives such as "strong", "excellent" or "solid" unless they are followed by what they mean.
 
 ## Never use (validate_jd.py checks these)
 
@@ -20,6 +20,7 @@ These rules apply to every word written into a JD. They come from plain-language
 - **Staged reveals**: "Here's the thing:", "The result:", "The catch:".
 - **Words and phrases in `banned-phrases.txt`**: job-ad clichés, AI-sounding words, and exclusionary or age- or gender-coded terms.
 - **"Objectives"**, "key result areas", or mission-statement language.
+- **Salary or pay talk** (CTC, LPA, ₹, lakh, crore, compensation).
 
 ## Also avoid (the format challenger checks these)
 
@@ -32,7 +33,6 @@ These rules apply to every word written into a JD. They come from plain-language
 ## Spelling and numbers
 
 - British/Indian English spelling: organise, optimise, centre, behaviour, licence (noun), programme (but "program" for software).
-- Indian number style for money: ₹10 lakh, ₹2 crore.
 - Number ranges use an en dash with no spaces: 3–5 years.
 - "+" for open ranges: 6+ years.
 
@@ -45,4 +45,8 @@ These rules apply to every word written into a JD. They come from plain-language
 
 ## Using /humanizer
 
-Once the challenger signs off, run the `humanizer` skill (if installed) over every slot's text, telling it to keep facts, names, numbers and word limits unchanged. Then run `validate_jd.py` again. If humanizer isn't installed, the copy pass applies this page by hand.
+The copy pass runs the humanizer skill (`humanizer` or `anthropic-skills:humanizer`) over every slot, keeping facts, names, numbers, `**bold**` markup and word limits unchanged. Then `validate_jd.py` runs again. If humanizer isn't installed, the copy pass applies this page by hand, and the hand-off says so.
+
+## User wording wins
+
+If the user named a tool or term that these rules would otherwise flag (for example a product called "Harness" or "Journey Builder"), keep it. The validator exempts must-include terms and toolkit tool names.
