@@ -10,6 +10,19 @@ You are the orchestrator. This is a first-round screen: aim for a quick, defensi
 ## Paths
 `SKILL_DIR` is the absolute path of this folder: the base directory shown when the skill loaded, or `${CLAUDE_PLUGIN_ROOT}/skills/resume-screener`. Pass `SKILL_DIR` and the run folder to every role. Use absolute paths in every command. File shapes are in `structure/formats.md`.
 
+## First use on this computer
+If `~/JD-Builder/.welcome-shown` doesn't exist, show the user the guide in `${CLAUDE_PLUGIN_ROOT}/skills/help/GETTING-STARTED.md` (skip this if that file isn't there), then create `~/JD-Builder/.welcome-shown` and carry on with their request. Show it only once per computer.
+
+## The user does no technical steps
+The user is not technical. Never ask them to run a command, install anything, find a file or open a folder. Do it yourself, and if the computer asks for permission, tell them in one line to click **Allow**.
+- **Python missing** (`python3 --version` fails): install it yourself.
+  - macOS: run `xcode-select --install` and tell the user to click **Install** in the window that appears; wait, then continue.
+  - Windows: `winget install -e --id Python.Python.3.12 --scope user --accept-package-agreements --accept-source-agreements`.
+  - Linux: tell the user their IT team needs to install Python 3, because it needs an administrator.
+  - Cowork and other cloud workspaces already have Python.
+- **Opening results:** open finished files for the user (`open <file>` on macOS, `start "" "<file>"` on Windows, `xdg-open <file>` on Linux). In Cowork, link the file instead.
+- **Questions about files** ("where is my JD?", "open my results"): find the latest run folder and open or show the file.
+
 ## Setup
 - **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
 - **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
@@ -70,7 +83,7 @@ Wait until `status.py` shows every candidate done.
   - why proceed and why not;
   - comments (interview pointers, a background note, any scorer–challenger gap).
 - **Offer:**
-  - to walk through any candidate's section of `reasoning.md`;
+  - to answer "why did <candidate> get this score?" from that candidate's section of `reasoning.md`, in plain words;
   - an override, saved to `overrides.json` with the recruiter's reason, after which the table is rebuilt;
   - a re-run of one candidate with a note, which deletes that candidate's 12/13/result files and runs stage B for them.
 - **Finally**, ask whether to keep or delete the run folder. It holds personal data.

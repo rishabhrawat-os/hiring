@@ -43,6 +43,7 @@ hiring/
 │           ├── validate_jd.py      blueprint, space, AI patterns, spelling, must-include
 │           ├── check_design.py     reads the .docx back: fonts, colours, sizes, order
 │           └── check_gate.py       recomputes research, challenge and format gates
+│   ├── skills/help/                /hr-hiring:help and GETTING-STARTED.md, the first-use guide
 │   └── skills/resume-screener/     self-contained skill
 │       ├── SKILL.md                orchestrator: stages A–C, 3 recruiter checkpoints, parallel waves
 │       ├── roles/                  persona, rubric-builder, rubric-challenger, extractor,

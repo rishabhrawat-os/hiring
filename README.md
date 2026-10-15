@@ -31,7 +31,7 @@ Each run keeps its files in a run folder: `~/JD-Builder/jd-runs/` or `~/JD-Build
 
 ## Installation
 
-Python 3 must be installed on the laptop. The JD skill also needs web access for its research.
+Users type only the slash commands. A simple guide ([GETTING-STARTED.md](plugins/hr-hiring/skills/help/GETTING-STARTED.md)) appears on first use or with `/hr-hiring:help`. The JD skill needs web access.
 
 ### Claude desktop app or Cowork
 
@@ -45,15 +45,15 @@ Open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and inst
 /plugin marketplace update onsurity-hiring
 ```
 
-These commands were not run for this README, because they need a Claude client with plugin support. The third one fetches later updates. The Python packages the skills need (listed in [`requirements.txt`](plugins/hr-hiring/requirements.txt)) install automatically the next time Claude starts, into `~/JD-Builder/.venv` when your Python refuses user installs.
+These commands were not run for this README, because they need a Claude client with plugin support. The third one fetches later updates. The packages in [`requirements.txt`](plugins/hr-hiring/requirements.txt) install automatically when Claude starts. If Python itself is missing, the skill installs it, and the user may need to click Allow once.
 
 ## Quickstart
 
 1. Write a JD by naming the role and anything that must be in it: `/hr-hiring:jd-builder Data Analyst, 3 years, SQL and Power BI`.
-2. Open the `.docx` the skill names at the end, in `~/JD-Builder/jd-runs/`.
+2. Read the Word file, which opens by itself when the JD is ready.
 3. Screen CVs by running `/hr-hiring:resume-screener` and giving it the JD file and a folder such as `~/Downloads/cvs/`.
 4. Approve or edit the rubric and set the cut-off when the screener shows it.
-5. Read the table, then open `reasoning.md` in `~/JD-Builder/screen-runs/<date>-<role>/` for any decision you want to check.
+5. Read the table, and ask "Why did C04 get this score?" to see the reasoning for any decision.
 
 ## How a JD is built
 
@@ -101,7 +101,7 @@ A demo screen of 5 invented CVs took 4 min 22 s and 11 agent runs in October 202
 | Symptom | Cause | Fix |
 |---|---|---|
 | The JD run stops at research and reports that pages cannot be opened | The environment blocks web pages | Allow web access in the environment's network settings, or run on a laptop |
-| A skill reports that `python-docx` or `pypdf` is missing | The automatic install at start-up failed | Run `python3 ~/.claude/plugins/.../hr-hiring/scripts/ensure_deps.py` and send its message to IT if it fails again |
+| A skill says Python needs an administrator | Linux computers need admin rights to install Python | Ask IT to install Python 3 once |
 | A CV shows `needs_manual_read` | The PDF is a scan with no text layer | No action is needed, because the extractor reads the original file |
 
 ## For maintainers

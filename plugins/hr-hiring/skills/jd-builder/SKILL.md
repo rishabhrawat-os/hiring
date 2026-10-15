@@ -14,6 +14,19 @@ You are the orchestrator. You run the steps below in order, enforce every gate, 
 - **Form** (fixed): the layout (`brand/`), the blueprint (`structure/`) and the company content (`company/company.json`).
 - **Content**: only the user's input plus this run's web research. No earlier JD, earlier run, example or remembered text is used. Every run starts from zero.
 
+## First use on this computer
+If `~/JD-Builder/.welcome-shown` doesn't exist, show the user the guide in `${CLAUDE_PLUGIN_ROOT}/skills/help/GETTING-STARTED.md` (skip this if that file isn't there), then create `~/JD-Builder/.welcome-shown` and carry on with their request. Show it only once per computer.
+
+## The user does no technical steps
+The user is not technical. Never ask them to run a command, install anything, find a file or open a folder. Do it yourself, and if the computer asks for permission, tell them in one line to click **Allow**.
+- **Python missing** (`python3 --version` fails): install it yourself.
+  - macOS: run `xcode-select --install` and tell the user to click **Install** in the window that appears; wait, then continue.
+  - Windows: `winget install -e --id Python.Python.3.12 --scope user --accept-package-agreements --accept-source-agreements`.
+  - Linux: tell the user their IT team needs to install Python 3, because it needs an administrator.
+  - Cowork and other cloud workspaces already have Python.
+- **Opening results:** open finished files for the user (`open <file>` on macOS, `start "" "<file>"` on Windows, `xdg-open <file>` on Linux). In Cowork, link the file instead.
+- **Questions about files** ("where is my JD?", "open my results"): find the latest run folder and open or show the file.
+
 ## Setup
 - **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
 - **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
@@ -40,7 +53,7 @@ Web search and page fetch must be available. Without them, stop and tell HR: a J
 | 5 | Format challenge | `roles/format-challenger.md` | `05-format-review-rN.json` | `check_gate.py format <file>`. If it fails, the structurer writes `04-draft-r(N+1).json` and the format challenger reviews again |
 | 6 | Copy | `roles/copy.md` | `06-final.json`, `06-copy-notes.md` | `validate_jd.py 06-final.json --intake 01-intake.json`, then the format challenger's facts check, gated by `check_gate.py facts 05-facts-check.json --approved <approved_draft> --final 06-final.json --intake 01-intake.json` |
 | 7 | Design | `roles/designer.md` | `JD-<slug>.docx`, `07-design-review.json` | `check_design.py` passes and every checklist item is ok or "not verified" |
-| 8 | Hand-off | you | — | Give HR the .docx path and a short note: level and experience used (and whether research or the user set them), the challenger's final score and number of rounds, any must-include item flagged as outdated, whether humanizer ran, and anything open |
+| 8 | Hand-off | you | — | Open the .docx for HR (see "Opening results"), say where it is saved, and give a short note: level and experience used (and whether research or the user set them), the challenger's final score and number of rounds, any must-include item flagged as outdated, whether humanizer ran, and anything open |
 
 **Loop limits:**
 - Research rounds: 4.
