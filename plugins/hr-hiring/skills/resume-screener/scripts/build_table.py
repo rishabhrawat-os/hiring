@@ -95,14 +95,16 @@ def main():
         o = overrides.get(cid)
         if o:
             verdict, basis = o["verdict"], f"recruiter override: {o.get('reason', '')}"
-        flags = list(r.get("flags", [])) + notes
-        if "unclear" in r["must_haves"].values():
-            flags.append("a must-have is unclear from the CV")
+        important = [f for f in r.get("flags", []) if f.startswith("must-have") or "averaged" in f]
+        flags = important + notes + [f for f in r.get("flags", []) if f not in important]
+        if "unclear" in r["must_haves"].values() and not any(f.startswith("must-have") for f in important):
+            flags.insert(0, "a must-have is unclear from the CV")
         bg = [c for c in rubric["criteria"] if c["signal"] == "background"]
         if bg and bg[0]["id"] in r["criteria"]:
             note = r["criteria"][bg[0]["id"]].get("scorer_reason", "")
             if note:
-                flags = [f"Background: {note}"] + flags
+                k = len([f for f in flags if f.startswith(("must-have", "a must-have")) or "averaged" in f])
+                flags = flags[:k] + [f"Background: {note}"] + flags[k:]
         rows.append({"id": cid, "label": manifest[cid]["label"], "score": score,
                      "verdict": verdict, "basis": basis, "why_proceed": r["why_proceed"],
                      "why_not": r["why_not"], "flags": flags})
