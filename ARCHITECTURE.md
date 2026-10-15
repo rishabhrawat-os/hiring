@@ -72,3 +72,31 @@ HR gets the .docx and a short note
 
 - Word tables have square corners (the blueprint PDFs have about 4 pt radius).
 - Line breaks can differ from a browser-made PDF by a word.
+
+# resume-screener
+
+```
+JD + CVs ─► ingest.py
+Stage A (once per JD)
+  persona ─► rubric builder ◄─► rubric challenger (95 bar, check_rubric.py)
+  CHECKPOINT 1: recruiter approves/edits rubric, background definition, cut-off
+  CHECKPOINT 2: two CVs scored in full; recruiter confirms or the anchors change
+Stage B (per candidate, parallel waves of up to 8 subagents)
+  extractor (blind CV, profile, must-have screen)
+  scorer ◄─► challenger, same persona, quotes checked by reconcile.py, up to 3 rounds
+  candidates/<id>/result.json  (score computed by the script)
+Stage C (after all candidates finish)
+  panel reasoner (consistency adjustments) ─► panel challenger (approves, borderline calls)
+  build_table.py ─► report.md
+  CHECKPOINT 3: recruiter reviews the table, overrides, re-runs one candidate with a note
+```
+
+- **One orchestration per candidate.** Each candidate's steps run as separate subagents that see only that candidate's folder, so candidates are judged against the rubric and never against each other. Only the panel looks across the batch, and only for consistency.
+- **Parallel by stage.** Subagents can't start subagents, so the orchestrator runs each stage as a wave: every waiting candidate's extractor at once, then every scorer, then every challenger. State on disk (`status.py --next`) tells it who needs what, so a failed candidate resumes alone.
+- **Scores are computed, never typed.** `reconcile.py` averages the agreed criterion scores and applies the weights. `build_table.py` applies the panel adjustments that were approved, the cut-off, the must-haves and any overrides.
+- **Evidence or nothing.** Every score quotes the blind CV, and quotes that aren't in it are rejected.
+- **Bias controls:**
+  - the CV is blinded before scoring;
+  - background is capped at 10 points, defined by the recruiter, and shown as a separate "without background" score;
+  - the rubric challenger scores fairness;
+  - short stints are judged in context.

@@ -1,7 +1,7 @@
 {
   "name": "hr-hiring",
-  "version": "0.2.0",
-  "description": "Onsurity hiring skills for HR. jd-builder researches a role from the user's input and writes a branded, human-sounding JD as a Word file. resume-screener (planned) scores and ranks CVs against a JD.",
+  "version": "0.3.0",
+  "description": "Onsurity hiring skills for HR. jd-builder researches a role and writes a branded JD as a Word file. resume-screener scores CVs against any JD with a recruiter-approved rubric, parallel scorer and challenger agents, and a panel, then gives a score and go/no-go per candidate.",
   "author": {
     "name": "Onsurity Technologies"
   },

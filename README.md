@@ -5,7 +5,7 @@ Claude skills for Onsurity's HR team, packaged as one plugin (`hr-hiring`).
 | Skill | What it does | Status |
 |---|---|---|
 | `jd-builder` | Researches a role from whatever you tell it and writes the JD as a branded Word file | Live |
-| `resume-screener` | Scores and ranks CVs against a JD, with a go/no-go for round one | Planned |
+| `resume-screener` | Scores every CV against any JD and gives a go/no-go, with the reasons, in a table | Live |
 
 ## Install (once per laptop)
 
@@ -35,6 +35,24 @@ Anything you name (a tool, skill or requirement) is guaranteed to appear in the 
 You get a `.docx` with the fonts built in, plus a folder with every step's output in `~/JD-Builder/jd-runs/` (or your Cowork workspace).
 
 Other commands: `/hr-hiring:jd-builder resume` continues an interrupted run; `/hr-hiring:jd-builder render <file.json>` re-renders after you edit the content file by hand.
+
+## Screening CVs
+
+Say "/hr-hiring:resume-screener" and give it a JD (file or pasted text) and the CVs (a folder, several files or a zip).
+
+1. It builds a hiring-manager persona about 5 years more senior than the role, and a scoring rubric. The rubric covers:
+   - role fit;
+   - job stability, industry relevance, breadth and depth, achievements, promotions, recency and red flags;
+   - company and college background, capped at 10 points.
+
+   A challenger has to score the rubric 95 or more before you see it.
+2. **You approve the rubric**: change weights, add your own considerations, and set the cut-off.
+3. **Calibration**: it scores two CVs first and asks if that matches your judgement.
+4. Every CV is then scored separately and in parallel. A scorer and an independent challenger both quote the CV for every point, and invented quotes are rejected.
+5. A panel checks that equal evidence got equal scores across candidates and makes the borderline calls.
+6. **You get a table**: score, score without background, go/no-go, why proceed, why not, and flags. You can override any decision or re-run one candidate with a note.
+
+CVs and results stay in a local folder (`~/JD-Builder/screen-runs/` or your Cowork workspace). Nothing is uploaded or committed, and you can delete the run at the end.
 
 ## What every JD looks like
 

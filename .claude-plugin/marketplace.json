@@ -7,9 +7,9 @@
     {
       "name": "hr-hiring",
       "source": "./plugins/hr-hiring",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "repository": "https://github.com/rishabhrawat-os/hiring",
-      "description": "Onsurity hiring skills: jd-builder researches a role from the user's input and writes the JD as a branded Word file."
+      "description": "Onsurity hiring skills: jd-builder (research-based JDs as branded Word files) and resume-screener (rubric-based CV scoring with go/no-go)."
     }
   ]
 }

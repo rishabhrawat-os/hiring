@@ -40,6 +40,18 @@ hiring/
 │           ├── validate_jd.py      blueprint, space, AI patterns, spelling, must-include
 │           ├── check_design.py     reads the .docx back: fonts, colours, sizes, order
 │           └── check_gate.py       recomputes research, challenge and format gates
+│   └── skills/resume-screener/     self-contained skill
+│       ├── SKILL.md                orchestrator: stages A–C, 3 recruiter checkpoints, parallel waves
+│       ├── roles/                  persona, rubric-builder, rubric-challenger, extractor,
+│       │                           scorer, candidate-challenger, panel-reasoner, panel-challenger
+│       ├── structure/formats.md    every file's shape and the run folder layout
+│       └── scripts/
+│           ├── ingest.py           JD + CVs (files, folders, zips; PDF/DOCX/TXT) → run folder
+│           ├── check_rubric.py     rubric and rubric-challenge gates
+│           ├── reconcile.py        checks quotes against the CV, agreement, computes the score
+│           ├── status.py           progress, next step per candidate, blind-CV check
+│           └── build_table.py      panel adjustments, overrides, verdicts, report.md
+├── evals/resume-screener/test_scripts.py   script tests on invented data
 └── evals/jd-builder/               maintainer tests; never read by the skill
     ├── run_checks.sh               run before every commit
     ├── make_fixtures.py            placeholder content at min size and at the word ceiling
