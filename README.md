@@ -4,7 +4,7 @@
 
 ![Page 1 of the house JD layout, with every word replaced by a bar so only the layout shows](plugins/hr-hiring/skills/jd-builder/brand/reference/layout-page-1.png)
 
-It runs in the Claude desktop app, Cowork and Claude Code. Version 0.3.0 works end to end and was last changed on 15 October 2026. The first command after installing is one line:
+It runs in the Claude desktop app, Cowork and Claude Code. Version 0.3.0 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
 
 ```
 /hr-hiring:jd-builder Customer Success Manager, Pune, must know HubSpot
@@ -23,7 +23,7 @@ Each run keeps its files in a run folder: `~/JD-Builder/jd-runs/` or `~/JD-Build
 
 ## Key features
 
-- **Each JD starts from fresh research.** The researcher opens at least 15 recent sources, and a challenger playing the VP of that function must score the research 95 out of 100.
+- **Each JD starts from fresh research.** The researcher opens at least 15 sources, most from the last 18 months, and a challenger playing the VP of that function must score the research 95 out of 100.
 - **Anything you name appears in the JD.** The validator, a script that checks every draft, fails a draft that drops a tool, skill, city or experience range you stated.
 - **The writing is checked for machine patterns.** The validator rejects em dashes, "not X, Y" contrasts, rhetorical questions, pay terms and US spellings.
 - **Each CV is judged on its own.** A scorer and an independent challenger must quote the CV for every point, and invented quotes are rejected.
@@ -106,7 +106,7 @@ A demo screen of 5 invented CVs took 4 min 22 s and 11 agent runs in October 202
 
 ## For maintainers
 
-Two test commands run before every commit (page counts need LibreOffice, import checks need `pdfplumber`):
+Two test commands run before every commit (page counts need LibreOffice and `pdfinfo`, import checks need `pdfplumber`):
 
 ```
 $ bash evals/jd-builder/run_checks.sh
@@ -123,7 +123,7 @@ $ python3 evals/resume-screener/test_scripts.py | tail -1
 ALL PASS
 ```
 
-The second command runs 27 checks on invented CVs; [evals/jd-builder/README.md](evals/jd-builder/README.md) explains the first. A test JD file (`bad.json`) with a rule-breaking sentence fails like this:
+The second command runs 27 checks on invented CVs; [evals/jd-builder/README.md](evals/jd-builder/README.md) explains the first. A test file (`bad.json`, made from `evals/jd-builder/fixtures/layout-min.json` with one sentence changed) fails like this:
 
 ```
 $ python3 plugins/hr-hiring/skills/jd-builder/scripts/validate_jd.py bad.json
@@ -132,7 +132,7 @@ FAIL writing: 'not just / not only' contrast: '...We ship fast — every week, n
 {"file": "bad.json", "pass": false, "problems": 2}
 ```
 
-Paths below are inside `plugins/hr-hiring/skills/`.
+Paths in the Edit column are inside `plugins/hr-hiring/skills/`; the commands run from the repository root.
 
 | To change | Edit | Then run |
 |---|---|---|
@@ -149,11 +149,7 @@ Paths below are inside `plugins/hr-hiring/skills/`.
 - The JD skill needs open web access, so it cannot run offline.
 - The `.docx` boxes have square corners, because Word tables cannot round them.
 - The screener does not verify CV claims with employers.
-- Recruiter checkpoints and a full JD run have not yet been tried on a live role.
-
-## Status
-
-The next step for both skills is a pilot on live roles, as listed in [ROADMAP.md](ROADMAP.md).
+- Recruiter checkpoints have been tried only on invented CVs, and neither skill has been piloted on a live role yet; [ROADMAP.md](ROADMAP.md) lists the pilot as the next step.
 
 ## License
 
