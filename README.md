@@ -1,63 +1,160 @@
-# Onsurity hiring skills
+# hr-hiring
 
-Claude skills for Onsurity's HR team, packaged as one plugin (`hr-hiring`).
+*Two Claude skills for hiring: one writes a researched job description in the company's house layout, the other screens CVs against any JD and records the reasoning behind every decision.*
 
-| Skill | What it does | Status |
-|---|---|---|
-| `jd-builder` | Researches a role from whatever you tell it and writes the JD as a branded Word file | Live |
-| `resume-screener` | Scores every CV against any JD and gives a go/no-go, with the reasons, in a table | Live |
+![Page 1 of the house JD layout, with every word replaced by a bar so only the layout shows](plugins/hr-hiring/skills/jd-builder/brand/reference/layout-page-1.png)
 
-## Install (once per laptop)
+It runs in the Claude desktop app, Cowork and Claude Code. Version 0.3.0 works end to end and was last changed on 15 October 2026. The first command after installing is one line:
 
-You need Python 3 on the laptop (macOS: install from python.org if `python3` asks for developer tools). The skill also needs web access, for research.
+```
+/hr-hiring:jd-builder Customer Success Manager, Pune, must know HubSpot
+```
 
-**Claude desktop app / Cowork:** open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and install **hr-hiring**. If the repository is private, the GitHub account connected to Claude needs read access to it.
+> Maintainers changing the rules, layout or scripts can go straight to [For maintainers](#for-maintainers).
 
-**Claude Code (terminal):**
+## The two skills
+
+Each run keeps its files in a run folder: `~/JD-Builder/jd-runs/` or `~/JD-Builder/screen-runs/`, or the workspace folder in Cowork.
+
+| Skill | Input | Output | When it asks you |
+|---|---|---|---|
+| `/hr-hiring:jd-builder` | A role in your own words, from one line to pages of notes | A `.docx` JD in the house layout with fonts embedded | When the role is unclear, or when research or format review cannot reach its pass mark |
+| `/hr-hiring:resume-screener` | A JD (file or pasted text) and CVs (folder, several files or a zip) | A table of score, go/no-go, why proceed, why not and comments, plus a reasoning log | To approve the rubric and cut-off, and to review the final table |
+
+## Key features
+
+- **Each JD starts from fresh research.** The researcher opens at least 15 recent sources, and a challenger playing the VP of that function must score the research 95 out of 100.
+- **Anything you name appears in the JD.** The validator, a script that checks every draft, fails a draft that drops a tool, skill, city or experience range you stated.
+- **The writing is checked for machine patterns.** The validator rejects em dashes, "not X, Y" contrasts, rhetorical questions, pay terms and US spellings.
+- **Each CV is judged on its own.** A scorer and an independent challenger must quote the CV for every point, and invented quotes are rejected.
+- **Every screening decision can be traced.** Scripts compute every total, and each run writes `reasoning.md`, a log of the rubric, must-have calls, criterion scores with reasons, and overrides.
+
+## Installation
+
+Python 3 must be installed on the laptop. The JD skill also needs web access for its research.
+
+### Claude desktop app or Cowork
+
+Open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and install **hr-hiring**. If the repository is private, the GitHub account connected to Claude needs read access to it.
+
+### Claude Code
+
 ```
 /plugin marketplace add rishabhrawat-os/hiring
 /plugin install hr-hiring@onsurity-hiring
+/plugin marketplace update onsurity-hiring
 ```
-Update with `/plugin marketplace update onsurity-hiring`.
 
-On first use the skill installs `python-docx` for you (into your user folder, or a private virtual environment if your Python doesn't allow that).
+These commands were not run for this README, because they need a Claude client with plugin support. The third one fetches later updates. On first use each skill installs its Python packages, using `~/JD-Builder/.venv` when your Python refuses user installs.
 
-## Use
+## Quickstart
 
-Tell it the role in your own words, as much or as little as you have:
+1. Write a JD by naming the role and anything that must be in it: `/hr-hiring:jd-builder Data Analyst, 3 years, SQL and Power BI`.
+2. Open the `.docx` the skill names at the end, in `~/JD-Builder/jd-runs/`.
+3. Screen CVs by running `/hr-hiring:resume-screener` and giving it the JD file and a folder such as `~/Downloads/cvs/`.
+4. Approve or edit the rubric and set the cut-off when the screener shows it.
+5. Read the table, then open `reasoning.md` in `~/JD-Builder/screen-runs/<date>-<role>/` for any decision you want to check.
 
-- "/hr-hiring:jd-builder performance marketing manager, Bengaluru, Google Ads and Meta"
-- "Write a JD: senior Java backend engineer, Kafka and Kubernetes are a must"
-- Or paste the hiring manager's notes.
+## How a JD is built
 
-Anything you name (a tool, skill or requirement) is guaranteed to appear in the JD. So is any experience range or city you state. Everything else (level, experience, responsibilities, tools, how the role is assessed) comes from fresh research on the role in India. A challenger playing the VP of that function has to score the research 95 or more before anything is written. The writing then goes through a format challenger and a humanizer pass. The JD never mentions salary.
+Seven agents run in turn, from research through a VP challenger and a humanizer pass to the rendered Word file; the [jd-builder SKILL.md](plugins/hr-hiring/skills/jd-builder/SKILL.md) lists them. Company details come only from [`company.json`](plugins/hr-hiring/skills/jd-builder/company/company.json), and a JD never states salary, because the layout has no block for it.
 
-You get a `.docx` with the fonts built in, plus a folder with every step's output in `~/JD-Builder/jd-runs/` (or your Cowork workspace).
+## How CVs are screened
 
-Other commands: `/hr-hiring:jd-builder resume` continues an interrupted run; `/hr-hiring:jd-builder render <file.json>` re-renders after you edit the content file by hand.
+```mermaid
+flowchart LR
+  A[JD and CVs] --> B[Persona and rubric]
+  B --> C[Rubric challenger, pass at 85]
+  C --> D[Recruiter approves rubric and cut-off]
+  D --> E[Per CV in parallel: blind CV, facts, must-haves, scorer]
+  E --> F[Per CV: one challenger review]
+  F --> G{Within 5 points of the cut-off}
+  G -- yes --> H[Panel reasoner and panel challenger]
+  G -- no --> I[Table and reasoning log]
+  H --> I
+```
 
-## Screening CVs
+- The persona is a hiring manager about 5 years more experienced than the top of the role's range, built fresh from each JD.
+- Role fit carries at least 50 of the rubric's 100 points. The rest weighs these career signals:
+  - stability, judged in context;
+  - industry relevance;
+  - breadth and depth;
+  - achievements;
+  - progression;
+  - recency;
+  - CV consistency.
+- Company and college background is capped at 10 points and shown as a comment.
+- Personal details are removed before scoring, and career gaps are never scored.
 
-Say "/hr-hiring:resume-screener" and give it a JD (file or pasted text) and the CVs (a folder, several files or a zip).
+## Runtime and cost
 
-1. It builds a hiring-manager persona about 5 years more senior than the role, and a scoring rubric. The rubric covers:
-   - role fit;
-   - job stability, industry relevance, breadth and depth, achievements, promotions, recency and red flags;
-   - company and college background, capped at 10 points.
+A demo screen of 5 invented CVs took 4 min 22 s and 11 agent runs in October 2026. A screen uses about two agent runs per CV plus two for the rubric, with at most 8 CVs scored at once, and each agent run uses your Claude plan.
 
-   A challenger has to score the rubric 85 or more before you see it. This is a first-round screen, so the bar is "good enough to separate clear fits from clear misses".
-2. **You approve the rubric**: change weights, add your own considerations, and set the cut-off.
-3. **Optional check**: if you want, it scores two CVs first so you can check the judgement before the full batch.
-4. Every CV is then scored separately and in parallel. A scorer and an independent challenger, each reviewing once, both quote the CV for every point, and invented quotes are rejected. Tenure, short stints, promotions and recency are calculated by a script from the CV's dates.
-5. A panel reviews only the borderline candidates (within 5 points of your cut-off). If there are none, it is skipped.
-6. **You get a table**: score, go/no-go, why proceed, why not, and comments (interview pointers and a one-line background note). You can override any decision or re-run one candidate with a note.
+## Safety and responsible use
 
-CVs and results stay in a local folder (`~/JD-Builder/screen-runs/` or your Cowork workspace). Nothing is uploaded or committed, and you can delete the run at the end.
+- CVs and results stay in the run folder, and the screener asks whether to delete them at the end.
+- Candidates are scored only on their CV, with no outside lookups about people.
+- A go/no-go is a first-round screen; the recruiter can override it, and the reason is logged.
 
-## What every JD looks like
+## Troubleshooting
 
-The house layout: a navy top bar, the title, a five-cell summary panel, a two-column grid of labelled sections, the navy "Non-negotiable" box, six assessment cards, and the "Read twice" panel. See `plugins/hr-hiring/skills/jd-builder/brand/design-spec.md`.
+| Symptom | Cause | Fix |
+|---|---|---|
+| The JD run stops at research and reports that pages cannot be opened | The environment blocks web pages | Allow web access in the environment's network settings, or run on a laptop |
+| Setup prints `externally-managed-environment` | Your Python refuses user installs | Allow the skill to create `~/JD-Builder/.venv` when it asks |
+| A CV shows `needs_manual_read` | The PDF is a scan with no text layer | No action is needed, because the extractor reads the original file |
 
-## Repo map
+## For maintainers
 
-`STRUCTURE.md` lists every folder. `ARCHITECTURE.md` explains how the agents and files fit together.
+Two test commands run before every commit (page counts need LibreOffice, import checks need `pdfplumber`):
+
+```
+$ bash evals/jd-builder/run_checks.sh
+ok   layout-max (7 pages)
+ok   layout-min (5 pages)
+ok   writing checks (33 cases)
+ok   fixed text follows the writing rules
+ok   gate checks (13 cases)
+ok   import sde-1
+ok   import sde-2
+ok   import sde-3
+ALL PASS
+$ python3 evals/resume-screener/test_scripts.py | tail -1
+ALL PASS
+```
+
+The second command runs 27 checks on invented CVs; [evals/jd-builder/README.md](evals/jd-builder/README.md) explains the first. A test JD file (`bad.json`) with a rule-breaking sentence fails like this:
+
+```
+$ python3 plugins/hr-hiring/skills/jd-builder/scripts/validate_jd.py bad.json
+FAIL writing: em dash: '...We ship fast — every week, not just on Frida...'
+FAIL writing: 'not just / not only' contrast: '...We ship fast — every week, not just on Fridays....'
+{"file": "bad.json", "pass": false, "problems": 2}
+```
+
+Paths below are inside `plugins/hr-hiring/skills/`.
+
+| To change | Edit | Then run |
+|---|---|---|
+| Company details, market, default city | `jd-builder/company/company.json` | `bash evals/jd-builder/run_checks.sh` |
+| JD layout, colours or fonts | `jd-builder/brand/tokens.json` and `jd-builder/brand/design-spec.md` | `bash evals/jd-builder/run_checks.sh` |
+| JD blocks and their space | `jd-builder/structure/skeleton.json` and `jd-builder/structure/jd-structure.md` | `bash evals/jd-builder/run_checks.sh` |
+| Writing rules | `jd-builder/voice/voice-guide.md` and `jd-builder/voice/banned-phrases.txt` | `bash evals/jd-builder/run_checks.sh` |
+| Screening steps or gates | `resume-screener/roles/` and `resume-screener/scripts/` | `python3 evals/resume-screener/test_scripts.py` |
+
+[CLAUDE.md](CLAUDE.md) holds the maintainer rules, [ARCHITECTURE.md](ARCHITECTURE.md) explains the agents and gates, and [STRUCTURE.md](STRUCTURE.md) lists every folder.
+
+## Limits
+
+- The JD skill needs open web access, so it cannot run offline.
+- The `.docx` boxes have square corners, because Word tables cannot round them.
+- The screener does not verify CV claims with employers.
+- Recruiter checkpoints and a full JD run have not yet been tried on a live role.
+
+## Status
+
+The next step for both skills is a pilot on live roles, as listed in [ROADMAP.md](ROADMAP.md).
+
+## License
+
+No license yet. The bundled fonts are under the SIL Open Font License, in [`OFL.txt`](plugins/hr-hiring/skills/jd-builder/brand/fonts/OFL.txt).

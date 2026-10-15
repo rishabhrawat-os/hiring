@@ -5,3 +5,6 @@ jd-runs/
 *.docx
 !plugins/**/templates/*.docx
 ~$*
+README.prev.md
+readme-inventory.md
+readme-challenge.md
