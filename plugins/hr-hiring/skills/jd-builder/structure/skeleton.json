@@ -21,7 +21,7 @@
     "header": {
       "component": "header",
       "fixed": {
-        "eyebrow_first": "ONSURITY"
+        "eyebrow_first": "from company.json → eyebrow_name"
       },
       "purpose": "Who is hiring, which function, where, and the role title, followed by a short summary of the role and one factual sentence (printed in bold sans) naming the main outcome the role is accountable for.",
       "slots": {
@@ -134,8 +134,8 @@
     "footer": {
       "component": "footer",
       "fixed": {
-        "left": "ONSURITY TECHNOLOGIES",
-        "right": "ONSURITY.COM"
+        "left": "from company.json → footer.left",
+        "right": "from company.json → footer.right"
       },
       "slots": {
         "footer_tag": "LEVEL · SPECIALISATION · CITY, upper case"

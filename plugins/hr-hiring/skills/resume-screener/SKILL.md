@@ -20,7 +20,7 @@ You are the orchestrator. This is a first-round screen: aim for a quick, defensi
 
 ## Stage A: persona and rubric (once per JD)
 1. **Ingest:**
-   - ask the recruiter for the JD (a file or pasted text) and the CVs (a folder, several files, or a zip);
+   - ask the recruiter for the JD (a file or pasted text) and the CVs (a folder, several files, or a zip), and, optionally, anything the JD doesn't say that they want weighed (company or team context, industries they value, deal-breakers). Save their words in `run.json` → `recruiter_context`. Don't add context of your own;
    - run `python3 "$SKILL_DIR/scripts/ingest.py" <run> --jd <jd> <cv paths...>`.
 2. **Persona and rubric:** one subagent with `roles/persona.md`, then `roles/rubric-builder.md`, writes `01-persona.json` and `02-rubric-r1.json`. Gate: `check_rubric.py rubric`.
 3. **Rubric challenge:** `roles/rubric-challenger.md` writes `03-rubric-challenge-r1.json`. Gate: `check_rubric.py challenge`, which passes at **85 or more with no blocking objection**.
@@ -62,14 +62,14 @@ Wait until `status.py` shows every candidate done.
 4. Run `python3 "$SKILL_DIR/scripts/build_table.py" <run>`. It computes the scores, applies the cut-off, the must-haves, the approved adjustments and any overrides, and writes `report.md`.
 
 ## Checkpoint 3: results
-- **Show** `report.md` as a table:
+- **Show** `report.md` as a table, and give the recruiter the path of `reasoning.md`: one file per run with the key reasoning for every decision (who judged, the rubric and its challenge, recruiter decisions, and for each candidate the must-have calls with quotes, calculated facts, each criterion's scorer/challenger/final score with the deciding reason, disputes, panel changes and overrides). It is for anyone who wants to check a decision or see what the system weighs. `build_table.py` writes it automatically.
   - ID and candidate;
   - score;
   - go/no-go and its basis;
   - why proceed and why not;
   - comments (interview pointers, a background note, any scorer–challenger gap).
 - **Offer:**
-  - the full reasoning for any candidate;
+  - to walk through any candidate's section of `reasoning.md`;
   - an override, saved to `overrides.json` with the recruiter's reason, after which the table is rebuilt;
   - a re-run of one candidate with a note, which deletes that candidate's 12/13/result files and runs stage B for them.
 - **Finally**, ask whether to keep or delete the run folder. It holds personal data.

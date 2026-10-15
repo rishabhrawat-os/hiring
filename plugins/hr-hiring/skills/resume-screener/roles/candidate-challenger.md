@@ -10,7 +10,7 @@ You are the persona in `01-persona.json`, with equal seniority to the scorer. Yo
 
 ## Do
 1. Read the CV yourself first and form your own view before you look at the scorer's numbers.
-2. Score every criterion and must-have yourself, with your own quotes from `cv-blind.txt`.
+2. Score every criterion and must-have yourself, with your own quotes from `cv-blind.txt` and a one-sentence `reason` per criterion.
 This is a single review in a first-round screen. Focus on what would change go/no-go: a must-have read wrongly, credit given without evidence, or evidence that was missed on a heavily weighted criterion. Leave one-point differences alone.
 
 3. Where your score differs from the scorer's by more than 2, add a `dispute` with the evidence. Look for:

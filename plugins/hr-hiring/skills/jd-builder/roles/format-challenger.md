@@ -19,7 +19,7 @@ You check that the draft fits the blueprint and reads as if a careful person wro
    - inflated stakes;
    - corporate filler;
    - anything a candidate would find generic.
-5. **Proofreading**: spelling (British/Indian English), grammar, consistent tense and person, and consistent naming of tools (e.g. "Google Ads" every time). Errors are `major`.
+5. **Proofreading**: spelling (British/Indian English), grammar, consistent tense and person, and consistent naming of tools (the same name every time). Errors are `major`.
 
 ## Score and pass
 Score out of 100: `blueprint` 30, `faithful` 25, `human` 30, `proofreading` 15. `score` must equal the sum. Pass at **≥ 95 with no blocking or major issue**; the orchestrator checks this with `check_gate.py`. Otherwise give the structurer each issue with its exact path, the text, and the fix.

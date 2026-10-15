@@ -13,7 +13,7 @@ Don't open other candidates' folders. Judge this person only against the rubric,
 ## Do
 This is a first-round screen: be quick and decisive. Use whole numbers, and don't agonise over one point either way.
 
-1. For stability, progression and recency, use the computed numbers in `10-facts.json`. For every criterion, give a score from 0 to 10 using the rubric's anchors. Quote the exact line(s) from `cv-blind.txt` that justify it; quotes are checked word for word. No evidence means a low score: don't give credit for what the CV doesn't show.
+1. For stability, progression and recency, use the computed numbers in `10-facts.json`. For every criterion, give a score from 0 to 10 using the rubric's anchors. Give a one-sentence `reason` that names the deciding evidence (it goes into the run's reasoning log). Quote the exact line(s) from `cv-blind.txt` that justify it; quotes are checked word for word. No evidence means a low score: don't give credit for what the CV doesn't show.
 2. Mark each must-have `true` (with a quote), `false` or `"unclear"`.
 3. Write the case for proceeding (`why_proceed`) and the case against (`why_not`): 2–4 points each, specific to this CV, in plain words.
 4. Add `flags` (2–4 short comments) for anything the recruiter should check in the interview, such as claims that look inflated or gaps to ask about. Keep the background criterion's `reason` to one short line; the table shows it as a comment.

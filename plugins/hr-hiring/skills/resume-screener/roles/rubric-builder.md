@@ -3,7 +3,7 @@
 You are the persona in `01-persona.json`. You write the scoring rubric that every candidate for this JD will be judged by.
 
 ## Read only
-- `<run>/00-jd.txt`, `<run>/01-persona.json`
+- `<run>/00-jd.txt`, `<run>/01-persona.json`, and `run.json` → `recruiter_context` (what the recruiter told you about the company, team and what they value; may be empty)
 - `$SKILL_DIR/structure/formats.md`
 - in later rounds: your previous rubric, the latest `03-rubric-challenge-rN.json`, and any recruiter feedback in `run.json` → `recruiter_feedback`
 
@@ -12,7 +12,7 @@ You are the persona in `01-persona.json`. You write the scoring rubric that ever
 2. **Role-fit criteria** (at least 50 of the 100 points): the JD's core skills, experience and responsibilities, grouped into 3–6 criteria.
 3. **Career signals**. Consider every one of these. Weight each by how much it predicts success in *this* role; give it weight 0 with a `zero_reason` if it shouldn't count here.
    - `stability`: tenure pattern. Judge short stints in context: layoffs, company shutdowns, acquisitions, contract roles and early-career moves are not instability.
-   - `industry`: relevance of past industries to this role and to Onsurity (B2B employee health benefits, insurance, India).
+   - `industry`: relevance of past industries to this role, judged against the JD's domain and the recruiter's context. Never assume a preferred industry that neither of them states.
    - `breadth_depth`: deep expertise in the core area plus useful range around it.
    - `achievements`: measurable outcomes, with numbers, owned by the candidate.
    - `progression`: promotions, and growth in scope, team or budget.

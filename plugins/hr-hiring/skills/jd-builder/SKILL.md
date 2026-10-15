@@ -1,6 +1,6 @@
 ---
 name: jd-builder
-description: Write an Onsurity job description from whatever the user gives (even a one-line comment), using fresh web research on the role in India, a VP-level challenger that must score it 95+, a format challenger, a humanizer pass, and a designer that renders the branded Word file. Use for "write a JD", "create a job description", "JD for <role>", "/hr-hiring:jd-builder".
+description: Write a job description in the company's house layout from whatever the user gives (even a one-line comment), using fresh web research on the role in the hiring market, a VP-level challenger that must score it 95+, a format challenger, a humanizer pass, and a designer that renders the branded Word file. Use for "write a JD", "create a job description", "JD for <role>", "/hr-hiring:jd-builder".
 ---
 
 # jd-builder

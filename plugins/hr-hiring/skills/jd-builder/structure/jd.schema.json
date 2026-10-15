@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "onsurity-jd-1.0",
-  "title": "Onsurity job description",
+  "$id": "house-jd-1.0",
+  "title": "Job description (house layout)",
   "description": "The content of one JD. Fixed text (About us, equal opportunity, section labels and headings) is not stored here; render_docx.py takes it from company/ and structure/skeleton.json. Inline markup in any text: **sans bold**, __serif bold__, *italic*, [text](url). Word and item limits live in skeleton.json#limits and are checked by validate_jd.py.",
   "type": "object",
   "additionalProperties": false,

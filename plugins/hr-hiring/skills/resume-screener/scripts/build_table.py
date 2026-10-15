@@ -8,7 +8,7 @@ then print the final table. Scores and verdicts are computed here.
 table and, last, a JSON line listing the borderline candidates (within 5
 points of the cut-off) that the panel must review. No borderline
 candidates means no panel is needed.
-Writes <run>/final.json and <run>/report.md.
+Writes <run>/final.json and <run>/report.md, then <run>/reasoning.md (build_log.py).
 """
 import json
 import sys
@@ -122,6 +122,9 @@ def main():
     if not draft:
         (run / "report.md").write_text(out)
     print(out)
+    if not draft:
+        import subprocess
+        subprocess.run([sys.executable, str(Path(__file__).with_name("build_log.py")), str(run)], check=True)
     if draft:
         band = [x["id"] for x in rows if x["score"] is not None and abs(x["score"] - cutoff) <= 5]
         print(json.dumps({"borderline": band}))

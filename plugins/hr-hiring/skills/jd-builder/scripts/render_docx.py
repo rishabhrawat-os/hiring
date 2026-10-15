@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a jd.json into an Onsurity-format .docx.
+"""Render a jd.json into a .docx in the house layout (brand/ + company/).
 
 Layout, fonts and colours come from brand/tokens.json; fixed text from
 structure/skeleton.json and company/company.json. The three brand fonts are
@@ -328,7 +328,7 @@ def render_header(doc, jd):
 
     eb = para(doc, before=12, after=14)
     e = T["eyebrow"]
-    style_run(eb.add_run(SKEL["sections"]["header"]["fixed"]["eyebrow_first"]), e, color=e["first_color"])
+    style_run(eb.add_run(CO["eyebrow_name"]), e, color=e["first_color"])
     for part in (h["function"], h["city"]):
         style_run(eb.add_run(f"  {e['separator']}  "), e, color=e["separator_color"], tracking=0)
         style_run(eb.add_run(part), e)

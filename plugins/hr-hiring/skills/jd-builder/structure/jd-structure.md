@@ -1,6 +1,6 @@
 # The JD blueprint
 
-Every Onsurity JD uses the same 15 blocks in the same order, for any role, function or level. This page says what each block is for and how much space it has. It says nothing about what to write: the content comes from the user's input and the research of that run. `skeleton.json` is the machine version, and `jd.schema.json` is the content file's shape.
+Every JD uses the same 15 blocks in the same order, for any role, function or level. This page says what each block is for and how much space it has. It says nothing about what to write: the content comes from the user's input and the research of that run. `skeleton.json` is the machine version, and `jd.schema.json` is the content file's shape.
 
 **Fixed text** is limited to:
 - company content, from `company/company.json`: About us, Equal opportunity, the footer ends;

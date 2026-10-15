@@ -182,6 +182,10 @@ with tempfile.TemporaryDirectory() as t:
     run("build_table.py", run_dir)
     row = {x["id"]: x for x in json.loads((run_dir / "final.json").read_text())["rows"]}
     expect("table: recruiter override applied and labelled", row["C02"]["verdict"] == "Go" and "recruiter override" in row["C02"]["basis"])
+    log = (run_dir / "reasoning.md").read_text() if (run_dir / "reasoning.md").exists() else ""
+    expect("reasoning log: written with every candidate, the rubric, and the override",
+           all(f"### {c} " in log for c in ("C01", "C02", "C03")) and "## 2. Rubric" in log
+           and "Recruiter overrides" in log and "| R1 SQL and BI | 40 |" in log, log[:300])
     rep_txt = (run_dir / "report.md").read_text()
     expect("table: report.md written, no 'without background' column", rep_txt.count("| C0") == 3 and "Without background" not in rep_txt and "| Comments |" in rep_txt)
 

@@ -24,11 +24,12 @@ Every step writes JSON in these shapes. Scripts check them, so field names must 
   panel/20-panel.json, panel/21-panel-challenge.json
   overrides.json               recruiter overrides
   final.json, report.md        written by build_table.py
+  reasoning.md                 key reasoning for every decision, written by build_log.py (shared with the recruiter)
 ```
 
 ## 01-persona.json
 ```json
-{"title": "Head of Analytics", "years": "10+", "function": "Data", "role_being_hired": {"title": "", "level": "", "experience": ""},
+{"title": "<senior title in the same function>", "years": "<top of the role's range + about 5>", "function": "", "role_being_hired": {"title": "", "level": "", "experience": ""},
  "domain": "", "what_they_look_for": [""], "what_worries_them": [""]}
 ```
 

@@ -51,7 +51,8 @@ hiring/
 │           ├── reconcile.py        checks quotes against the CV, averages, computes the score
 │           ├── facts.py            tenure, short stints, promotions, recency, gaps from CV dates
 │           ├── status.py           progress, next step per candidate, blind-CV check
-│           └── build_table.py      panel adjustments, overrides, verdicts, report.md
+│           ├── build_table.py      panel adjustments, overrides, verdicts, report.md
+│           └── build_log.py        reasoning.md: key reasoning for every decision in the run
 ├── evals/resume-screener/test_scripts.py   script tests on invented data
 └── evals/jd-builder/               maintainer tests; never read by the skill
     ├── run_checks.sh               run before every commit
