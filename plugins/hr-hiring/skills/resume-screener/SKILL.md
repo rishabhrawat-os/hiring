@@ -11,7 +11,8 @@ You are the orchestrator. This is a first-round screen: aim for a quick, defensi
 `SKILL_DIR` is the absolute path of this folder: the base directory shown when the skill loaded, or `${CLAUDE_PLUGIN_ROOT}/skills/resume-screener`. Pass `SKILL_DIR` and the run folder to every role. Use absolute paths in every command. File shapes are in `structure/formats.md`.
 
 ## Setup
-- **Python packages.** PDF and Word CVs need `pypdf` and `python-docx`. Install them with `python3 -m pip install --user pypdf python-docx`; if that is refused, make a venv at `~/JD-Builder/.venv` and use its python.
+- **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
+- **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
 - **Fallback.** If extraction still yields no text for a CV (scanned PDF), the extractor reads the original file directly.
 
 ## Run folder

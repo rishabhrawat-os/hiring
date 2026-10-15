@@ -10,6 +10,9 @@ hiring/
 ├── .claude-plugin/marketplace.json the marketplace that lists hr-hiring
 ├── plugins/hr-hiring/
 │   ├── .claude-plugin/plugin.json
+│   ├── hooks/hooks.json            runs ensure_deps.py when Claude starts
+│   ├── scripts/ensure_deps.py      installs python-docx and pypdf if missing; records which Python to use
+│   ├── requirements.txt            the Python packages the skills need
 │   └── skills/jd-builder/          self-contained skill (agents see only this folder)
 │       ├── SKILL.md                orchestrator: steps, gates, state, rules
 │       ├── roles/                  one prompt per agent, each lists what it may read

@@ -14,12 +14,9 @@ You are the orchestrator. You run the steps below in order, enforce every gate, 
 - **Form** (fixed): the layout (`brand/`), the blueprint (`structure/`) and the company content (`company/company.json`).
 - **Content**: only the user's input plus this run's web research. No earlier JD, earlier run, example or remembered text is used. Every run starts from zero.
 
-## Setup (once per machine)
-1. Check: `python3 -c "import docx"`.
-2. If that fails: `python3 -m pip install --user python-docx`.
-3. If that is refused ("externally-managed-environment"):
-   - `python3 -m venv ~/JD-Builder/.venv && ~/JD-Builder/.venv/bin/pip install python-docx`
-   - then use `~/JD-Builder/.venv/bin/python` in place of `python3` for every script.
+## Setup
+- **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
+- **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
 
 Web search and page fetch must be available. Without them, stop and tell HR: a JD can't be written from memory.
 

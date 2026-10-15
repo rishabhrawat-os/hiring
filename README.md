@@ -4,7 +4,7 @@
 
 ![Page 1 of the house JD layout, with every word replaced by a bar so only the layout shows](plugins/hr-hiring/skills/jd-builder/brand/reference/layout-page-1.png)
 
-It runs in the Claude desktop app, Cowork and Claude Code. Version 0.3.0 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
+It runs in the Claude desktop app, Cowork and Claude Code. Version 0.4.0 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
 
 ```
 /hr-hiring:jd-builder Customer Success Manager, Pune, must know HubSpot
@@ -45,7 +45,7 @@ Open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and inst
 /plugin marketplace update onsurity-hiring
 ```
 
-These commands were not run for this README, because they need a Claude client with plugin support. The third one fetches later updates. On first use each skill installs its Python packages, using `~/JD-Builder/.venv` when your Python refuses user installs.
+These commands were not run for this README, because they need a Claude client with plugin support. The third one fetches later updates. The Python packages the skills need (listed in [`requirements.txt`](plugins/hr-hiring/requirements.txt)) install automatically the next time Claude starts, into `~/JD-Builder/.venv` when your Python refuses user installs.
 
 ## Quickstart
 
@@ -101,7 +101,7 @@ A demo screen of 5 invented CVs took 4 min 22 s and 11 agent runs in October 202
 | Symptom | Cause | Fix |
 |---|---|---|
 | The JD run stops at research and reports that pages cannot be opened | The environment blocks web pages | Allow web access in the environment's network settings, or run on a laptop |
-| Setup prints `externally-managed-environment` | Your Python refuses user installs | Allow the skill to create `~/JD-Builder/.venv` when it asks |
+| A skill reports that `python-docx` or `pypdf` is missing | The automatic install at start-up failed | Run `python3 ~/.claude/plugins/.../hr-hiring/scripts/ensure_deps.py` and send its message to IT if it fails again |
 | A CV shows `needs_manual_read` | The PDF is a scan with no text layer | No action is needed, because the extractor reads the original file |
 
 ## For maintainers
