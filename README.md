@@ -31,7 +31,7 @@ Each run keeps its files in a run folder: `~/JD-Builder/jd-runs/` or `~/JD-Build
 
 ## Installation
 
-Users type only the slash commands. A simple guide ([GETTING-STARTED.md](plugins/hr-hiring/skills/help/GETTING-STARTED.md)) appears on first use or with `/hr-hiring:help`. The JD skill needs web access.
+Users type only the slash commands. A simple guide ([GETTING-STARTED.md](plugins/hr-hiring/skills/help/GETTING-STARTED.md)) appears on first use or with `/hr-hiring:help`.
 
 ### Claude desktop app or Cowork
 
@@ -100,7 +100,7 @@ A demo screen of 5 invented CVs took 4 min 22 s and 11 agent runs in October 202
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| The JD run stops at research and reports that pages cannot be opened | The environment blocks web pages | Allow web access in the environment's network settings, or run on a laptop |
+| The JD skill asks to use your browser | Claude's own page reader could not open some sites | Click Allow; the skill reads those pages through the browser and carries on |
 | A skill says Python needs an administrator | Linux computers need admin rights to install Python | Ask IT to install Python 3 once |
 | A CV shows `needs_manual_read` | The PDF is a scan with no text layer | No action is needed, because the extractor reads the original file |
 
@@ -146,7 +146,7 @@ Paths in the Edit column are inside `plugins/hr-hiring/skills/`; the commands ru
 
 ## Limits
 
-- The JD skill needs open web access, so it cannot run offline.
+- The JD skill researches online every run, through Claude's web tools, its browser or the terminal ([`web-access.md`](plugins/hr-hiring/skills/jd-builder/web-access.md)), so it cannot run with no internet at all.
 - The `.docx` boxes have square corners, because Word tables cannot round them.
 - The screener does not verify CV claims with employers.
 - Recruiter checkpoints have been tried only on invented CVs, and neither skill has been piloted on a live role yet; [ROADMAP.md](ROADMAP.md) lists the pilot as the next step.

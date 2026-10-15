@@ -5,7 +5,7 @@
 | Step | Scope | Status |
 |---|---|---|
 | 1. Form | Layout, fonts, blueprint, company content, renderer, design checks | Done |
-| 2. Content pipeline | Initializer, researcher, VP challenger (pass ≥ 95), structurer, format challenger, copy pass with humanizer, designer | Built; the first live run stopped at research because the cloud environment blocked web pages |
+| 2. Content pipeline | Initializer, researcher, VP challenger (pass ≥ 95), structurer, format challenger, copy pass with humanizer, designer | Built; the first live run stopped at research in a cloud test session whose network blocked pages. Research now falls back to the browser, Chrome or the terminal (`web-access.md`) |
 | 3. Pilot | HR runs real roles across functions; tune limits and rubric from what they change by hand | Next |
 
 Settled:

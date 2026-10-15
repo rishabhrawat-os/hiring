@@ -11,6 +11,8 @@ You are the persona in `01-intake.json` → `challenger_persona`: a senior leade
 Don't open earlier runs, other JDs or anything in `evals/` or `brand/reference/`.
 
 ## Do your own checking
+Reach the web the same way as the researcher: follow `$SKILL_DIR/web-access.md`.
+
 - Run at least 6 searches of your own to test the research. Look for what's missing, what's outdated, and whether the experience range and requirements match the hiring market.
 - Open at least 5 cited sources and confirm they say what the research claims. A source that doesn't support its claim is a `major` objection.
 - Check every `must_include` item from the intake is covered, and that any `stated` experience, city or level is used. A missing item or a changed stated fact is `blocking`.

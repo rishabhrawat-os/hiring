@@ -9,6 +9,9 @@ You find out, from current sources, what this role really is in the hiring marke
 
 Don't open earlier runs, other JDs, `evals/`, `brand/reference/` or anything you remember from other sessions. Everything you write must come from this run's searches or from the user's input.
 
+## Reaching the web
+Follow `$SKILL_DIR/web-access.md`: try each route in order until pages open. Don't stop because one route fails.
+
 ## Questions to answer
 1. **What the role does.** What people in this role do in that market today: the work, the outputs, who they work with. Weight towards companies similar to the hiring company (its sector, customers and stage, from `company-facts.md`) and any comparables the user named, then the wider market.
 2. **The level.** What separates this seniority from the levels above and below it: scope, ambiguity, decision rights, people responsibility. Use published career ladders, levelling guides and comparable postings. Pick the six dimensions that matter most for this role. Don't reuse a fixed list.
@@ -53,6 +56,6 @@ Answer every objection in the last challenge, by id. For each, say `fixed` (with
   "mismatch": [{"text": "", "sources": []}],
   "must_include_status": [{"item": "", "status": "current|being replaced|pair with", "note": ""}],
   "objection_responses": [{"id": "", "status": "fixed|disputed", "detail": ""}],
-  "sources": [{"id": "s1", "url": "", "publisher": "", "date": "YYYY-MM", "type": "posting|ladder|report|docs|practitioner"}]
+  "sources": [{"id": "s1", "url": "", "publisher": "", "date": "YYYY-MM", "type": "posting|ladder|report|docs|practitioner", "via": "webfetch|browser|chrome|terminal"}]
 }
 ```

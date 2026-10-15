@@ -15,6 +15,7 @@ hiring/
 │   ├── requirements.txt            the Python packages the skills need
 │   └── skills/jd-builder/          self-contained skill (agents see only this folder)
 │       ├── SKILL.md                orchestrator: steps, gates, state, rules
+│       ├── web-access.md           how research reaches the web: Claude tools, browser, Chrome, terminal, then ask
 │       ├── roles/                  one prompt per agent, each lists what it may read
 │       │   ├── initializer.md      user input → brief + must-include list
 │       │   ├── researcher.md       fresh web research, sourced

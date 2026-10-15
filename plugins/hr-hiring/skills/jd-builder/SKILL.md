@@ -31,7 +31,7 @@ The user is not technical. Never ask them to run a command, install anything, fi
 - **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
 - **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
 
-Web search and page fetch must be available. Without them, stop and tell HR: a JD can't be written from memory.
+Research reaches the web through Claude's own tools first, then the built-in browser, Chrome, or the terminal, asking the user only before using their browser. The order and rules are in `web-access.md`; pass its path to the researcher and the challenger.
 
 ## State
 - **Run folder:** `<root>/jd-runs/<YYYY-MM-DD>-<role-slug>/`. `<root>` is the Cowork workspace folder when running in Cowork; everywhere else it is `~/JD-Builder`. Never write into a code repository that happens to be open.
