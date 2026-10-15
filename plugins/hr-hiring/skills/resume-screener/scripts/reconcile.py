@@ -3,11 +3,15 @@
 write the candidate's result. The score is computed here, never taken
 from an agent.
 
-    python3 reconcile.py <run>/candidates/<id> --rubric <run>/rubric-final.json [--max-rounds 3]
+    python3 reconcile.py <run>/candidates/<id> --rubric <run>/rubric-final.json [--max-rounds 1] [--tolerance 2]
 
-Exit codes: 0 result written (agreed, or round limit reached with the
-disagreements flagged); 2 another scorer/challenger round is needed;
-1 a file is invalid (the step that wrote it must redo it).
+First-round screening: by default the challenger reviews once. Criterion
+scores within the tolerance count as agreed; wider gaps are averaged and
+noted in the comments, so no extra rounds are spent.
+
+Exit codes: 0 result written; 2 another round is needed (only when
+--max-rounds is above 1); 1 a file is invalid (the step that wrote it must
+redo it).
 """
 import json
 import re
@@ -78,11 +82,9 @@ def validate(doc, rubric, cv, who):
             fail(f"{who}: '{k}' must be a non-empty list")
 
 
-def weighted(scores, rubric, skip_background=False):
+def weighted(scores, rubric):
     num = den = 0
     for c in rubric["criteria"]:
-        if skip_background and c["signal"] == "background":
-            continue
         num += c["weight"] * scores[c["id"]]
         den += c["weight"]
     return round(num / den * 10, 1) if den else 0.0
@@ -94,7 +96,8 @@ def main():
         sys.exit(__doc__)
     d = Path(a[0])
     rubric = json.loads(Path(a[a.index("--rubric") + 1]).read_text())
-    max_rounds = int(a[a.index("--max-rounds") + 1]) if "--max-rounds" in a else 3
+    max_rounds = int(a[a.index("--max-rounds") + 1]) if "--max-rounds" in a else 1
+    tolerance = float(a[a.index("--tolerance") + 1]) if "--tolerance" in a else 2
     cv = norm((d / "cv-blind.txt").read_text())
     sf, cf = latest(d, "12-score"), latest(d, "13-challenge")
     if not sf or not cf:
@@ -113,7 +116,7 @@ def main():
 
     ss = {x["id"]: x["score"] for x in s["criteria"]}
     cs = {x["id"]: x["score"] for x in c["criteria"]}
-    gaps = {k: (ss[k], cs[k]) for k in ss if abs(ss[k] - cs[k]) > 1}
+    gaps = {k: (ss[k], cs[k]) for k in ss if abs(ss[k] - cs[k]) > tolerance}
     smh = {m["id"]: m["met"] for m in s["must_haves"]}
     cmh = {m["id"]: m["met"] for m in c["must_haves"]}
     mh_gaps = {k: (smh[k], cmh[k]) for k in smh if smh[k] != cmh.get(k)}
@@ -126,6 +129,7 @@ def main():
         sys.exit(2)
 
     final = {k: round((ss[k] + cs[k]) / 2 * 2) / 2 for k in ss}       # mean, to the nearest 0.5
+    names = {c["id"]: c["name"] for c in rubric["criteria"]}
     mh_final = {}
     for k in smh:
         a_, b_ = smh[k], cmh.get(k)
@@ -145,11 +149,11 @@ def main():
         "must_haves": mh_final,
         "must_have_fail": must_fail,
         "score": weighted(final, rubric),
-        "score_without_background": weighted(final, rubric, skip_background=True),
         "why_proceed": merge(s["why_proceed"], c["why_proceed"]),
         "why_not": merge(s["why_not"], c["why_not"]),
-        "flags": merge(s.get("flags", []), c.get("flags", [])
-                       + (["scorer and challenger did not agree within the round limit"] if gaps or mh_gaps else [])),
+        "flags": merge(s.get("flags", []), c.get("flags", []))
+                 + [f"{names[k]}: scorer {x}, challenger {y}, averaged" for k, (x, y) in gaps.items()]
+                 + [f"must-have {k} unclear (scorer {x}, challenger {y})" for k, (x, y) in mh_gaps.items()],
     }
     (d / "result.json").write_text(json.dumps(result, indent=1, ensure_ascii=False))
     st = json.loads((d / "status.json").read_text())

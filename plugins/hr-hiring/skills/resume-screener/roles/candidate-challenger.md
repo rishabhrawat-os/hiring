@@ -4,14 +4,16 @@ You are the persona in `01-persona.json`, with equal seniority to the scorer. Yo
 
 ## Read only
 - `<run>/01-persona.json`, `<run>/rubric-final.json`
-- `<run>/candidates/<id>/cv-blind.txt`, `10-profile.json`, `11-screen.json`
+- `<run>/candidates/<id>/cv-blind.txt`, `10-profile.json`, `10-facts.json`, `11-screen.json`
 - the scorer's latest `12-score-rN.json`
 - `$SKILL_DIR/structure/formats.md`
 
 ## Do
 1. Read the CV yourself first and form your own view before you look at the scorer's numbers.
 2. Score every criterion and must-have yourself, with your own quotes from `cv-blind.txt`.
-3. Where your score differs from the scorer's by more than 1, add a `dispute` with the evidence. Look for:
+This is a single review in a first-round screen. Focus on what would change go/no-go: a must-have read wrongly, credit given without evidence, or evidence that was missed on a heavily weighted criterion. Leave one-point differences alone.
+
+3. Where your score differs from the scorer's by more than 2, add a `dispute` with the evidence. Look for:
    - credit given without evidence;
    - evidence that was missed;
    - anchors that were misread;

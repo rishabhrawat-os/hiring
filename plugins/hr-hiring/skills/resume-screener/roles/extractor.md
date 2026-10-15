@@ -22,4 +22,5 @@ Don't open other candidates' folders.
    - inconsistencies (overlapping dates, titles that don't match the work).
 
    Facts only: no judgement.
-4. Write `11-screen.json`: for each must-have, `met` is `true` (with a quote from `cv-blind.txt`), `false` (the CV clearly shows it isn't met), or `"unclear"`. Set `screened_out: true` only if a must-have is clearly `false`, and say why in `reasons`. When in doubt, use `"unclear"`; the candidate then goes on to scoring.
+4. Run `python3 "$SKILL_DIR/scripts/facts.py" <run>/candidates/<id> --as-of <run_date YYYY-MM>`. It works out tenure, short stints, promotions, recency and gaps from your profile dates and writes `10-facts.json`. Use these numbers; don't recount them by hand.
+5. Write `11-screen.json`: for each must-have, `met` is `true` (with a quote from `cv-blind.txt`), `false` (the CV clearly shows it isn't met), or `"unclear"`. Set `screened_out: true` only if a must-have is clearly `false`, and say why in `reasons`. When in doubt, use `"unclear"`; the candidate then goes on to scoring.

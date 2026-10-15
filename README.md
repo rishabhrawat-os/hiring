@@ -45,12 +45,12 @@ Say "/hr-hiring:resume-screener" and give it a JD (file or pasted text) and the 
    - job stability, industry relevance, breadth and depth, achievements, promotions, recency and red flags;
    - company and college background, capped at 10 points.
 
-   A challenger has to score the rubric 95 or more before you see it.
+   A challenger has to score the rubric 85 or more before you see it. This is a first-round screen, so the bar is "good enough to separate clear fits from clear misses".
 2. **You approve the rubric**: change weights, add your own considerations, and set the cut-off.
-3. **Calibration**: it scores two CVs first and asks if that matches your judgement.
-4. Every CV is then scored separately and in parallel. A scorer and an independent challenger both quote the CV for every point, and invented quotes are rejected.
-5. A panel checks that equal evidence got equal scores across candidates and makes the borderline calls.
-6. **You get a table**: score, score without background, go/no-go, why proceed, why not, and flags. You can override any decision or re-run one candidate with a note.
+3. **Optional check**: if you want, it scores two CVs first so you can check the judgement before the full batch.
+4. Every CV is then scored separately and in parallel. A scorer and an independent challenger, each reviewing once, both quote the CV for every point, and invented quotes are rejected. Tenure, short stints, promotions and recency are calculated by a script from the CV's dates.
+5. A panel reviews only the borderline candidates (within 5 points of your cut-off). If there are none, it is skipped.
+6. **You get a table**: score, go/no-go, why proceed, why not, and comments (interview pointers and a one-line background note). You can override any decision or re-run one candidate with a note.
 
 CVs and results stay in a local folder (`~/JD-Builder/screen-runs/` or your Cowork workspace). Nothing is uploaded or committed, and you can delete the run at the end.
 

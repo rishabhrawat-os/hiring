@@ -48,7 +48,8 @@ hiring/
 │       └── scripts/
 │           ├── ingest.py           JD + CVs (files, folders, zips; PDF/DOCX/TXT) → run folder
 │           ├── check_rubric.py     rubric and rubric-challenge gates
-│           ├── reconcile.py        checks quotes against the CV, agreement, computes the score
+│           ├── reconcile.py        checks quotes against the CV, averages, computes the score
+│           ├── facts.py            tenure, short stints, promotions, recency, gaps from CV dates
 │           ├── status.py           progress, next step per candidate, blind-CV check
 │           └── build_table.py      panel adjustments, overrides, verdicts, report.md
 ├── evals/resume-screener/test_scripts.py   script tests on invented data

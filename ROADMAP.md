@@ -18,5 +18,5 @@ Settled:
 
 | Step | Scope | Status |
 |---|---|---|
-| 1. Pipeline | Persona, rubric builder and challenger, recruiter approval, calibration, per-candidate extractor / scorer / challenger in parallel, panel reasoner and challenger, table, overrides, re-runs | Built |
+| 1. Pipeline | Persona and rubric (challenger, 85 bar), recruiter approval, optional calibration, per candidate in parallel (extract + score, one challenger review), panel for borderline cases only, table, overrides, re-runs | Built |
 | 2. Pilot | One live role, compared with the recruiter's own shortlist; tune anchors and the reconcile tolerance | Next |

@@ -20,6 +20,6 @@ Severity:
 - `minor`: polish.
 
 ## Pass
-Only at **score ≥ 95 with no blocking or major objection**. The score must equal the sum of the dimensions; `check_rubric.py challenge` checks this.
+At **score ≥ 85 with no blocking objection**. This rubric is for a first-round screen, so good enough to separate clear fits from clear misses is the bar. Raise `major` and `minor` points for the builder to consider; they don't hold up the run. The score must equal the sum of the dimensions; `check_rubric.py challenge` checks this.
 
 ## Write `<run>/03-rubric-challenge-rN.json`

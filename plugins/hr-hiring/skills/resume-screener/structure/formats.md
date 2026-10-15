@@ -15,6 +15,7 @@ Every step writes JSON in these shapes. Scripts check them, so field names must 
     cv.txt                     extracted text
     cv-blind.txt               the same with name, contact and personal details removed
     10-profile.json            structured profile
+    10-facts.json              tenure, stints, promotions, recency, gaps (facts.py)
     11-screen.json             must-have screen
     12-score-rN.json           scorer
     13-challenge-rN.json       challenger
@@ -56,7 +57,7 @@ Rules (`check_rubric.py`):
  "by_dimension": {"job_relevance": 0, "coverage": 0, "anchors": 0, "weights": 0, "fairness": 0},
  "objections": [{"id": "rc1-1", "severity": "blocking|major|minor", "criterion": "", "issue": "", "required_change": ""}]}
 ```
-Maximums: job_relevance 25, coverage 20, anchors 20, weights 20, fairness 15. Pass at 95+ with no blocking or major objection.
+Maximums: job_relevance 25, coverage 20, anchors 20, weights 20, fairness 15. Pass at 85+ with no blocking objection.
 
 ## 10-profile.json
 ```json

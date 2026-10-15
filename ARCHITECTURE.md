@@ -78,25 +78,37 @@ HR gets the .docx and a short note
 ```
 JD + CVs ─► ingest.py
 Stage A (once per JD)
-  persona ─► rubric builder ◄─► rubric challenger (95 bar, check_rubric.py)
+  persona + rubric builder (one agent) ─► rubric challenger (85 bar, check_rubric.py, max 2 rounds)
   CHECKPOINT 1: recruiter approves/edits rubric, background definition, cut-off
-  CHECKPOINT 2: two CVs scored in full; recruiter confirms or the anchors change
+                (optional: score 2 CVs first to check the judgement)
 Stage B (per candidate, parallel waves of up to 8 subagents)
-  extractor (blind CV, profile, must-have screen)
-  scorer ◄─► challenger, same persona, quotes checked by reconcile.py, up to 3 rounds
+  wave 1: extractor + scorer (one agent): blind CV, profile, facts.py, must-have screen, scores
+  wave 2: challenger reviews once; reconcile.py checks quotes, averages, notes gaps > 2 points
   candidates/<id>/result.json  (score computed by the script)
-Stage C (after all candidates finish)
-  panel reasoner (consistency adjustments) ─► panel challenger (approves, borderline calls)
+Stage C (only if a candidate is within 5 points of the cut-off)
+  panel reasoner (consistency for borderline cases) ─► panel challenger (approves, borderline calls)
   build_table.py ─► report.md
   CHECKPOINT 3: recruiter reviews the table, overrides, re-runs one candidate with a note
 ```
 
 - **One orchestration per candidate.** Each candidate's steps run as separate subagents that see only that candidate's folder, so candidates are judged against the rubric and never against each other. Only the panel looks across the batch, and only for consistency.
-- **Parallel by stage.** Subagents can't start subagents, so the orchestrator runs each stage as a wave: every waiting candidate's extractor at once, then every scorer, then every challenger. State on disk (`status.py --next`) tells it who needs what, so a failed candidate resumes alone.
+- **Parallel by stage.** Subagents can't start subagents, so the orchestrator runs each stage as a wave: every candidate's extract-and-score at once, then every challenger. State on disk (`status.py --next`) tells it who needs what, so a failed candidate resumes alone.
 - **Scores are computed, never typed.** `reconcile.py` averages the agreed criterion scores and applies the weights. `build_table.py` applies the panel adjustments that were approved, the cut-off, the must-haves and any overrides.
 - **Evidence or nothing.** Every score quotes the blind CV, and quotes that aren't in it are rejected.
 - **Bias controls:**
   - the CV is blinded before scoring;
-  - background is capped at 10 points, defined by the recruiter, and shown as a separate "without background" score;
+  - background is capped at 10 points, defined by the recruiter, and shown as a one-line comment;
   - the rubric challenger scores fairness;
   - short stints are judged in context.
+
+**Speed choices (first-round screen).** These replace the earlier, slower version:
+
+| Was | Now | Why |
+|---|---|---|
+| Rubric pass bar 95, up to 4 rounds | 85, up to 2 rounds; only blocking objections hold it up | Good enough to separate clear fits from clear misses |
+| Persona and rubric as two agents | One agent, two role files | Saves a hand-off |
+| Extractor and scorer as two agents | One agent per candidate | Saves a wave |
+| Scorer and challenger agree within 1 point, up to 3 rounds | One challenger review; gaps over 2 points are averaged and noted | Extra rounds rarely change a verdict |
+| Calibration always on | Optional | — |
+| Panel on every batch | Only for candidates within 5 points of the cut-off | Nobody else's verdict can change |
+| Tenure and stints judged by agents | Calculated by `facts.py` | Deterministic |

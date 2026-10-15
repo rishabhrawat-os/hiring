@@ -113,6 +113,14 @@ with tempfile.TemporaryDirectory() as t:
     expect("rubric challenge: 96 with no objections passes", run("check_rubric.py", "challenge", p)[0] == 0)
     p.write_text(json.dumps({**ch, "objections": [{"id": "x", "severity": "Major"}]}))
     expect("rubric challenge: bad severity fails", run("check_rubric.py", "challenge", p)[0] == 1)
+    low = {"round": 1, "score": 86, "by_dimension": {"job_relevance": 22, "coverage": 17, "anchors": 17, "weights": 17, "fairness": 13},
+           "objections": [{"id": "m", "severity": "major"}]}
+    p.write_text(json.dumps(low))
+    expect("rubric challenge: 86 with a major (no blocking) passes the first-round bar", run("check_rubric.py", "challenge", p)[0] == 0)
+    p.write_text(json.dumps({**low, "objections": [{"id": "b", "severity": "blocking"}]}))
+    expect("rubric challenge: a blocking objection still fails", run("check_rubric.py", "challenge", p)[0] == 1)
+    p.write_text(json.dumps({**low, "score": 84, "by_dimension": {**low["by_dimension"], "fairness": 11}}))
+    expect("rubric challenge: 84 fails", run("check_rubric.py", "challenge", p)[0] == 1)
     p.write_text(json.dumps({**ch, "score": 101, "by_dimension": {**ch["by_dimension"], "extra": 5}}))
     expect("rubric challenge: unknown dimension fails", run("check_rubric.py", "challenge", p)[0] == 1)
 
@@ -127,8 +135,13 @@ with tempfile.TemporaryDirectory() as t:
 
     (c1 / "12-score-r1.json").write_text(json.dumps(score_doc("C01", 1, {"R1": 9})))
     (c1 / "13-challenge-r1.json").write_text(json.dumps(score_doc("C01", 1, {"R1": 6})))
+    code, out = run("reconcile.py", c1, "--rubric", rf, "--max-rounds", "2")
+    expect("reconcile: gap of 3 asks for another round when rounds are allowed", code == 2 and "DISAGREE R1" in out, out)
     code, out = run("reconcile.py", c1, "--rubric", rf)
-    expect("reconcile: gap of 3 asks for another round", code == 2 and "DISAGREE R1" in out, out)
+    r0 = json.loads((c1 / "result.json").read_text())
+    expect("reconcile: default single review averages the gap and notes it",
+           code == 0 and r0["criteria"]["R1"]["score"] == 7.5 and any("scorer 9, challenger 6" in f for f in r0["flags"]), out)
+    (c1 / "result.json").unlink()
     (c1 / "12-score-r2.json").write_text(json.dumps(score_doc("C01", 2, {"R1": 8}, quote="This line is not in the CV at all, invented")))
     (c1 / "13-challenge-r2.json").write_text(json.dumps(score_doc("C01", 2, {"R1": 7})))
     code, out = run("reconcile.py", c1, "--rubric", rf)
@@ -169,7 +182,18 @@ with tempfile.TemporaryDirectory() as t:
     run("build_table.py", run_dir)
     row = {x["id"]: x for x in json.loads((run_dir / "final.json").read_text())["rows"]}
     expect("table: recruiter override applied and labelled", row["C02"]["verdict"] == "Go" and "recruiter override" in row["C02"]["basis"])
-    expect("table: report.md written", (run_dir / "report.md").read_text().count("| C0") == 3)
+    rep_txt = (run_dir / "report.md").read_text()
+    expect("table: report.md written, no 'without background' column", rep_txt.count("| C0") == 3 and "Without background" not in rep_txt and "| Comments |" in rep_txt)
+
+    prof = {"roles": [{"company": "A", "title": "x", "start": "2018-01", "end": "2018-06"},
+                      {"company": "B", "title": "y", "start": "2019-01", "end": "2021-12"},
+                      {"company": "B", "title": "z", "start": "2022-01", "end": "present"}], "promotions": [{"company": "B"}]}
+    (c1 / "10-profile.json").write_text(json.dumps(prof))
+    code, out = run("facts.py", c1, "--as-of", "2024-12")
+    f = json.loads((c1 / "10-facts.json").read_text())
+    expect("facts: tenure, stints, promotions and gaps computed",
+           code == 0 and f["total_months_worked"] == 78 and f["companies"] == 2 and f["promotions"] == 1
+           and f["gaps_for_interview_only"] == [{"after": "A", "months": 6}] and f["short_stints_last_5y"] == [], out)
 
 print("ALL PASS" if not fails else f"{fails} FAILED")
 sys.exit(1 if fails else 0)
