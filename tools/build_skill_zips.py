@@ -23,9 +23,26 @@ def build(name):
     return buf.getvalue()
 
 
+def frontmatter_problems(name):
+    """claude.ai rejects a skill whose name or description has < or >, or a description over 200 characters."""
+    head = (SKILLS / name / "SKILL.md").read_text().split("---")[1]
+    out = []
+    for line in head.strip().splitlines():
+        key, _, val = line.partition(":")
+        if key in ("name", "description") and ("<" in val or ">" in val):
+            out.append(f"{name}: {key} contains < or >")
+        if key == "description" and len(val.strip()) > 200:
+            out.append(f"{name}: description is {len(val.strip())} characters (max 200)")
+    return out
+
+
 def main():
     check = "--check" in sys.argv
     stale = []
+    bad = [msg for name in NAMES for msg in frontmatter_problems(name)]
+    if bad:
+        print("FAIL " + "; ".join(bad))
+        sys.exit(1)
     OUT.mkdir(exist_ok=True)
     for name in NAMES:
         data, path = build(name), OUT / f"{name}.zip"

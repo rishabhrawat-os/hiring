@@ -4,7 +4,7 @@
 Reads the file back (not the JSON) and checks: A4 page and margins, only
 brand fonts, only palette colours, only sizes from the type scale, the three
 font families embedded, section labels in skeleton order, no empty runs of
-text, and the fixed text present. With --png it also renders page images
+text, the fixed text present, and the company links clickable. With --png it also renders page images
 (needs LibreOffice) for the designer agent to compare with brand/reference/.
 
     python3 check_design.py out.docx [--png out_dir]
@@ -107,6 +107,15 @@ def main():
         bad(f"leftover markup or placeholder: '{leftover}'")
         break
 
+    # every [text](url) in the company content is a working link to that url
+    rels = {r.rId: r.target_ref for r in doc.part.rels.values() if r.reltype.endswith("/hyperlink")}
+    linked = {}
+    for h in body.iter(qn("w:hyperlink")):
+        linked["".join(x.text or "" for x in h.iter(qn("w:t")))] = rels.get(h.get(qn("r:id")))
+    for label, url in re.findall(r"\[([^\]]+)\]\(([^)\s]+)\)", "\n".join(_strings(CO))):
+        if linked.get(label) != url:
+            bad(f"link '{label}' does not open {url} (found {linked.get(label)})")
+
     if "--png" in args:
         out = Path(args[args.index("--png") + 1])
         out.mkdir(parents=True, exist_ok=True)
@@ -126,6 +135,20 @@ def main():
     print(json.dumps({"file": path, "pass": not problems, "problems": len(problems),
                       "fonts_used": sorted(f for f in seen_fonts if f)}))
     sys.exit(1 if problems else 0)
+
+
+def _strings(node, key=""):
+    """Every printed string in company.json (keys starting with _ are notes)."""
+    if key.startswith("_"):
+        return
+    if isinstance(node, str):
+        yield node
+    elif isinstance(node, dict):
+        for k, v in node.items():
+            yield from _strings(v, k)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _strings(v)
 
 
 def _all_paragraphs(doc):

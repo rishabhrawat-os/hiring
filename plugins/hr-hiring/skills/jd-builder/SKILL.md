@@ -1,6 +1,6 @@
 ---
 name: jd-builder
-description: Write a researched job description as a branded Word file in the house layout. Use for "write a JD", "job description for <role>" or /hr-hiring:jd-builder.
+description: Write a researched job description as a branded Word file in the house layout. Use for "write a JD", "job description for a role" or /hr-hiring:jd-builder.
 ---
 
 # jd-builder
@@ -53,7 +53,7 @@ Research reaches the web through Claude's own tools first, then the built-in bro
 | 5 | Format challenge | `roles/format-challenger.md` | `05-format-review-rN.json` | `check_gate.py format <file>`. If it fails, the structurer writes `04-draft-r(N+1).json` and the format challenger reviews again |
 | 6 | Copy | `roles/copy.md` | `06-final.json`, `06-copy-notes.md` | `validate_jd.py 06-final.json --intake 01-intake.json`, then the format challenger's facts check, gated by `check_gate.py facts 05-facts-check.json --approved <approved_draft> --final 06-final.json --intake 01-intake.json` |
 | 7 | Design | `roles/designer.md` | `JD-<slug>.docx`, `07-design-review.json` | `check_design.py` passes and every checklist item is ok or "not verified" |
-| 8 | Hand-off | you | — | Open the .docx for HR (see "Opening results"), say where it is saved, and give a short note: level and experience used (and whether research or the user set them), the challenger's final score and number of rounds, any must-include item flagged as outdated, whether humanizer ran, and anything open |
+| 8 | Hand-off | you | — | Open the .docx for HR (see "Opening results"), say where it is saved, and give a short note: level and experience used (and whether research or the user set them), the challenger's final score and number of rounds, that the website and social links open with Ctrl+click in Word (Cmd+click on a Mac) or a plain click in a PDF saved from Word, any must-include item flagged as outdated, whether humanizer ran, and anything open |
 
 **Loop limits:**
 - Research rounds: 4.
