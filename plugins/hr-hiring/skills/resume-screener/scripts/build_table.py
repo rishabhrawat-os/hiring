@@ -10,7 +10,17 @@ Writes <run>/final.json and <run>/report.md.
 """
 import json
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
+
+
+def dedupe(items):
+    """Drop points that say nearly the same thing as an earlier one (scorer and challenger often overlap)."""
+    out = []
+    for it in items or []:
+        if not any(SequenceMatcher(None, it.lower(), o.lower()).ratio() > 0.7 for o in out):
+            out.append(it)
+    return out
 
 
 def weighted(scores, rubric, skip_background=False):
@@ -24,7 +34,7 @@ def weighted(scores, rubric, skip_background=False):
 
 
 def cell(items, n=2):
-    items = [i.replace("|", "/").replace("\n", " ") for i in (items or [])][:n]
+    items = [i.replace("|", "/").replace("\n", " ") for i in dedupe(items)][:n]
     return "; ".join(items) if items else "—"
 
 

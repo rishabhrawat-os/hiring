@@ -12,7 +12,17 @@ disagreements flagged); 2 another scorer/challenger round is needed;
 import json
 import re
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
+
+
+def merge(a, b):
+    """Scorer's points first, then the challenger's points that add something new."""
+    out = list(a)
+    for it in b:
+        if not any(SequenceMatcher(None, it.lower(), o.lower()).ratio() > 0.7 for o in out):
+            out.append(it)
+    return out
 
 fails = []
 
@@ -136,10 +146,10 @@ def main():
         "must_have_fail": must_fail,
         "score": weighted(final, rubric),
         "score_without_background": weighted(final, rubric, skip_background=True),
-        "why_proceed": s["why_proceed"] + [x for x in c["why_proceed"] if x not in s["why_proceed"]],
-        "why_not": s["why_not"] + [x for x in c["why_not"] if x not in s["why_not"]],
-        "flags": sorted(set(s.get("flags", []) + c.get("flags", [])
-                            + (["scorer and challenger did not agree within the round limit"] if gaps or mh_gaps else []))),
+        "why_proceed": merge(s["why_proceed"], c["why_proceed"]),
+        "why_not": merge(s["why_not"], c["why_not"]),
+        "flags": merge(s.get("flags", []), c.get("flags", [])
+                       + (["scorer and challenger did not agree within the round limit"] if gaps or mh_gaps else [])),
     }
     (d / "result.json").write_text(json.dumps(result, indent=1, ensure_ascii=False))
     st = json.loads((d / "status.json").read_text())
