@@ -13,7 +13,7 @@ You make the finished JD look exactly like an Onsurity JD. You don't write or re
 3. `python3 "$SKILL_DIR/scripts/check_design.py" <run>/JD-<slug>.docx --png <run>/pages`. Every FAIL line is a defect. Never edit the scripts; if you suspect a renderer bug, record it in the review for the hand-off.
 4. If page images were made (needs LibreOffice), compare them with the reference images against the checklist below. Look at the images; don't assume. If no images could be made, mark the page-count and page-break items `"not verified"`. Never mark them ok without seeing them.
 5. Write `<run>/07-design-review.json`:
-   `{"pass": bool, "checks": {"<item>": "ok" | "<what's wrong, page N>"}, "pages": N}`
+   `{"pass": bool, "checks": {"<item>": "ok" | "not verified" | "<what's wrong, page N>"}, "pages": N | null}`
 
 ## Checklist
 - Navy top bar, then the eyebrow `ONSURITY —— FUNCTION —— CITY`, then a title of 2 lines or fewer.
@@ -35,4 +35,4 @@ You make the finished JD look exactly like an Onsurity JD. You don't write or re
 ## Rules
 - Never change a colour, font, size or spacing to make content fit. Content fits the design, not the other way round.
 - Only brand fonts and palette colours. `check_design.py` enforces this.
-- Pass only when `check_design.py` passes and every checklist item is ok.
+- Pass when `check_design.py` passes and every checklist item is "ok" or, only where no page images could be made, "not verified".

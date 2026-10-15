@@ -64,10 +64,16 @@ for t in texts:
     for name, rx in v.AI_PATTERNS:
         if re.search(rx, p, re.I):
             print(f"FAIL fixed text has {name}: {p[:70]}"); bad = 1
+v.problems.clear()
+v.check_writing({"fixed": texts}, ["Disney+ Hotstar", "Dun & Bradstreet"])
+for prob in v.problems:
+    print(f"FAIL fixed text: {prob}"); bad = 1
 if not bad:
     print("ok   fixed text follows the writing rules")
 sys.exit(bad)
 PY
+# The gate script must refuse gamed or incomplete step outputs.
+python3 "$HERE/gate_cases.py" "$SKILL" "$OUT" || fail=1
 for n in 1 2 3; do
   python3 "$HERE/extract_pdf_jd.py" "$HERE/fixtures/originals/onsurity-sde-$n-backend.pdf" "$OUT/x$n.json" >/dev/null 2>&1
   if cmp -s "$OUT/x$n.json" "$HERE/fixtures/extracted/sde-$n-backend.json"; then echo "ok   import sde-$n"; else echo "FAIL import sde-$n"; fail=1; fi

@@ -44,7 +44,7 @@ AI_PATTERNS = [
     ("rhetorical question", r"\?"),
     ("exclamation", r"!"),
     ("staged colon reveal", r"\b(here's|here is|the result|the answer|the catch|the point|the deal|the twist|the secret)\b[^.]{0,20}:"),
-    ("salary or pay", r"(₹|\bINR\b|\b(CTC|LPA|salary|salaries|compensation|stipend|per annum|lakhs?|crores?|pay band|pay range)\b)"),
+    ("salary or pay", r"\b(CTC|LPA|salary|salaries|compensation|remuneration|stipend|per annum|pay band|pay range|pay scale|take-home)\b"),
 ]
 US_OK = {"size", "sizes", "sized", "sizing", "prize", "prizes", "seize", "seized", "seizes", "resize", "resized",
          "downsize", "downsized", "oversize", "oversized", "capsize", "citizen", "citizens"}
@@ -270,11 +270,12 @@ def check_writing(jd, exempt_terms):
         if re.search(r"(?<![\w-])" + re.escape(phrase) + r"(?![\w-])", low):
             bad("banned", f"'{phrase}'")
     found = set()
-    for w in re.findall(r"\b[a-z]+(?:iz|yz)(?:e|es|ed|ing|ation|ations|er|ers)\b", body):
-        if w not in US_OK:
+    for w in re.findall(r"\b[A-Za-z][a-z]+(?:iz|yz)(?:e|es|ed|ing|ation|ations|er|ers)\b", body):
+        if w.lower() not in US_OK:
             found.add(w)
-    for w in US_EXTRA.findall(body):          # lower-case words only; proper nouns are skipped
-        found.add(w)
+    for w in re.findall(r"\b\w+\b", body):
+        if US_EXTRA.fullmatch(w.lower()) and (w.islower() or w.istitle()):
+            found.add(w)
     for w in sorted(found):
         bad("spelling", f"US spelling '{w}'; use British/Indian English (-ise, -our, -re)")
 
@@ -292,6 +293,11 @@ def check_user_input(jd, intake):
         nums_j = re.findall(r"\d+", meta.get("EXPERIENCE", ""))
         if nums_s and nums_s != nums_j[:len(nums_s)]:
             bad("meta.EXPERIENCE", f"user stated '{exp}', JD says '{meta.get('EXPERIENCE')}'")
+    level = stated.get("seniority") or stated.get("level")
+    if level:
+        where = (meta.get("LEVEL", "") + " " + jd["header"]["title"]).lower()
+        if level.lower() not in where:
+            bad("meta.LEVEL", f"user stated '{level}', but neither LEVEL ('{meta.get('LEVEL')}') nor the title uses it")
     city = stated.get("city")
     if city and city.lower() not in meta.get("LOCATION", "").lower():
         bad("meta.LOCATION", f"user stated '{city}', JD says '{meta.get('LOCATION')}'")

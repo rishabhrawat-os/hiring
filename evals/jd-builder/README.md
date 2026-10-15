@@ -9,8 +9,9 @@ Nothing in this folder is read by the skill.
    - plain English that must pass;
    - AI patterns, salary and US spelling that must fail;
    - user-named terms that must be exempt.
-4. Checks the fixed text (company content, labels, headings) follows the same writing rules.
-5. Checks `extract_pdf_jd.py` still reads the blueprint PDFs (`fixtures/originals/`) the same way (`fixtures/extracted/`).
+4. Checks the fixed text (company content, labels, headings) follows the same writing rules, banned phrases and spelling included.
+5. Runs `gate_cases.py`: synthetic step outputs (gamed scores, extra score keys, duplicate spot checks, old sources, claims without sources) that `check_gate.py` must refuse.
+6. Checks `extract_pdf_jd.py` still reads the blueprint PDFs (`fixtures/originals/`) the same way (`fixtures/extracted/`).
 
 Other tools:
 - `greek_reference.py`: rebuilds the skill's `brand/reference/layout-page-*.png` from a blueprint PDF, with every word replaced by a bar.

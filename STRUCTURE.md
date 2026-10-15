@@ -44,6 +44,7 @@ hiring/
     ├── run_checks.sh               run before every commit
     ├── make_fixtures.py            placeholder content at min size and at the word ceiling
     ├── writing_cases.json          sentences the validator must pass / fail / exempt
+    ├── gate_cases.py               step outputs check_gate.py must pass / refuse
     ├── greek_reference.py          builds the word-free reference images
     ├── extract_pdf_jd.py           reads a PDF in the house layout
     └── fixtures/

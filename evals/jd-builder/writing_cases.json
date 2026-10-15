@@ -10,27 +10,96 @@
     "You will analyse claim data every week and organise the findings.",
     "You will set up our data centre monitoring.",
     "You will hold a valid driving licence.",
-    "You will resize product images for the app store."
+    "You will resize product images for the app store.",
+    "You will manage monthly Google Ads budgets above ₹50 lakh.",
+    "You will own a quarterly sales target of ₹2 crore."
   ],
   "must_fail": [
-    ["We ship fast — every week.", "em dash"],
-    ["You own the outcome, not the task.", "contrast"],
-    ["This is not just a job.", "not just"],
-    ["Ready to build?", "question"],
-    ["It's not about following tickets.", "not about"],
-    ["It isn't about speed. It's about judgement.", "isn't/it's"],
-    ["Instead of chasing vanity metrics, you will track revenue.", "instead of"],
-    ["No fluff. Just real ownership.", "No X. Just Y"],
-    ["You will play a key role in our innovative ecosystem.", "banned"],
-    ["You will streamline and utilize our tools.", "banned"],
-    ["You will spend time organizing and prioritizing work.", "US spelling"],
-    ["The budget for this role is 30 LPA.", "salary"],
-    ["Here's the thing: we move fast.", "staged reveal"],
-    ["Join a fast-paced environment.", "banned"]
+    [
+      "We ship fast — every week.",
+      "em dash"
+    ],
+    [
+      "You own the outcome, not the task.",
+      "contrast"
+    ],
+    [
+      "This is not just a job.",
+      "not just"
+    ],
+    [
+      "Ready to build?",
+      "question"
+    ],
+    [
+      "It's not about following tickets.",
+      "not about"
+    ],
+    [
+      "It isn't about speed. It's about judgement.",
+      "isn't/it's"
+    ],
+    [
+      "Instead of chasing vanity metrics, you will track revenue.",
+      "instead of"
+    ],
+    [
+      "No fluff. Just real ownership.",
+      "No X. Just Y"
+    ],
+    [
+      "You will play a key role in our innovative ecosystem.",
+      "banned"
+    ],
+    [
+      "You will streamline and utilize our tools.",
+      "banned"
+    ],
+    [
+      "You will spend time organizing and prioritizing work.",
+      "US spelling"
+    ],
+    [
+      "The budget for this role is 30 LPA.",
+      "salary"
+    ],
+    [
+      "Here's the thing: we move fast.",
+      "staged reveal"
+    ],
+    [
+      "Join a fast-paced environment.",
+      "banned"
+    ],
+    [
+      "Optimize campaigns across channels.",
+      "US spelling at sentence start"
+    ],
+    [
+      "Analyze funnel data weekly.",
+      "US spelling at sentence start"
+    ],
+    [
+      "The CTC for this role is competitive.",
+      "salary"
+    ],
+    [
+      "We offer a stipend for interns.",
+      "salary"
+    ]
   ],
   "exempt_with_must_include": [
-    ["You will write iOS code in Objective-C.", "Objective-C"],
-    ["You will run pipelines in Harness.", "Harness"],
-    ["You will build flows in Salesforce Marketing Cloud Journey Builder.", "Salesforce Marketing Cloud Journey Builder"]
+    [
+      "You will write iOS code in Objective-C.",
+      "Objective-C"
+    ],
+    [
+      "You will run pipelines in Harness.",
+      "Harness"
+    ],
+    [
+      "You will build flows in Salesforce Marketing Cloud Journey Builder.",
+      "Salesforce Marketing Cloud Journey Builder"
+    ]
   ]
 }

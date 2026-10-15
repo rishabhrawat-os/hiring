@@ -37,11 +37,11 @@ Web search and page fetch must be available. Without them, stop and tell HR: a J
 |---|---|---|---|---|
 | 0 | Save input | you | `00-input.md` (the user's words, verbatim) and `input/` (copies of attachments) | file exists |
 | 1 | Intake | `roles/initializer.md` | `01-intake.json` | the role is identified; ask the user only if it isn't |
-| 2 | Research | `roles/researcher.md` | `02-research-rN.json` | `check_gate.py research <file> --run-date <run_date>` |
+| 2 | Research | `roles/researcher.md` | `02-research-rN.json` | `check_gate.py research <file> --run-date <run_date>` (rounds 2+: add `--previous-challenge 03-challenge-r(N-1).json`) |
 | 3 | Challenge | `roles/challenger.md` | `03-challenge-rN.json` | `check_gate.py challenge <file> --research <02 file>`. If it fails, go back to step 2 with N+1 |
 | 4 | Structure | `roles/structurer.md` | `04-draft-r1.json` | `validate_jd.py <file> --intake 01-intake.json` |
 | 5 | Format challenge | `roles/format-challenger.md` | `05-format-review-rN.json` | `check_gate.py format <file>`. If it fails, the structurer writes `04-draft-r(N+1).json` and the format challenger reviews again |
-| 6 | Copy | `roles/copy.md` | `06-final.json`, `06-copy-notes.md` | `validate_jd.py 06-final.json --intake 01-intake.json`, then the format challenger's facts check (`05-facts-check.json`, pass = no changed facts) |
+| 6 | Copy | `roles/copy.md` | `06-final.json`, `06-copy-notes.md` | `validate_jd.py 06-final.json --intake 01-intake.json`, then the format challenger's facts check, gated by `check_gate.py facts 05-facts-check.json --approved <approved_draft> --final 06-final.json --intake 01-intake.json` |
 | 7 | Design | `roles/designer.md` | `JD-<slug>.docx`, `07-design-review.json` | `check_design.py` passes and every checklist item is ok or "not verified" |
 | 8 | Hand-off | you | — | Give HR the .docx path and a short note: level and experience used (and whether research or the user set them), the challenger's final score and number of rounds, any must-include item flagged as outdated, whether humanizer ran, and anything open |
 

@@ -20,7 +20,7 @@ These rules apply to every word written into a JD. They come from plain-language
 - **Staged reveals**: "Here's the thing:", "The result:", "The catch:".
 - **Words and phrases in `banned-phrases.txt`**: job-ad clichés, AI-sounding words, and exclusionary or age- or gender-coded terms.
 - **"Objectives"**, "key result areas", or mission-statement language.
-- **Salary or pay talk** (CTC, LPA, ₹, lakh, crore, compensation).
+- **Salary or pay talk** (CTC, LPA, salary, compensation, stipend, pay band). Money figures that describe the work, such as a budget the role manages, are fine and use Indian style: ₹50 lakh, ₹2 crore.
 
 ## Also avoid (the format challenger checks these)
 
