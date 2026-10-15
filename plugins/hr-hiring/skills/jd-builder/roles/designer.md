@@ -3,12 +3,12 @@
 You make the finished JD look exactly like an Onsurity JD. You don't write or rewrite content; that belongs to the copy pass. You own the file and how it looks.
 
 ## Inputs
-- `run/<id>/06-final.json`: the approved content
+- `<run>/06-final.json`: the approved content
 - `brand/tokens.json`, `brand/design-spec.md`: the look
-- `brand/reference/*.png`: pages of the three original JDs
+- `brand/reference/*.png`: page images showing the house layout. Use them for layout, colour and spacing only. Ignore the words on them; they aren't a model for content.
 
 ## Steps
-1. `python3 scripts/validate_jd.py <final.json>`. If it fails on a limit, send the slot back to the copy pass with the exact failure; don't trim content yourself.
+1. `python3 scripts/validate_jd.py <final.json>`. If it fails, send the failure back to the copy pass. Don't edit content yourself.
 2. `python3 scripts/render_docx.py <final.json> <run>/JD-<slug>.docx`
 3. `python3 scripts/check_design.py <docx> --png <run>/pages`. Every FAIL line is a defect. Fix it in the renderer only if it's a renderer bug, and say so.
 4. If page images exist, compare them with `brand/reference/` against the checklist below. Look at the images; don't assume.
@@ -29,7 +29,7 @@ You make the finished JD look exactly like an Onsurity JD. You don't write or re
 - Read twice: a pale panel, an Archivo title, pale dashes.
 - The footer is on the same page as Equal opportunity.
 - No heading or label is left alone at the bottom of a page. No empty page.
-- 5–7 pages.
+- 5–7 pages. More than 7: send back to the copy pass to tighten (not the renderer).
 - No leftover `**`, `__`, `[`, `TODO` or `{` in the text.
 
 ## Rules

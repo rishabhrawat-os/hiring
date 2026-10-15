@@ -4,42 +4,47 @@
 hiring/
 ├── README.md                       install + use, for HR
 ├── CLAUDE.md                       maintainer rules
-├── ARCHITECTURE.md                 pipeline, state, design choices
+├── ARCHITECTURE.md                 pipeline, guards, state, design choices
 ├── STRUCTURE.md                    this file
 ├── ROADMAP.md                      what's built, what's next
 ├── .claude-plugin/marketplace.json the marketplace that lists hr-hiring
 ├── plugins/hr-hiring/
 │   ├── .claude-plugin/plugin.json
-│   └── skills/jd-builder/          self-contained skill
-│       ├── SKILL.md                orchestrator: commands, steps, gates, state
-│       ├── roles/                  one prompt per agent role
-│       │   └── designer.md         makes the .docx match the house look (step 1)
+│   └── skills/jd-builder/          self-contained skill (agents see only this folder)
+│       ├── SKILL.md                orchestrator: steps, gates, state, rules
+│       ├── roles/                  one prompt per agent, each lists what it may read
+│       │   ├── initializer.md      user input → brief + must-include list
+│       │   ├── researcher.md       fresh web research, sourced
+│       │   ├── challenger.md       VP of the function; scores /100, pass ≥ 95
+│       │   ├── structurer.md       research → content file in the blueprint
+│       │   ├── format-challenger.md blueprint fit, human writing, proofreading
+│       │   ├── copy.md             humanizer + proofread
+│       │   └── designer.md         renders and checks the branded .docx
 │       ├── structure/
-│       │   ├── skeleton.json       15 blocks: order, labels, fixed text, limits
-│       │   ├── jd.schema.json      shape of a jd.json
-│       │   └── jd-structure.md     what goes where, and how each slot is written
+│       │   ├── skeleton.json       15 blocks: order, labels, headings, purpose, space limits
+│       │   ├── jd.schema.json      shape of the content file
+│       │   └── jd-structure.md     the blueprint explained
 │       ├── brand/
 │       │   ├── tokens.json         page, grid, colours, fonts, type scale
 │       │   ├── design-spec.md      the same, explained
 │       │   ├── fonts/              Archivo, Newsreader, IBM Plex Mono (OFL)
-│       │   └── reference/          page images of the 3 original JDs
+│       │   └── reference/          page images of the layout (look only)
 │       ├── company/
-│       │   ├── company.json        About us, equal opportunity, footer: fixed text
-│       │   ├── company-facts.md    the only company facts agents may use
-│       │   └── engineering-stack.json
+│       │   ├── company.json        About us, equal opportunity, footer: the fixed text
+│       │   └── company-facts.md    the only company facts a JD may state
 │       ├── voice/
-│       │   ├── voice-guide.md      tone, punctuation, British spelling, humanizer use
+│       │   ├── voice-guide.md      plain, human writing rules
 │       │   └── banned-phrases.txt
-│       ├── examples/
-│       │   ├── sde-{1,2,3}-backend.json   gold content, extracted from the originals
-│       │   └── originals/          the published PDFs
 │       └── scripts/
-│           ├── render_docx.py      jd.json → branded .docx (fonts embedded)
-│           ├── validate_jd.py      skeleton, limits, voice, must-include
+│           ├── render_docx.py      content file → branded .docx (fonts embedded)
+│           ├── validate_jd.py      blueprint, space, AI patterns, spelling, must-include
 │           ├── check_design.py     reads the .docx back: fonts, colours, sizes, order
-│           └── extract_pdf_jd.py   Onsurity-layout PDF → jd.json
-└── evals/jd-builder/
-    ├── README.md
+│           └── extract_pdf_jd.py   reads a PDF in this layout (maintainer tool)
+└── evals/jd-builder/               maintainer tests; never read by the skill
     ├── run_checks.sh               run before every commit
-    └── fixtures/                   layout test content (not real JDs)
+    ├── make_fixtures.py            placeholder content at min and max size
+    └── fixtures/
+        ├── layout-min.json, layout-max.json
+        ├── originals/              the blueprint PDFs
+        └── extracted/              their extraction, for the importer test only
 ```

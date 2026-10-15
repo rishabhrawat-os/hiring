@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.0",
+  "header": {
+    "function": "Function",
+    "city": "Bengaluru",
+    "title": "Layout Layout",
+    "lead": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+    "punchline": "Layout test words fill this block."
+  },
+  "meta": [
+    {
+      "label": "LEVEL",
+      "value": "Level"
+    },
+    {
+      "label": "TRACK",
+      "value": "Individual contributor"
+    },
+    {
+      "label": "EXPERIENCE",
+      "value": "3–5 years"
+    },
+    {
+      "label": "LOCATION",
+      "value": "Bengaluru"
+    },
+    {
+      "label": "TOOLS",
+      "value": "Tool · Tool · Tool"
+    }
+  ],
+  "the_role": {
+    "lead": "Layout test words fill this block to check spacing and wrapping on.",
+    "paragraphs": [
+      "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test.",
+      "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words.",
+      "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill."
+    ]
+  },
+  "the_level": {
+    "level_name": "Level",
+    "lead": "Layout test words fill this block to check.",
+    "rows": [
+      {
+        "key": "KEYA",
+        "text": "Layout test words fill this block."
+      },
+      {
+        "key": "KEYB",
+        "text": "Test words fill this block to."
+      },
+      {
+        "key": "KEYC",
+        "text": "Words fill this block to check."
+      },
+      {
+        "key": "KEYD",
+        "text": "Fill this block to check spacing."
+      },
+      {
+        "key": "KEYE",
+        "text": "This block to check spacing and."
+      },
+      {
+        "key": "KEYF",
+        "text": "Block to check spacing and wrapping."
+      }
+    ]
+  },
+  "your_work": {
+    "heading": "What you'll own",
+    "groups": [
+      {
+        "label": "GROUP A",
+        "bullets": [
+          "Layout test words fill this block to check.",
+          "Test words fill this block to check spacing.",
+          "Words fill this block to check spacing and."
+        ]
+      },
+      {
+        "label": "GROUP B",
+        "bullets": [
+          "Layout test words fill this block to check.",
+          "Test words fill this block to check spacing.",
+          "Words fill this block to check spacing and."
+        ]
+      },
+      {
+        "label": "GROUP C",
+        "bullets": [
+          "Layout test words fill this block to check.",
+          "Test words fill this block to check spacing.",
+          "Words fill this block to check spacing and."
+        ]
+      }
+    ]
+  },
+  "the_bar": {
+    "intro": "Layout test words fill this block to check.",
+    "traits": [
+      {
+        "title": "Trait Trait",
+        "text": "Layout test words fill this block to check spacing and wrapping on the page layout."
+      },
+      {
+        "title": "Trait Trait",
+        "text": "Test words fill this block to check spacing and wrapping on the page layout test."
+      },
+      {
+        "title": "Trait Trait",
+        "text": "Words fill this block to check spacing and wrapping on the page layout test words."
+      },
+      {
+        "title": "Trait Trait",
+        "text": "Fill this block to check spacing and wrapping on the page layout test words fill."
+      },
+      {
+        "title": "Trait Trait",
+        "text": "This block to check spacing and wrapping on the page layout test words fill this."
+      }
+    ]
+  },
+  "ai": {
+    "lead": "Layout test words fill this block to check spacing and.",
+    "bullets": [
+      "Layout test words fill this block to check.",
+      "Test words fill this block to check spacing.",
+      "Words fill this block to check spacing and.",
+      "Fill this block to check spacing and wrapping."
+    ]
+  },
+  "minimum": {
+    "note": "Layout test words fill this.",
+    "items": [
+      "**Bold phrase** layout test words fill.",
+      "**Bold phrase** test words fill this.",
+      "**Bold phrase** words fill this block.",
+      "**Bold phrase** fill this block to.",
+      "**Bold phrase** this block to check.",
+      "**Bold phrase** block to check spacing.",
+      "**Bold phrase** to check spacing and.",
+      "**Bold phrase** check spacing and wrapping."
+    ]
+  },
+  "preferred": {
+    "items": [
+      "Layout test words.",
+      "Test words fill.",
+      "Words fill this.",
+      "Fill this block."
+    ]
+  },
+  "toolkit": {
+    "label": "OUR TOOLS",
+    "note": "Layout test words fill this.",
+    "rows": [
+      {
+        "key": "category 0",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 1",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 2",
+        "value": "Tool one, Tool two, Tool three"
+      }
+    ]
+  },
+  "assessment": {
+    "lead": "Layout test words fill this block to check.",
+    "cards": [
+      {
+        "title": "Card",
+        "text": "Layout test words fill this block to check spacing and wrapping on."
+      },
+      {
+        "title": "Card",
+        "text": "Test words fill this block to check spacing and wrapping on the."
+      },
+      {
+        "title": "Card",
+        "text": "Words fill this block to check spacing and wrapping on the page."
+      },
+      {
+        "title": "Card",
+        "text": "Fill this block to check spacing and wrapping on the page layout."
+      },
+      {
+        "title": "Card",
+        "text": "This block to check spacing and wrapping on the page layout test."
+      },
+      {
+        "title": "Card",
+        "text": "Block to check spacing and wrapping on the page layout test words."
+      }
+    ]
+  },
+  "not_for_you": {
+    "items": [
+      "Layout test words fill this block to check.",
+      "Test words fill this block to check spacing.",
+      "Words fill this block to check spacing and.",
+      "Fill this block to check spacing and wrapping."
+    ]
+  },
+  "footer_tag": "LEVEL · LAYOUT · BENGALURU"
+}

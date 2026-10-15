@@ -4,7 +4,7 @@ Claude skills for Onsurity's HR team, packaged as one plugin (`hr-hiring`).
 
 | Skill | What it does | Status |
 |---|---|---|
-| `jd-builder` | Writes a job description in the Onsurity layout and gives you a branded Word file | Format, rendering and checks live. Research loop in progress |
+| `jd-builder` | Researches a role from whatever you tell it and writes the JD as a branded Word file | Live |
 | `resume-screener` | Scores and ranks CVs against a JD, with a go/no-go for round one | Planned |
 
 ## Install (once per laptop)
@@ -18,19 +18,23 @@ Works in the Claude desktop app (Code tab), Cowork and Claude Code.
 
 Get updates with `/plugin marketplace update onsurity-hiring`.
 
-The Word files are built with Python. If Claude says `python-docx` is missing, let it run `pip install python-docx pdfplumber`.
+The Word files are built with Python. If Claude says `python-docx` is missing, let it run `pip install python-docx`. The skill needs web access for research.
 
 ## Use
 
-- **New JD:** "write a JD for a senior backend engineer, Java, 6+ years, Bengaluru", or just `/jd-builder`. *(The research loop ships in step 2; see `ROADMAP.md`.)*
-- **Render a JD you already have as JSON:** `/jd-builder render path/to/jd.json`
-- **Revise an old JD:** `/jd-builder import path/to/old-jd.pdf`, edit, then render.
+Tell it the role in your own words, as much or as little as you have:
 
-The finished `.docx` carries its own fonts, so it looks the same on any laptop. Open it in Word to read, edit or export to PDF.
+- "/jd-builder performance marketing manager, Bengaluru, Google Ads and Meta"
+- "We need a senior Java backend engineer, Kafka and Kubernetes are a must"
+- Or paste the hiring manager's notes.
+
+Anything you name (a tool, skill or requirement) is guaranteed to be in the JD. Everything else, including level, experience range, responsibilities and tools, comes from fresh research on the role in India. A VP-level challenger has to score it 95+ before it is written up. The finished `.docx` carries its own fonts, so it looks the same on any laptop.
+
+Other commands: `/jd-builder resume` continues an interrupted run; `/jd-builder render <file.json>` re-renders after you edit the content file by hand.
 
 ## What every JD looks like
 
-The house layout taken from the SDE I/II/III JDs: a navy top bar, the title, a five-cell summary panel, a two-column grid of labelled sections, the navy "Non-negotiable" box, six assessment cards, and the "Read twice" panel. See `plugins/hr-hiring/skills/jd-builder/brand/design-spec.md`.
+The house layout: a navy top bar, the title, a five-cell summary panel, a two-column grid of labelled sections, the navy "Non-negotiable" box, six assessment cards, and the "Read twice" panel. See `plugins/hr-hiring/skills/jd-builder/brand/design-spec.md`.
 
 ## Repo map
 

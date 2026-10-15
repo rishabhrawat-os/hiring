@@ -100,7 +100,7 @@ def main():
         else:
             last = i
     for fixed in (CO["about_us"]["heading"], CO["eeo"]["text"][:40], CO["footer"]["left"], CO["footer"]["right"],
-                  SKEL["sections"]["the_bar"]["fixed"]["heading"], *SKEL["sections"]["the_bar"]["fixed_trait_titles"]):
+                  SKEL["sections"]["the_bar"]["fixed"]["heading"], SKEL["sections"]["the_bar"]["fixed"]["eyebrow"]):
         if fixed not in text:
             bad(f"fixed text missing: '{fixed[:40]}'")
     for leftover in re.findall(r"\*\*|__|\]\(|\{level_name\}|TODO|TBD|\[[A-Z ]+\]", text):

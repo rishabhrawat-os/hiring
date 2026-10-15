@@ -1,38 +1,48 @@
-# How an Onsurity JD sounds
+# Writing rules for JD content
 
-Taken from the three SDE JDs. The copy pass follows this page, and `validate_jd.py` enforces the parts that can be checked mechanically.
+These rules apply to every word written into a JD. They come from plain-language writing practice, not from any earlier JD. `validate_jd.py` fails a JD that breaks the checkable ones.
 
-## The voice
+## Write like a person explaining the job to a friend
 
-- **Second person, present tense, with contractions.** "You'll own a domain." "We're small enough that…" Not "The candidate will…".
-- **Honest about difficulty.** "A hard senior role, deliberately." "We hold this bar and we don't lower it to fill the seat." Say what the job costs, not only what it offers.
-- **Concrete nouns from our world**: claims, wallet, subscriptions, provider network, payments, a member in a hospital visit, insurance partners, regulators, month-end. Use the role's own equivalents for non-tech roles: pipeline, a broker's quote, a payroll cycle, a renewal.
-- **Consequences, not adjectives.** "Missing them in production costs a member." Not "high-impact role".
-- **Short sentences, then one longer one.** Most sentences are under 20 words. A two-word sentence is fine ("The deal is simple.").
-- **Verb-first bullets.** Own, Write, Debug, Carry, Set, Review, Say no. Each bullet names a real thing and, often, why it matters.
-- **Evidence over claims in qualifications.** "Production Node.js — services you built and ran, not scripts." The bold lead names the skill; the rest says what proof looks like.
+- Use plain words: "use", not "leverage"; "help", not "empower"; "build", not "spearhead".
+- Address the reader as "you" and the company as "we", in present or future tense.
+- Most sentences are under 20 words, and each says one thing.
+- Be specific. Name the actual tools, tasks, teams and outputs that the research found for this role. If a sentence would fit any company's JD, rewrite it or delete it.
+- State facts directly. Write "You will run the monthly payroll close", not "You will play a key role in ensuring payroll excellence".
+- Describe responsibilities as work someone does, starting with a verb: "Run", "Write", "Review", "Plan", "Fix".
+- Each requirement says what is needed and what level of it, for example "3+ years running paid search campaigns with monthly budgets above ₹10 lakh". Avoid vague adjectives such as "strong", "excellent" or "solid" unless they are followed by what they mean.
 
-## House punctuation and spelling
+## Never use (validate_jd.py checks these)
 
-- **British English**: centre, judgement, defence, organise, optimise, programme (but "program" for code), specialise, memorised.
-- **Spaced em dash for asides**: " — ". At most about 2 per 100 words; the originals run at about 1.6.
-- **En dash in ranges**: 0–2 years, 3–5 years. Use "6+ years" for open ranges.
-- **Curly apostrophes are fine; straight are fine. Be consistent within one JD.**
-- **"·" (middle dot)** separates items in the meta panel and the footer.
-- **No exclamation marks, no emoji, no ALL-CAPS words** outside labels.
+- **Em dashes (—)**, or a hyphen or en dash used as a pause between words. Use a full stop, a comma or brackets instead. An en dash is allowed only in number ranges (3–5 years).
+- **Contrast framing**: "X, not Y", "not just X", "not only X but Y", "isn't X, it's Y", "rather than", or sentences starting with "Not". Say what the thing is, and stop.
+- **Rhetorical questions and exclamation marks.**
+- **Staged reveals**: "Here's the thing:", "The result:", "The catch:".
+- **Words and phrases in `banned-phrases.txt`**: job-ad clichés, AI-sounding words, and exclusionary or age- or gender-coded terms.
+- **"Objectives"**, "key result areas", or mission-statement language.
 
-## Contrasts: allowed, rationed
+## Also avoid (the format challenger checks these)
 
-The originals use "not X, Y" contrasts on purpose ("Not years, not lines of code.", "fix the cause, not the symptom"). They are part of the voice. Keep to **one per section at most**, and only where both halves are concrete. A generic contrast ("not just a job, a mission") is slop: cut it.
+- Lists of three used for rhythm ("fast, focused and fearless"). A list should have as many items as the facts require.
+- One-line closing sentences that sum up a paragraph ("That's the job.").
+- Inflated stakes ("world-class", "game-changing", "mission-critical").
+- The same sentence shape repeated across bullets.
+- Bold or italics for emphasis inside sentences. The layout's bold lead phrase in Minimum qualifications is the only bold.
 
-## Never write
+## Spelling and numbers
 
-- Anything in `banned-phrases.txt` (job-ad clichés, AI tells, exclusionary words).
-- Company claims that aren't in `company/`. Don't invent funding, customer counts, awards or perks.
-- Salary, benefits or perks unless HR supplied them.
-- Age, gender, "native speaker", "young team", "culture fit", or "digital native".
-- Requirements that can't be tested in the interview loop on the Assessment cards.
+- British/Indian English spelling: organise, optimise, centre, behaviour, licence (noun), programme (but "program" for software).
+- Indian number style for money: ₹10 lakh, ₹2 crore.
+- Number ranges use an en dash with no spaces: 3–5 years.
+- "+" for open ranges: 6+ years.
+
+## Facts
+
+- Company facts come only from `company/company.json`.
+- Role facts come only from the user's input and the research of this run.
+- No salary, compensation, benefits or perks: the layout has no place for them.
+- Nothing about age, gender, marital status, religion, caste, region or native language.
 
 ## Using /humanizer
 
-If the `humanizer` skill is installed, run it over each slot's text once the challenger has signed off. Give it this page as the style to keep: the house em dashes and rationed contrasts stay; generic contrasts, inflated words, stacked adjectives and one-line closers go. After humanizer, run `validate_jd.py` again, because humanizer must not push a slot outside its word limits.
+Once the challenger signs off, run the `humanizer` skill (if installed) over every slot's text, telling it to keep facts, names, numbers and word limits unchanged. Then run `validate_jd.py` again. If humanizer isn't installed, the copy pass applies this page by hand.

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Check a jd.json against the skeleton before it is rendered.
 
-Checks the shape, the fixed parts (labels, trait titles, level keys), the
-word and item limits in structure/skeleton.json, house punctuation, banned
-phrases, and that every must-include item from the intake made it in.
+Checks the shape, the fixed labels, the space limits in
+structure/skeleton.json, AI-writing patterns (em dashes, contrasts,
+rhetorical questions), banned phrases, British/Indian spelling, and that
+every must-include item from the user's input made it in.
 
     python3 validate_jd.py jd.json [--must-include intake.json]
 
@@ -21,6 +22,21 @@ S = SKEL["sections"]
 BANNED = [l.strip().lower() for l in (ROOT / "voice/banned-phrases.txt").read_text().splitlines()
           if l.strip() and not l.startswith("#")]
 REQUIRED = json.loads((ROOT / "structure/jd.schema.json").read_text())["required"]
+
+# Patterns that make text read as machine-written. Any hit fails the JD.
+AI_PATTERNS = [
+    ("em dash", r"—"),
+    ("dash used as punctuation", r"\s[–-]\s"),
+    ("'not X, Y' contrast", r",\s+not\s+(?!only\b|just\b)\w+"),
+    ("'not just/only' contrast", r"\bnot\s+(just|only|merely|simply)\b"),
+    ("sentence opening with 'Not'", r"(^|[.!?]\s+)Not\b"),
+    ("'isn't X, it's Y' contrast", r"\b(isn't|is not|aren't|are not|wasn't|don't|doesn't)\b[^.]{0,60},\s*(it's|it is|they're|we|you)\b"),
+    ("'not X but Y' contrast", r"\bnot\b[^.]{0,40}\bbut\b"),
+    ("'rather than' contrast", r"\brather than\b"),
+    ("rhetorical question", r"\?"),
+    ("exclamation", r"!"),
+    ("staged colon reveal", r"\b(here's|the result|the answer|the catch|the point|the deal|the twist)\b[^.]{0,20}:"),
+]
 
 problems = []
 
@@ -78,6 +94,7 @@ def check(jd, must_include=()):
         return
 
     h = jd["header"]
+    span("header.title", h["title"], LIM["header.title"])
     span("header.lead", h["lead"], LIM["header.lead"])
     span("header.punchline", h["punchline"], LIM["header.punchline"])
 
@@ -86,9 +103,11 @@ def check(jd, must_include=()):
         bad("meta", f"first four labels must be {S['meta']['fixed_labels']}, got {labels[:4]}")
     if len(labels) != 5 or labels[4] not in S["meta"]["fifth_label_options"]:
         bad("meta", f"fifth label must be one of {S['meta']['fifth_label_options']}")
+    for m in jd["meta"]:
+        span(f"meta.{m['label']}", m["value"], [1, 6])
     exp = next((m["value"] for m in jd["meta"] if m["label"] == "EXPERIENCE"), "")
-    if not re.fullmatch(r"\d+(–\d+|\+) years", exp):
-        bad("meta.EXPERIENCE", f"'{exp}' should look like '0–2 years' or '6+ years' (en dash)")
+    if not re.fullmatch(r"\d+(–\d+|\+) years?", exp):
+        bad("meta.EXPERIENCE", f"'{exp}' should look like '3–5 years' or '6+ years'")
 
     r = jd["the_role"]
     span("the_role.lead", r["lead"], LIM["the_role.lead"])
@@ -97,33 +116,25 @@ def check(jd, must_include=()):
     lv = jd["the_level"]
     span("the_level.lead", lv["lead"], LIM["the_level.lead"])
     items("the_level.rows", lv["rows"], LIM["the_level.rows"], key="text")
-    keys = [x["key"] for x in lv["rows"]]
-    if keys[:5] != S["the_level"]["fixed_keys"]:
-        bad("the_level.rows", f"first five keys must be {S['the_level']['fixed_keys']}")
-    if len(keys) == 6 and keys[5] not in S["the_level"]["sixth_key_options"]:
-        bad("the_level.rows", f"sixth key must be one of {list(S['the_level']['sixth_key_options'])}")
+    for x in lv["rows"]:
+        if not re.fullmatch(r"[A-Z]+", x["key"]):
+            bad(f"the_level.{x['key']}", "key must be one upper-case word")
 
     w = jd["your_work"]
     items("your_work.groups", w["groups"], LIM["your_work.groups"])
     for g in w["groups"]:
-        if g["label"] != g["label"].upper():
-            bad(f"your_work.{g['label']}", "group label must be upper case")
+        if g["label"] != g["label"].upper() or len(g["label"].split()) > 2:
+            bad(f"your_work.{g['label']}", "group label must be 1–2 upper-case words")
         items(f"your_work.{g['label']}", g["bullets"], LIM["your_work.bullets"])
-    last = w["groups"][-1]["label"] if w["groups"] else ""
-    if last not in ("GROW", "MULTIPLY", "LEAD"):
-        bad("your_work", f"last group must be GROW, MULTIPLY or LEAD, got {last}")
 
     b = jd["the_bar"]
     span("the_bar.intro", b["intro"], LIM["the_bar.intro"])
     items("the_bar.traits", b["traits"], LIM["the_bar.traits"], key="text")
-    titles = [t["title"] for t in b["traits"]]
-    if titles != S["the_bar"]["fixed_trait_titles"]:
-        bad("the_bar.traits", f"titles must be exactly {S['the_bar']['fixed_trait_titles']}")
+    for t in b["traits"]:
+        span(f"the_bar.{t['title']}.title", t["title"], LIM["the_bar.traits"]["title_words"])
 
     a = jd["ai"]
     span("ai.lead", a["lead"], LIM["ai.lead"])
-    if not any(a["lead"].startswith(o) for o in S["ai"]["fixed_opener"].values()):
-        bad("ai.lead", f"must start with one of {list(S['ai']['fixed_opener'].values())}")
     items("ai.bullets", a["bullets"], LIM["ai.bullets"])
 
     m = jd["minimum"]
@@ -131,10 +142,8 @@ def check(jd, must_include=()):
         span("minimum.note", m["note"], LIM["minimum.note"])
     items("minimum.items", m["items"], LIM["minimum.items"])
     for i, it in enumerate(m["items"]):
-        if "**" not in it:
-            bad(f"minimum.items[{i}]", "needs a **bold lead phrase**")
-    if m["items"] and not re.match(r"\*\*\d", m["items"][0]):
-        bad("minimum.items[0]", "must open with the experience range in bold, e.g. **6+ years**")
+        if not it.startswith("**") and "**" not in it[:40]:
+            bad(f"minimum.items[{i}]", "needs a short **bold phrase** near the start (layout)")
 
     items("preferred.items", jd["preferred"]["items"], LIM["preferred.items"])
 
@@ -148,53 +157,40 @@ def check(jd, must_include=()):
 
     asm = jd["assessment"]
     span("assessment.lead", asm["lead"], LIM["assessment.lead"])
-    if not asm["lead"].startswith("Six dimensions."):
-        bad("assessment.lead", "must start with 'Six dimensions.'")
     items("assessment.cards", asm["cards"], LIM["assessment.cards"], key="text")
     for c in asm["cards"]:
         span(f"assessment.{c['title']}.title", c["title"], LIM["assessment.cards"]["title_words"])
 
-    nfy = jd["not_for_you"]["items"]
-    items("not_for_you.items", nfy, LIM["not_for_you.items"])
-    for i, it in enumerate(nfy):
-        if not it.startswith("You"):
-            bad(f"not_for_you.items[{i}]", "must start with 'You'")
-    if nfy and "hospital admission. That's the seriousness this team runs at." not in nfy[-1]:
-        bad("not_for_you.items[-1]", "last item must be the fixed hospital-admission line")
+    items("not_for_you.items", jd["not_for_you"]["items"], LIM["not_for_you.items"])
 
     if jd["footer_tag"] != jd["footer_tag"].upper() or jd["footer_tag"].count(" · ") != 2:
         bad("footer_tag", "must be 'LEVEL · SPECIALISATION · CITY' in upper case")
 
-    # House punctuation and phrasing across all text
+    # Writing checks: plain, human, no AI patterns
     text = all_text(jd)
-    body = " ".join(plain(t) for t in text)
-    n_words = len(body.split())
-    dashes = body.count("—")
-    if dashes / max(n_words, 1) * 100 > LIM["em_dash_per_100_words"]:
-        bad("style", f"{dashes} em dashes in {n_words} words; cap is {LIM['em_dash_per_100_words']} per 100")
     for t in text:
         p = plain(t)
-        if re.search(r"\w—|—\w", p):
-            bad("style", f"em dash needs a space either side: '{p[:60]}'")
-        if " - " in p:
-            bad("style", f"use ' — ' not ' - ': '{p[:60]}'")
-        if re.search(r"\d-\d", p) and "years" in p:
-            bad("style", f"ranges take an en dash (0–2): '{p[:60]}'")
+        for name, rx in AI_PATTERNS:
+            mt = re.search(rx, p)
+            if mt:
+                bad("ai-pattern", f"{name}: '...{p[max(0, mt.start() - 25):mt.end() + 25]}...'")
         if "  " in t:
             bad("style", f"double space: '{p[:60]}'")
-        if t.count("**") % 2 or (t.count("__") % 2):
+        if t.count("**") % 2 or t.count("__") % 2:
             bad("markup", f"unbalanced bold markers: '{t[:60]}'")
+    body = " ".join(plain(t) for t in text)
     low = body.lower()
     for phrase in BANNED:
         if re.search(r"\b" + re.escape(phrase) + r"\b", low):
             bad("banned", f"'{phrase}'")
-    us = re.findall(r"\b(center|judgment|defense|organization|organize|optimize|prioritize|analyze|color|behavior|favorite|program(?!m))\b", low)
+    us = re.findall(r"\b(center|centers|judgment|defense|organization|organizations|organize|optimize|optimizing|"
+                    r"prioritize|analyze|analyzing|color|behavior|favorite|license|catalog|modeling)\b", low)
     for wd in sorted(set(us)):
-        bad("spelling", f"US spelling '{wd}', house style is British English")
+        bad("spelling", f"US spelling '{wd}'; use British/Indian English")
 
     for item in must_include:
         if item.lower() not in low:
-            bad("must_include", f"'{item}' from the intake is missing")
+            bad("must_include", f"'{item}' from the user's input is missing")
 
 
 def main():

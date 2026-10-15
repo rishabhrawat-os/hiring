@@ -1,0 +1,262 @@
+{
+  "schema_version": "1.0",
+  "header": {
+    "function": "Function",
+    "city": "Bengaluru",
+    "title": "Layout Layout Layout Layout Layout Layout Layout Layout",
+    "lead": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words.",
+    "punchline": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check."
+  },
+  "meta": [
+    {
+      "label": "LEVEL",
+      "value": "Level"
+    },
+    {
+      "label": "TRACK",
+      "value": "Individual contributor"
+    },
+    {
+      "label": "EXPERIENCE",
+      "value": "3–5 years"
+    },
+    {
+      "label": "LOCATION",
+      "value": "Bengaluru"
+    },
+    {
+      "label": "TOOLS",
+      "value": "Tool · Tool · Tool"
+    }
+  ],
+  "the_role": {
+    "lead": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test.",
+    "paragraphs": [
+      "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing.",
+      "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and.",
+      "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+      "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on.",
+      "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the."
+    ]
+  },
+  "the_level": {
+    "level_name": "Level",
+    "lead": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+    "rows": [
+      {
+        "key": "KEYA",
+        "text": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check."
+      },
+      {
+        "key": "KEYB",
+        "text": "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing."
+      },
+      {
+        "key": "KEYC",
+        "text": "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and."
+      },
+      {
+        "key": "KEYD",
+        "text": "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping."
+      },
+      {
+        "key": "KEYE",
+        "text": "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on."
+      },
+      {
+        "key": "KEYF",
+        "text": "Block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the."
+      }
+    ]
+  },
+  "your_work": {
+    "heading": "What you'll own",
+    "groups": [
+      {
+        "label": "GROUP A",
+        "bullets": [
+          "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+          "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check.",
+          "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing.",
+          "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and.",
+          "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping."
+        ]
+      },
+      {
+        "label": "GROUP B",
+        "bullets": [
+          "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+          "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check.",
+          "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing.",
+          "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and.",
+          "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping."
+        ]
+      },
+      {
+        "label": "GROUP C",
+        "bullets": [
+          "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+          "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check.",
+          "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing.",
+          "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and.",
+          "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping."
+        ]
+      },
+      {
+        "label": "GROUP D",
+        "bullets": [
+          "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+          "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check.",
+          "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing.",
+          "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and.",
+          "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping."
+        ]
+      }
+    ]
+  },
+  "the_bar": {
+    "intro": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+    "traits": [
+      {
+        "title": "Trait Trait Trait Trait Trait Trait",
+        "text": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on."
+      },
+      {
+        "title": "Trait Trait Trait Trait Trait Trait",
+        "text": "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the."
+      },
+      {
+        "title": "Trait Trait Trait Trait Trait Trait",
+        "text": "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page."
+      },
+      {
+        "title": "Trait Trait Trait Trait Trait Trait",
+        "text": "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout."
+      },
+      {
+        "title": "Trait Trait Trait Trait Trait Trait",
+        "text": "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test."
+      }
+    ]
+  },
+  "ai": {
+    "lead": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test.",
+    "bullets": [
+      "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page.",
+      "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout.",
+      "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test.",
+      "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words.",
+      "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill."
+    ]
+  },
+  "minimum": {
+    "note": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on.",
+    "items": [
+      "**Bold phrase** layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page.",
+      "**Bold phrase** test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout.",
+      "**Bold phrase** words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test.",
+      "**Bold phrase** fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words.",
+      "**Bold phrase** this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill.",
+      "**Bold phrase** block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this.",
+      "**Bold phrase** to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block.",
+      "**Bold phrase** check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+      "**Bold phrase** spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check.",
+      "**Bold phrase** and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing.",
+      "**Bold phrase** wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and.",
+      "**Bold phrase** on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+      "**Bold phrase** the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on.",
+      "**Bold phrase** page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the."
+    ]
+  },
+  "preferred": {
+    "items": [
+      "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+      "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on.",
+      "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the.",
+      "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page.",
+      "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout.",
+      "Block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test.",
+      "To check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words.",
+      "Check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill.",
+      "Spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this."
+    ]
+  },
+  "toolkit": {
+    "label": "OUR TOOLS",
+    "note": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+    "rows": [
+      {
+        "key": "category 0",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 1",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 2",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 3",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 4",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 5",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 6",
+        "value": "Tool one, Tool two, Tool three"
+      },
+      {
+        "key": "category 7",
+        "value": "Tool one, Tool two, Tool three"
+      }
+    ]
+  },
+  "assessment": {
+    "lead": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping.",
+    "cards": [
+      {
+        "title": "Card Card Card Card",
+        "text": "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page."
+      },
+      {
+        "title": "Card Card Card Card",
+        "text": "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout."
+      },
+      {
+        "title": "Card Card Card Card",
+        "text": "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test."
+      },
+      {
+        "title": "Card Card Card Card",
+        "text": "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words."
+      },
+      {
+        "title": "Card Card Card Card",
+        "text": "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill."
+      },
+      {
+        "title": "Card Card Card Card",
+        "text": "Block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this."
+      }
+    ]
+  },
+  "not_for_you": {
+    "items": [
+      "Layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill.",
+      "Test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this.",
+      "Words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block.",
+      "Fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to.",
+      "This block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check.",
+      "Block to check spacing and wrapping on the page layout test words fill this block to check spacing and wrapping on the page layout test words fill this block to check spacing."
+    ]
+  },
+  "footer_tag": "LEVEL · LAYOUT · BENGALURU"
+}

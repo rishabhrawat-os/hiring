@@ -1,6 +1,6 @@
 # Onsurity JD design spec
 
-Measured from the three SDE JDs in `examples/originals/` (A4 PDFs exported from Chrome). The values below live in `tokens.json`; `render_docx.py` and `check_design.py` both read them from there. This file explains the values; it doesn't override them.
+Measured from the layout of the three Onsurity JD PDFs the user supplied as the blueprint (A4, exported from Chrome; kept in `evals/jd-builder/fixtures/originals/` for regression tests only). Only the layout, colours and type were taken; none of their wording. The values below live in `tokens.json`; `render_docx.py` and `check_design.py` both read them from there. This file explains the values; it doesn't override them.
 
 ## The look in one paragraph
 

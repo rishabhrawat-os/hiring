@@ -1,385 +1,116 @@
 {
-  "_about": "The fixed skeleton of every Onsurity JD, in page order. Same for every role, function and level. 'fixed' text is printed as-is; 'slot' is what the research fills. Counts are hard limits that validate_jd.py enforces. Measured from the SDE I/II/III JDs and generalised so non-engineering roles fit the same frame.",
-  "order": [
-    "header",
-    "meta",
-    "about_us",
-    "the_role",
-    "the_level",
-    "your_work",
-    "the_bar",
-    "ai",
-    "minimum",
-    "preferred",
-    "toolkit",
-    "assessment",
-    "not_for_you",
-    "eeo",
-    "footer"
-  ],
+  "_about": "Blueprint of every Onsurity JD: which sections exist, in what order, what each one is for, which visual component holds it, and how much space it has. The only fixed words are the section labels and headings (structure) and the company content in company/company.json. Everything inside a section is written fresh for each role from the user's input and that run's research. Capacity limits keep the page layout intact; they are not style rules.",
+  "order": ["header", "meta", "about_us", "the_role", "the_level", "your_work", "the_bar", "ai", "minimum", "preferred", "toolkit", "assessment", "not_for_you", "eeo", "footer"],
   "sections": {
     "header": {
       "component": "header",
-      "fixed": {
-        "eyebrow_first": "ONSURITY"
-      },
+      "fixed": {"eyebrow_first": "ONSURITY"},
+      "purpose": "Who is hiring, which function, where, and the role title, followed by a short summary of the role and one closing sentence printed in the bold sans style.",
       "slots": {
-        "function": "Department in Title Case, e.g. Engineering, Marketing, Sales, Operations, Finance, People, Product, Design, Data, Customer Success",
-        "city": "City in Title Case, e.g. Bengaluru",
-        "title": "Full role title as it appears on the offer letter, plus the specialisation after a comma: 'Software Development Engineer III, Java', 'Product Marketing Manager, B2B'",
-        "lead": "2–3 sentences, 25–45 words. What makes this role this role, at this level.",
-        "punchline": "1–2 sentences, 8–22 words. The bar, said plainly."
+        "function": "Department, Title Case",
+        "city": "City, Title Case",
+        "title": "Role title as it will be advertised; a specialisation may follow a comma",
+        "lead": "Summary of the role at this level",
+        "punchline": "One sentence that states the standard expected"
       }
     },
     "meta": {
       "component": "meta_panel",
       "count": 5,
-      "fixed_labels": [
-        "LEVEL",
-        "TRACK",
-        "EXPERIENCE",
-        "LOCATION"
-      ],
-      "fifth_label_options": [
-        "STACK",
-        "TOOLS",
-        "FOCUS",
-        "MARKETS",
-        "REPORTS TO"
-      ],
-      "rules": {
-        "TRACK": "One of: Individual contributor | People manager | Player-coach",
-        "EXPERIENCE": "'0–2 years', '3–5 years', '6+ years' (en dash, no spaces)",
-        "STACK": "Engineering roles only. Three items joined by ' · '",
-        "TOOLS": "Non-engineering roles: three tools joined by ' · '",
-        "FOCUS": "Roles where the subject matters more than the tools: up to three areas joined by ' · '"
-      }
+      "fixed_labels": ["LEVEL", "TRACK", "EXPERIENCE", "LOCATION"],
+      "fifth_label_options": ["STACK", "TOOLS", "FOCUS", "MARKETS", "REPORTS TO"],
+      "purpose": "Five facts at a glance. Values are short (1–4 words). TRACK is Individual contributor, People manager or Player-coach. EXPERIENCE is a range like '3–5 years' or '6+ years'. The fifth cell is whichever of the options is most useful for this role; three items at most, joined by ' · '."
     },
-    "about_us": {
-      "component": "about",
-      "label": "ABOUT US",
-      "static": true,
-      "source": "company/company.json#about_us"
-    },
+    "about_us": {"component": "about", "label": "ABOUT US", "static": true, "source": "company/company.json#about_us"},
     "the_role": {
       "component": "prose",
       "label": "THE ROLE",
       "heading": "What this job actually is",
-      "slots": {
-        "lead": "1 sentence, 15–30 words: who we're hiring and why",
-        "paragraphs": "3–5 paragraphs, 35–60 words each"
-      }
+      "purpose": "A one-sentence opening line (section-lead style), then paragraphs that explain what the person will be responsible for, what the work involves day to day, who they work with, and why the role matters to the business."
     },
     "the_level": {
       "component": "level_rows",
       "label": "THE LEVEL",
       "heading": "What {level_name} means here",
-      "slots": {
-        "lead": "1–2 sentences that frame the level",
-        "rows": "exactly 6 rows"
-      },
-      "fixed_keys": [
-        "SCOPE",
-        "AMBIGUITY",
-        "INFLUENCE",
-        "JUDGEMENT",
-        "CONSEQUENCE"
-      ],
-      "sixth_key_options": {
-        "SLOPE": "entry levels (0–2 years): rate of learning",
-        "MULTIPLIER": "mid and senior individual contributors",
-        "TEAM": "people managers: what their team does without them"
-      },
-      "row_words": [
-        6,
-        20
-      ]
+      "purpose": "A short opening line, then six key/value rows that describe the seniority expected. Each key is one upper-case word naming a dimension of seniority chosen by the research for this role; each value says what is expected on that dimension at this level."
     },
     "your_work": {
       "component": "work_groups",
       "label": "YOUR WORK",
-      "heading_options": {
-        "What you'll do": "entry levels",
-        "What you'll own": "every other level"
-      },
-      "slots": {
-        "groups": "3–4 groups, 3–5 bullets each"
-      },
-      "group_label_rule": "One upper-case verb per group describing a phase of the work. Engineering default: DESIGN, BUILD, RUN, then GROW (entry) or MULTIPLY (mid+). Other functions pick their own phases in the same spirit, e.g. Marketing: PLAN, MAKE, MEASURE, MULTIPLY; Sales: FIND, WIN, GROW ACCOUNTS, MULTIPLY; Operations: SET UP, RUN, FIX, MULTIPLY. The last group is always GROW (entry) or MULTIPLY (mid+), or LEAD for people managers.",
-      "bullet_words": [
-        12,
-        35
-      ]
+      "heading_options": {"What you'll do": "entry level (roughly 0–2 years)", "What you'll own": "all other levels"},
+      "purpose": "The responsibilities, grouped into 3–4 areas. Each group has a short upper-case label (1–2 words) chosen by the research for this role, followed by bullets. Each bullet is one concrete responsibility."
     },
     "the_bar": {
       "component": "bar_box",
       "label": "THE BAR",
-      "fixed": {
-        "eyebrow": "NON-NEGOTIABLE",
-        "heading": "How we expect you to operate"
-      },
-      "slots": {
-        "intro": "1–2 sentences",
-        "traits": "exactly 5, titles fixed and in this order"
-      },
-      "fixed_trait_titles": [
-        "High ownership",
-        "Highly motivated and self-driven",
-        "Extensive AI use",
-        "Fast, with a floor under it",
-        "Direct and low-ego"
-      ],
-      "trait_words": [
-        18,
-        40
-      ]
+      "fixed": {"eyebrow": "NON-NEGOTIABLE", "heading": "How we expect you to operate"},
+      "purpose": "The highlighted box. A one-line intro, then five behaviours this role cannot succeed without, each a short title (2–6 words) and a description. Chosen by the research for this role."
     },
     "ai": {
       "component": "bullets_with_lead",
       "label": "AI",
       "heading": "How we expect you to use AI",
-      "slots": {
-        "lead": "Starts with the fixed opener, then one sentence for this level",
-        "bullets": "4–5 bullets"
-      },
-      "fixed_opener": {
-        "engineering": "AI-assisted development is the default here, not a novelty.",
-        "other": "AI-assisted work is the default here, not a novelty."
-      },
-      "bullet_words": [
-        12,
-        25
-      ]
+      "purpose": "How AI tools are used in this specific role today: an opening line and bullets naming real tools and real tasks for this function, plus where human judgement must stay in charge."
     },
     "minimum": {
       "component": "two_col_bullets",
       "label": "MINIMUM",
       "heading": "Minimum qualifications",
-      "slots": {
-        "note": "optional, 1–2 sentences in the section-lead style",
-        "items": "10–14 items, each opens with a **bold lead phrase**"
-      },
-      "rules": [
-        "First item is the experience range, in bold, e.g. **6+ years** of ...",
-        "Every tool, skill or spec HR named appears here or in preferred/toolkit",
-        "Last two items: education (or equivalent evidence) and communication"
-      ],
-      "item_words": [
-        8,
-        30
-      ]
+      "purpose": "Must-have requirements in two columns. Optional one-line note above. Each item starts with a short bold phrase naming the requirement (written **like this**), then the detail of what counts as meeting it."
     },
     "preferred": {
       "component": "bullets",
       "label": "PREFERRED",
       "heading": "Preferred qualifications",
-      "slots": {
-        "items": "6–9 items, no bold lead"
-      },
-      "item_words": [
-        3,
-        25
-      ]
+      "purpose": "Nice-to-have experience that makes a candidate stronger. One line each."
     },
     "toolkit": {
       "component": "key_value_rows",
-      "label_options": {
-        "OUR STACK": "engineering, data",
-        "OUR TOOLS": "every other function"
-      },
+      "label_options": {"OUR STACK": "engineering and data roles", "OUR TOOLS": "every other role"},
       "heading": "What you'd work with",
-      "slots": {
-        "note": "optional, 1–2 sentences, level-specific expectation",
-        "rows": "4–8 rows; key is a lower-case category, value is a comma list"
-      },
-      "rules": [
-        "Engineering roles use company/engineering-stack.json as-is",
-        "Every tool HR named appears in a row"
-      ]
+      "purpose": "The tools of the job as key/value rows: a lower-case category, then a comma-separated list. Optional one-line note above."
     },
     "assessment": {
       "component": "card_grid",
       "label": "THE BAR, TESTED",
       "heading": "What we'll assess",
-      "slots": {
-        "lead": "Starts with 'Six dimensions.' then one sentence on what we index on at this level",
-        "cards": "exactly 6 cards: title 1–4 words, text 14–26 words"
-      }
+      "purpose": "An opening line, then exactly six cards (a 3×2 grid). Each card is one thing the hiring process will assess for this role: a title of 1–4 words and a description of what is tested and how."
     },
     "not_for_you": {
       "component": "panel_bullets",
       "label": "READ TWICE",
       "heading": "This role is probably not for you if",
-      "slots": {
-        "items": "4–6 items, 15–32 words, each 'You ...' + a sentence about how it really is here"
-      },
-      "fixed_last_item": "You're uncomfortable working where a {mistake} can delay someone's hospital admission. That's the seriousness this team runs at.",
-      "mistake_word": {
-        "engineering": "bug",
-        "other": "mistake"
-      }
+      "purpose": "Honest reasons a candidate might not enjoy this role. Each item completes the heading's sentence."
     },
-    "eeo": {
-      "component": "eeo",
-      "label": "EQUAL OPPORTUNITY",
-      "static": true,
-      "source": "company/company.json#eeo"
-    },
+    "eeo": {"component": "eeo", "label": "EQUAL OPPORTUNITY", "static": true, "source": "company/company.json#eeo"},
     "footer": {
       "component": "footer",
-      "fixed": {
-        "left": "ONSURITY TECHNOLOGIES",
-        "right": "ONSURITY.COM"
-      },
-      "slots": {
-        "footer_tag": "LEVEL · SPECIALISATION · CITY in upper case, e.g. 'SDE III · JAVA · BENGALURU'"
-      }
+      "fixed": {"left": "ONSURITY TECHNOLOGIES", "right": "ONSURITY.COM"},
+      "slots": {"footer_tag": "LEVEL · SPECIALISATION · CITY, upper case"}
     }
   },
   "limits": {
-    "_about": "Word counts [min, max] per item, and item counts [min, max]. Set from the three SDE JDs with a little headroom. validate_jd.py enforces these.",
-    "header.lead": [
-      25,
-      45
-    ],
-    "header.punchline": [
-      8,
-      22
-    ],
-    "the_role.lead": [
-      15,
-      30
-    ],
-    "the_role.paragraphs": {
-      "count": [
-        3,
-        5
-      ],
-      "words": [
-        35,
-        60
-      ]
-    },
-    "the_level.lead": [
-      12,
-      25
-    ],
-    "the_level.rows": {
-      "count": [
-        6,
-        6
-      ],
-      "words": [
-        6,
-        20
-      ]
-    },
-    "your_work.groups": {
-      "count": [
-        3,
-        4
-      ]
-    },
-    "your_work.bullets": {
-      "count": [
-        3,
-        5
-      ],
-      "words": [
-        12,
-        35
-      ]
-    },
-    "the_bar.intro": [
-      12,
-      25
-    ],
-    "the_bar.traits": {
-      "count": [
-        5,
-        5
-      ],
-      "words": [
-        18,
-        40
-      ]
-    },
-    "ai.lead": [
-      15,
-      30
-    ],
-    "ai.bullets": {
-      "count": [
-        4,
-        5
-      ],
-      "words": [
-        12,
-        25
-      ]
-    },
-    "minimum.note": [
-      0,
-      40
-    ],
-    "minimum.items": {
-      "count": [
-        10,
-        14
-      ],
-      "words": [
-        8,
-        30
-      ]
-    },
-    "preferred.items": {
-      "count": [
-        6,
-        9
-      ],
-      "words": [
-        3,
-        25
-      ]
-    },
-    "toolkit.note": [
-      0,
-      35
-    ],
-    "toolkit.rows": {
-      "count": [
-        4,
-        8
-      ]
-    },
-    "assessment.lead": [
-      12,
-      25
-    ],
-    "assessment.cards": {
-      "count": [
-        6,
-        6
-      ],
-      "words": [
-        14,
-        26
-      ],
-      "title_words": [
-        1,
-        4
-      ]
-    },
-    "not_for_you.items": {
-      "count": [
-        4,
-        6
-      ],
-      "words": [
-        15,
-        32
-      ]
-    },
-    "em_dash_per_100_words": 2.0
+    "_about": "Space each block has on the page: [min, max] words per item and [min, max] items. These protect the layout. validate_jd.py enforces them.",
+    "header.title": [2, 8],
+    "header.lead": [25, 45],
+    "header.punchline": [6, 22],
+    "the_role.lead": [12, 30],
+    "the_role.paragraphs": {"count": [3, 5], "words": [30, 65]},
+    "the_level.lead": [8, 25],
+    "the_level.rows": {"count": [6, 6], "words": [6, 22]},
+    "your_work.groups": {"count": [3, 4]},
+    "your_work.bullets": {"count": [3, 5], "words": [8, 35]},
+    "the_bar.intro": [8, 25],
+    "the_bar.traits": {"count": [5, 5], "words": [15, 40], "title_words": [2, 6]},
+    "ai.lead": [10, 30],
+    "ai.bullets": {"count": [4, 5], "words": [8, 28]},
+    "minimum.note": [0, 40],
+    "minimum.items": {"count": [8, 14], "words": [6, 30]},
+    "preferred.items": {"count": [4, 9], "words": [3, 25]},
+    "toolkit.note": [0, 35],
+    "toolkit.rows": {"count": [3, 8]},
+    "assessment.lead": [8, 25],
+    "assessment.cards": {"count": [6, 6], "words": [12, 28], "title_words": [1, 4]},
+    "not_for_you.items": {"count": [4, 6], "words": [8, 32]}
   }
 }
