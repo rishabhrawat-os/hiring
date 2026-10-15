@@ -11,7 +11,7 @@
 Settled:
 - Content comes only from the user's input and fresh research in each run. The blueprint PDFs gave layout and company details only.
 - No salary, benefits or perks: the blueprint has no block for them.
-- India-based roles; Bengaluru when no city is given.
+- Market and default city come from `company/company.json` (currently India and Bengaluru); nothing in the skill assumes them.
 - No em dashes, contrast framing or other AI writing patterns.
 
 ## resume-screener
