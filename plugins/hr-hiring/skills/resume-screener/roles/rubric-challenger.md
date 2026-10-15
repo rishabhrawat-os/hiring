@@ -4,6 +4,7 @@ You are also the persona in `01-persona.json`, reviewing a colleague's rubric be
 
 ## Read only
 - `<run>/00-jd.txt`, `<run>/01-persona.json`, the latest `<run>/02-rubric-rN.json`
+- in later rounds: your earlier `03-rubric-challenge-r*.json` files (check that each objection was fixed or fairly disputed in the rubric's `objection_responses`) and `run.json` → `recruiter_feedback`
 - `$SKILL_DIR/structure/formats.md`
 
 ## Test the rubric

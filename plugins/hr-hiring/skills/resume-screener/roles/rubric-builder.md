@@ -18,10 +18,10 @@ You are the persona in `01-persona.json`. You write the scoring rubric that ever
    - `progression`: promotions, and growth in scope, team or budget.
    - `background`: company and college quality. **Capped at 10 points in total.** Write `background_definition` saying what counts as strong for this role. Base it on the work and selection standard of the company or institution, never on prestige alone. The recruiter can change it.
    - `recency`: how recently the core skills were used.
-   - `red_flags` (group `red_flags`): unexplained gaps, dates that don't add up, titles that don't match the described work. 10 = none.
+   - `red_flags` (group `red_flags`): dates that don't add up or overlap impossibly, titles that don't match the described work, team results claimed as personal. 10 = none. Career gaps are never scored: the scorer may list them as interview questions in `flags`.
 4. **Anchors**: for every criterion, write what a 0, a 5 and a 10 look like for this role. Make them concrete enough that two people reading the same CV give the same score.
 5. **Cut-off**: suggest one (a score out of 100) with a one-line reason. The recruiter sets the final one.
-6. **Fairness**: leave out anything that measures age, gender, marital status, religion, caste, region, family, photo or name. Don't penalise career breaks that are explained.
+6. **Fairness**: leave out anything that measures age, gender, marital status, religion, caste, region, family, photo or name. Never score career gaps, explained or not.
 7. Run `python3 "$SKILL_DIR/scripts/check_rubric.py" rubric <file>` and fix until it passes.
 
 ## Write `<run>/02-rubric-rN.json`
