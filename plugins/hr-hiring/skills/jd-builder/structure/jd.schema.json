@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "onsurity-jd-1.0",
+  "title": "Onsurity job description",
+  "description": "The content of one JD. Fixed text (About us, equal opportunity, section labels and headings) is not stored here; render_docx.py takes it from company/ and structure/skeleton.json. Inline markup in any text: **sans bold**, __serif bold__, *italic*, [text](url). Word and item limits live in skeleton.json#limits and are checked by validate_jd.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "header", "meta", "the_role", "the_level", "your_work", "the_bar", "ai", "minimum", "preferred", "toolkit", "assessment", "not_for_you", "footer_tag"],
+  "$defs": {
+    "text": {"type": "string", "minLength": 1},
+    "list": {"type": "array", "items": {"$ref": "#/$defs/text"}}
+  },
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "header": {
+      "type": "object", "additionalProperties": false,
+      "required": ["function", "city", "title", "lead", "punchline"],
+      "properties": {
+        "function": {"$ref": "#/$defs/text"},
+        "city": {"$ref": "#/$defs/text"},
+        "title": {"$ref": "#/$defs/text"},
+        "lead": {"$ref": "#/$defs/text"},
+        "punchline": {"$ref": "#/$defs/text"}
+      }
+    },
+    "meta": {
+      "type": "array", "minItems": 5, "maxItems": 5,
+      "items": {"type": "object", "additionalProperties": false, "required": ["label", "value"],
+                "properties": {"label": {"$ref": "#/$defs/text"}, "value": {"$ref": "#/$defs/text"}}}
+    },
+    "the_role": {
+      "type": "object", "additionalProperties": false, "required": ["lead", "paragraphs"],
+      "properties": {"lead": {"$ref": "#/$defs/text"}, "paragraphs": {"$ref": "#/$defs/list"}}
+    },
+    "the_level": {
+      "type": "object", "additionalProperties": false, "required": ["level_name", "lead", "rows"],
+      "properties": {
+        "level_name": {"$ref": "#/$defs/text"},
+        "lead": {"$ref": "#/$defs/text"},
+        "rows": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["key", "text"],
+                 "properties": {"key": {"$ref": "#/$defs/text"}, "text": {"$ref": "#/$defs/text"}}}}
+      }
+    },
+    "your_work": {
+      "type": "object", "additionalProperties": false, "required": ["heading", "groups"],
+      "properties": {
+        "heading": {"enum": ["What you'll do", "What you'll own"]},
+        "groups": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["label", "bullets"],
+                   "properties": {"label": {"$ref": "#/$defs/text"}, "bullets": {"$ref": "#/$defs/list"}}}}
+      }
+    },
+    "the_bar": {
+      "type": "object", "additionalProperties": false, "required": ["intro", "traits"],
+      "properties": {
+        "intro": {"$ref": "#/$defs/text"},
+        "traits": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["title", "text"],
+                   "properties": {"title": {"$ref": "#/$defs/text"}, "text": {"$ref": "#/$defs/text"}}}}
+      }
+    },
+    "ai": {
+      "type": "object", "additionalProperties": false, "required": ["lead", "bullets"],
+      "properties": {"lead": {"$ref": "#/$defs/text"}, "bullets": {"$ref": "#/$defs/list"}}
+    },
+    "minimum": {
+      "type": "object", "additionalProperties": false, "required": ["items"],
+      "properties": {"note": {"$ref": "#/$defs/text"}, "items": {"$ref": "#/$defs/list"}}
+    },
+    "preferred": {
+      "type": "object", "additionalProperties": false, "required": ["items"],
+      "properties": {"items": {"$ref": "#/$defs/list"}}
+    },
+    "toolkit": {
+      "type": "object", "additionalProperties": false, "required": ["label", "rows"],
+      "properties": {
+        "label": {"enum": ["OUR STACK", "OUR TOOLS"]},
+        "note": {"$ref": "#/$defs/text"},
+        "rows": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["key", "value"],
+                 "properties": {"key": {"$ref": "#/$defs/text"}, "value": {"$ref": "#/$defs/text"}}}}
+      }
+    },
+    "assessment": {
+      "type": "object", "additionalProperties": false, "required": ["lead", "cards"],
+      "properties": {
+        "lead": {"$ref": "#/$defs/text"},
+        "cards": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["title", "text"],
+                  "properties": {"title": {"$ref": "#/$defs/text"}, "text": {"$ref": "#/$defs/text"}}}}
+      }
+    },
+    "not_for_you": {
+      "type": "object", "additionalProperties": false, "required": ["items"],
+      "properties": {"items": {"$ref": "#/$defs/list"}}
+    },
+    "footer_tag": {"$ref": "#/$defs/text"}
+  }
+}

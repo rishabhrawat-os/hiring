@@ -1,0 +1,11 @@
+{
+  "name": "onsurity-hiring",
+  "owner": {"name": "Onsurity Technologies"},
+  "plugins": [
+    {
+      "name": "hr-hiring",
+      "source": "./plugins/hr-hiring",
+      "description": "Onsurity hiring skills: jd-builder (live: format, render, checks; research loop in progress)."
+    }
+  ]
+}

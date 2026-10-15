@@ -1,0 +1,23 @@
+{
+  "_about": "Fixed company content. It goes into every JD word for word. HR edits this file; agents never rewrite it. Markup: __x__ serif bold, **x** sans bold, *x* italic, [text](url) link.",
+  "legal_name": "Onsurity Technologies",
+  "short_name": "Onsurity",
+  "website": "onsurity.com",
+  "about_us": {
+    "label": "ABOUT US",
+    "heading": "Healthcare benefits shouldn't be a luxury",
+    "paragraphs": [
+      "Onsurity is a fast-growing employee healthcare benefits platform. We give SMEs, start-ups and enterprises flexible healthcare subscriptions — discounted medicine, health checkups, fitness plans, free doctor teleconsultations and insurance, in one membership. Our plans aren't limited to full-time employees; we also cover contractual workers, interns, freelancers and consultants, because inclusion is the whole point.",
+      "We've raised a __$45M Series B led by Creaegis__, count cricketing legend __Anil Kumble__ as a strategic advisor and investor, featured in season one of Disney+ Hotstar's *The Great Indian Disruptors*, and were named a __Dun & Bradstreet Start-up 50 Trailblazer__. More at [onsurity.com](https://www.onsurity.com/) — or find us on [LinkedIn](https://www.linkedin.com/company/onsurity/), [Instagram](https://www.instagram.com/onsurity/) and [YouTube](https://www.youtube.com/@onsurity)."
+    ]
+  },
+  "eeo": {
+    "label": "EQUAL OPPORTUNITY",
+    "text": "Onsurity is an equal-opportunity employer. We hire on capability and evidence, and we're committed to an inclusive workplace — the same philosophy behind healthcare plans that cover the people other plans leave out."
+  },
+  "footer": {
+    "left": "ONSURITY TECHNOLOGIES",
+    "right": "ONSURITY.COM"
+  },
+  "default_city": "Bengaluru"
+}

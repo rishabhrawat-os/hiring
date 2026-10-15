@@ -1,0 +1,16 @@
+{
+  "_about": "Onsurity's engineering stack as printed on the SDE JDs (Oct 2026). Engineering JDs use these rows as they are. Update here when the stack changes.",
+  "label": "OUR STACK",
+  "meta_value": "Java · Node · React",
+  "rows": [
+    {"key": "language", "value": "Java 17+, Node.js, TypeScript"},
+    {"key": "backend", "value": "Spring Boot, REST APIs, JUnit"},
+    {"key": "frontend", "value": "React web, React Native mobile app"},
+    {"key": "data", "value": "MySQL, PostgreSQL, MongoDB, Redis"},
+    {"key": "streaming", "value": "Kafka"},
+    {"key": "platform", "value": "AWS, Docker, Kubernetes, GitHub Actions"},
+    {"key": "observability", "value": "Prometheus, Grafana, Sentry, ELK"},
+    {"key": "ai", "value": "Copilot, Claude, ChatGPT — in the daily workflow"}
+  ],
+  "domains": ["claims", "wallet", "subscriptions", "provider network", "payments"]
+}

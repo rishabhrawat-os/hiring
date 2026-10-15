@@ -1,0 +1,73 @@
+# One phrase per line, lower case. validate_jd.py fails a JD that contains any of them.
+# Job-ad clichés
+rockstar
+ninja
+guru
+wizard
+superstar
+fast-paced environment
+fast paced environment
+dynamic environment
+work hard, play hard
+self-starter
+team player
+go-getter
+wear many hats
+hit the ground running
+think outside the box
+passionate about
+best-in-class
+world-class
+cutting-edge
+cutting edge
+state-of-the-art
+synergy
+synergies
+leverage
+results-driven
+detail-oriented
+excellent communication skills
+competitive salary
+other duties as assigned
+ideal candidate
+the candidate will
+the successful candidate
+# AI tells
+delve
+tapestry
+in today's
+ever-evolving
+ever evolving
+landscape
+navigate the complexities
+embark
+seamless
+seamlessly
+robust
+holistic
+unlock
+empower
+elevate
+harness
+spearhead
+pivotal
+paramount
+myriad
+plethora
+foster
+furthermore
+moreover
+additionally
+it's worth noting
+at the end of the day
+game-changer
+game changer
+# Exclusionary wording
+young
+energetic
+digital native
+native english
+recent graduate only
+he/she
+his/her
+manpower

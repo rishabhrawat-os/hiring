@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+jd-runs/
+*.docx
+!plugins/**/templates/*.docx
+~$*

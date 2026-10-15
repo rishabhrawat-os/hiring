@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "header": {
+    "function": "Marketing",
+    "city": "Bengaluru",
+    "title": "Growth Marketing Manager, B2B",
+    "lead": "You'll run the engine that brings small and mid-sized companies to Onsurity, from the first search to a signed plan. A small team, a real budget, and numbers that the whole company reads every Monday.",
+    "punchline": "We judge the work by pipeline and cost, not by how busy the calendar looks."
+  },
+  "meta": [
+    {"label": "LEVEL", "value": "Manager"},
+    {"label": "TRACK", "value": "People manager"},
+    {"label": "EXPERIENCE", "value": "5–8 years"},
+    {"label": "LOCATION", "value": "Bengaluru"},
+    {"label": "TOOLS", "value": "HubSpot · Google Ads · Looker"}
+  ],
+  "the_role": {
+    "lead": "We're hiring a manager who has built a B2B demand engine before and can show the numbers it produced.",
+    "paragraphs": [
+      "You'll own acquisition for our SME plans: paid search, LinkedIn, partnerships and the website that converts all of it. Not just the campaigns: the budget, the funnel, the reporting, and the two marketers who work with you.",
+      "Most of our buyers are founders and HR leads at companies with fewer than two hundred people. They are busy, sceptical and price-aware, and they compare us with a group insurance quote from a broker. Your work has to answer that comparison in plain language.",
+      "You'll work closely with sales, who take the leads you create, and with product, who own the sign-up flow. When a number moves, you'll be the one who can explain why and what changes next week."
+    ]
+  },
+  "the_level": {
+    "level_name": "Manager",
+    "lead": "Not a title for its own sake. These six are what the level asks you to carry.",
+    "rows": [
+      {"key": "SCOPE", "text": "A channel mix and its budget, end to end. You set the plan and defend it."},
+      {"key": "AMBIGUITY", "text": "The goal arrives as a revenue number. You turn it into a plan by channel."},
+      {"key": "INFLUENCE", "text": "Your team's work, and the sales and product teams that depend on it."},
+      {"key": "JUDGEMENT", "text": "You decide where the next rupee goes, and stop what isn't working."},
+      {"key": "CONSEQUENCE", "text": "If the pipeline dries up, it's yours to explain and to fix."},
+      {"key": "TEAM", "text": "Your team ships good work on the days you're not in the room."}
+    ]
+  },
+  "your_work": {
+    "heading": "What you'll own",
+    "groups": [
+      {"label": "PLAN", "bullets": [
+        "Set the quarterly plan by channel, with the cost per lead and the pipeline each one has to deliver written down.",
+        "Size each bet before you spend on it, and agree with sales what a qualified lead actually means.",
+        "Keep a short list of what we stopped doing and why, so we don't repeat it next year."
+      ]},
+      {"label": "MAKE", "bullets": [
+        "Run paid search and LinkedIn yourself until the team can, then review it weekly with real numbers.",
+        "Brief and edit landing pages, emails and comparison pages that answer a founder's actual questions.",
+        "Build partnerships with accountants, payroll tools and co-working spaces that reach our buyers."
+      ]},
+      {"label": "MEASURE", "bullets": [
+        "Own the funnel report from first visit to signed plan, and make it something sales trusts.",
+        "Run tests with a clear question and a stop date, and share the losers as openly as the winners.",
+        "Explain every big move in a number within a week, with what you're changing because of it."
+      ]},
+      {"label": "LEAD", "bullets": [
+        "Hire, coach and review two marketers, and give them work that stretches them.",
+        "Set a weekly rhythm with sales and product so problems surface on Monday, not at quarter end.",
+        "Say no with a reason when a request would cost the plan more than it brings."
+      ]}
+    ]
+  },
+  "the_bar": {
+    "intro": "Skills get you the interview. These get you the offer, and they're the things we won't compromise on.",
+    "traits": [
+      {"title": "High ownership", "text": "The pipeline number is yours, including the weeks it goes the wrong way. You find out first, you say so first, and you come with what you're changing."},
+      {"title": "Highly motivated and self-driven", "text": "You find the next most useful thing to do without being assigned it, and you say clearly and early when something is going to slip."},
+      {"title": "Extensive AI use", "text": "You already use Claude, ChatGPT or similar daily for research, drafts, analysis and reporting, and you still check every claim and number that goes out under your name."},
+      {"title": "Fast, with a floor under it", "text": "You launch in days, not quarters, and you don't buy that speed by skipping tracking or shipping copy nobody has read twice."},
+      {"title": "Direct and low-ego", "text": "You disagree in the planning meeting, not after it. You change your mind when the data is against you, and you write decisions down."}
+    ]
+  },
+  "ai": {
+    "lead": "AI-assisted work is the default here, not a novelty. We expect it to show up in how much your team gets done.",
+    "bullets": [
+      "Use Claude, ChatGPT or similar daily for research, first drafts, ad variants, analysis and reporting.",
+      "Read and own everything you publish. \"The AI wrote it\" is not an explanation for a wrong claim.",
+      "Know where it's weak: pricing, regulatory claims and anything about insurance cover. Check those yourself.",
+      "Build the workflow, not just the habit: prompts, templates and checks that make the whole team faster."
+    ]
+  },
+  "minimum": {
+    "items": [
+      "**5–8 years** in B2B marketing, at least three of them owning acquisition numbers.",
+      "**Paid search and LinkedIn** campaigns you ran yourself, with the budgets and results to show.",
+      "**Funnel reporting** — you've built the report from visit to revenue, not only read one.",
+      "**HubSpot or a similar CRM** set up and kept clean enough that sales trusts it.",
+      "**Testing** with a clear question, a sample size and a stop date.",
+      "**Managing people** — at least one direct report you hired or grew.",
+      "**Writing** that a busy founder reads to the end: landing pages, emails, one-page plans.",
+      "**Working with sales** on lead definitions, handovers and feedback that changes campaigns.",
+      "**Extensive daily AI use** already built into how you work.",
+      "**Clear written and spoken communication** in a cross-functional team."
+    ]
+  },
+  "preferred": {
+    "items": [
+      "You've marketed to SMEs or HR buyers before.",
+      "Insurance, health or fintech marketing, where claims need care.",
+      "Partnership programmes that produced pipeline, not only logos.",
+      "SQL or Looker well enough to answer your own questions.",
+      "You've built a marketing team's first reporting from scratch.",
+      "Experience with pricing pages and plan comparison."
+    ]
+  },
+  "toolkit": {
+    "label": "OUR TOOLS",
+    "rows": [
+      {"key": "crm", "value": "HubSpot"},
+      {"key": "paid", "value": "Google Ads, LinkedIn Ads, Meta Ads"},
+      {"key": "analytics", "value": "GA4, Looker Studio, Mixpanel"},
+      {"key": "web", "value": "Webflow"},
+      {"key": "ai", "value": "Claude, ChatGPT — in the daily workflow"}
+    ]
+  },
+  "assessment": {
+    "lead": "Six dimensions. We index on judgement and evidence, not on how many tools you can name.",
+    "cards": [
+      {"title": "Plan", "text": "A real Onsurity growth target and a budget. Where you'd spend it, what you'd cut, and how you'd know by week four."},
+      {"title": "Funnel", "text": "A funnel report with a problem in it. What you check first, what you conclude, and what you'd change."},
+      {"title": "Writing", "text": "A landing page brief for a sceptical founder. Clear, honest, and short enough to be read on a phone."},
+      {"title": "Testing", "text": "A test you ran that failed. What you learned, what it cost, and what you did next because of it."},
+      {"title": "Leading", "text": "How you hired, coached and reviewed someone, and what changed in their work because of it."},
+      {"title": "Bar and collaboration", "text": "How you handle disagreement with sales and being wrong, and whether the people around you get better."}
+    ]
+  },
+  "not_for_you": {
+    "items": [
+      "You want a brand role with no number attached. This job is measured on pipeline every week.",
+      "You'd rather brief agencies than run a campaign yourself. Here you'll do both, and the first months are hands-on.",
+      "You need a large team before you can deliver. You'll start with two people and a clear budget.",
+      "You're uncomfortable working where a mistake can delay someone's hospital admission. That's the seriousness this team runs at."
+    ]
+  },
+  "footer_tag": "MANAGER · GROWTH MARKETING · BENGALURU"
+}
