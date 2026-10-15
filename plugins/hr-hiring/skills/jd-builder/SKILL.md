@@ -1,6 +1,6 @@
 ---
 name: jd-builder
-description: Write a job description in the company's house layout from whatever the user gives (even a one-line comment), using fresh web research on the role in the hiring market, a VP-level challenger that must score it 95+, a format challenger, a humanizer pass, and a designer that renders the branded Word file. Use for "write a JD", "create a job description", "JD for <role>", "/hr-hiring:jd-builder".
+description: Write a researched job description as a branded Word file in the house layout. Use for "write a JD", "job description for <role>" or /hr-hiring:jd-builder.
 ---
 
 # jd-builder
@@ -24,12 +24,12 @@ The user is not technical. Never ask them to run a command, install anything, fi
   - Windows: `winget install -e --id Python.Python.3.12 --scope user --accept-package-agreements --accept-source-agreements`.
   - Linux: tell the user their IT team needs to install Python 3, because it needs an administrator.
   - Cowork and other cloud workspaces already have Python.
-- **Opening results:** open finished files for the user (`open <file>` on macOS, `start "" "<file>"` on Windows, `xdg-open <file>` on Linux). In Cowork, link the file instead.
+- **Opening results:** open finished files for the user (`open <file>` on macOS, `start "" "<file>"` on Windows, `xdg-open <file>` on Linux). In Cowork, link the file instead. In a claude.ai or desktop chat, copy it to the chat's outputs folder (for example `/mnt/user-data/outputs/`) and share it there so the user can download it.
 - **Questions about files** ("where is my JD?", "open my results"): find the latest run folder and open or show the file.
 
 ## Setup
 - **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
-- **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
+- **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`. In a claude.ai or desktop chat, if pip cannot reach the internet, tell the user in one line to turn on **Code execution and file creation** and network access in Settings > Capabilities (on Team or Enterprise, their admin does this), then try again.
 
 Research reaches the web through Claude's own tools first, then the built-in browser, Chrome, or the terminal, asking the user only before using their browser. The order and rules are in `web-access.md`; pass its path to the researcher and the challenger.
 

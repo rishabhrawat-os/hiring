@@ -13,6 +13,8 @@ This repo ships the `hr-hiring` Claude plugin. HR installs it; you are maintaini
 ## Before you commit
 `bash evals/jd-builder/run_checks.sh` and `python3 evals/resume-screener/test_scripts.py`. Both must print `ALL PASS`. The first builds placeholder fixtures at min and max size, validates, renders and design-checks them, tests that the validator rejects AI patterns, and checks the PDF importer. The second tests every resume-screener script on invented data.
 - Never commit real CVs or screening results; tests build invented data at runtime.
+- After changing anything in a skill folder, run `python3 tools/build_skill_zips.py` so `install/*.zip` matches; `run_checks.sh` fails otherwise.
+- Skill descriptions stay at 200 characters or fewer, so the skills also upload to claude.ai.
 
 ## Changing the look
 1. Edit `brand/tokens.json`, and the matching row in `brand/design-spec.md`.

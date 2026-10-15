@@ -1,6 +1,6 @@
 ---
 name: resume-screener
-description: Screen CVs against any JD. A fast first-round screen. Builds a role-specific persona and scoring rubric (agent + challenger, recruiter approves), scores every CV in parallel with a scorer and an independent challenger quoting the CV, has a panel review only the borderline cases, and gives each candidate a score and a go/no-go with comments, shown as a table. Use for "screen these resumes", "score CVs for <role>", "/hr-hiring:resume-screener".
+description: Screen CVs against a JD: recruiter-approved rubric, each CV scored and checked, go/no-go table with reasons. Use for "screen these CVs" or /hr-hiring:resume-screener.
 ---
 
 # resume-screener
@@ -20,12 +20,12 @@ The user is not technical. Never ask them to run a command, install anything, fi
   - Windows: `winget install -e --id Python.Python.3.12 --scope user --accept-package-agreements --accept-source-agreements`.
   - Linux: tell the user their IT team needs to install Python 3, because it needs an administrator.
   - Cowork and other cloud workspaces already have Python.
-- **Opening results:** open finished files for the user (`open <file>` on macOS, `start "" "<file>"` on Windows, `xdg-open <file>` on Linux). In Cowork, link the file instead.
+- **Opening results:** open finished files for the user (`open <file>` on macOS, `start "" "<file>"` on Windows, `xdg-open <file>` on Linux). In Cowork, link the file instead. In a claude.ai or desktop chat, copy it to the chat's outputs folder (for example `/mnt/user-data/outputs/`) and share it there so the user can download it.
 - **Questions about files** ("where is my JD?", "open my results"): find the latest run folder and open or show the file.
 
 ## Setup
 - **Which Python.** Python packages (`python-docx`, `pypdf`) are installed automatically when Claude starts, by the plugin's `ensure_deps.py`. It writes the Python to use into `~/JD-Builder/python`. Read that file and use that interpreter wherever this skill says `python3`; if the file is missing, use `python3`.
-- **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`.
+- **If a script says a package is missing:** run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/ensure_deps.py"` and use the interpreter it records. If the plugin root isn't available (the skill was uploaded on its own), run `python3 -m pip install --user python-docx pypdf`; if that is refused, `python3 -m venv ~/JD-Builder/.venv`, then `~/JD-Builder/.venv/bin/pip install python-docx pypdf`, and use `~/JD-Builder/.venv/bin/python`. In a claude.ai or desktop chat, if pip cannot reach the internet, tell the user in one line to turn on **Code execution and file creation** and network access in Settings > Capabilities (on Team or Enterprise, their admin does this), then try again.
 - **Fallback.** If extraction still yields no text for a CV (scanned PDF), the extractor reads the original file directly.
 
 ## Run folder

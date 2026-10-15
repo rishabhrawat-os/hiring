@@ -8,7 +8,7 @@
     {
       "name": "hr-hiring",
       "source": "./plugins/hr-hiring",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "repository": "https://github.com/rishabhrawat-os/hiring",
       "description": "Onsurity hiring skills: jd-builder (research-based JDs as branded Word files) and resume-screener (rubric-based CV scoring with go/no-go)."
     }

@@ -4,7 +4,7 @@
 
 ![Page 1 of the house JD layout, with every word replaced by a bar so only the layout shows](plugins/hr-hiring/skills/jd-builder/brand/reference/layout-page-1.png)
 
-It runs in the Claude desktop app, Cowork and Claude Code. Version 0.4.0 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
+It runs in the Claude desktop app, claude.ai, Cowork and Claude Code. Version 0.5.0 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
 
 ```
 /hr-hiring:jd-builder Customer Success Manager, Pune, must know HubSpot
@@ -33,9 +33,18 @@ Each run keeps its files in a run folder: `~/JD-Builder/jd-runs/` or `~/JD-Build
 
 Users type only the slash commands. A simple guide ([GETTING-STARTED.md](plugins/hr-hiring/skills/help/GETTING-STARTED.md)) appears on first use or with `/hr-hiring:help`.
 
-### Claude desktop app or Cowork
+### From a Claude chat (no terminal)
 
-Open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and install **hr-hiring**. If the repository is private, the GitHub account connected to Claude needs read access to it.
+1. Make sure **Code execution and file creation** is on in Settings > Capabilities (on Team or Enterprise, an admin turns it on).
+2. Type this in a new chat: `Install the HR hiring skills from https://github.com/rishabhrawat-os/hiring`
+3. Claude fetches the two skill files and shows them in the chat. Click the save button on each one.
+
+If no save button appears, use one of the click paths below. The chat route depends on Claude's network access being allowed to reach GitHub.
+
+### Claude desktop app, claude.ai or Cowork (clicks only)
+
+- **Whole plugin:** open Customize > Plugins, click Add > Add marketplace, paste `https://github.com/rishabhrawat-os/hiring`, then install **hr-hiring**.
+- **Skills only:** download [`install/jd-builder.zip`](install/jd-builder.zip) and [`install/resume-screener.zip`](install/resume-screener.zip), then upload each in Customize > Skills > + > Upload a skill.
 
 ### Claude Code
 
@@ -45,7 +54,14 @@ Open the plugin settings, add the marketplace `rishabhrawat-os/hiring`, and inst
 /plugin marketplace update onsurity-hiring
 ```
 
-These commands were not run for this README, because they need a Claude client with plugin support. The third one fetches later updates. The packages in [`requirements.txt`](plugins/hr-hiring/requirements.txt) install automatically when Claude starts. If Python itself is missing, the skill installs it, and the user may need to click Allow once.
+The third command fetches later updates. The packages in [`requirements.txt`](plugins/hr-hiring/requirements.txt) install automatically when Claude starts. If Python itself is missing, the skill installs it, and the user may need to click Allow once.
+
+### Note for Claude: installing when a user asks in chat
+
+When a user asks you to install this repository:
+- **With a shell and the `claude` command** (Claude Code): run `claude plugin marketplace add rishabhrawat-os/hiring` and `claude plugin install hr-hiring@onsurity-hiring`, then tell the user to restart Claude (or run `/reload-plugins`).
+- **In a claude.ai, desktop or Cowork chat with code execution:** run `git clone --depth 1 https://github.com/rishabhrawat-os/hiring`. Copy `install/jd-builder.zip` and `install/resume-screener.zip` to the outputs folder as `jd-builder.skill` and `resume-screener.skill`, share both, and tell the user in one line to click the save button on each. If the clone fails, the network is blocked: give the user the "clicks only" steps above.
+- Never ask the user to run a command.
 
 ## Quickstart
 
@@ -54,6 +70,8 @@ These commands were not run for this README, because they need a Claude client w
 3. Screen CVs by running `/hr-hiring:resume-screener` and giving it the JD file and a folder such as `~/Downloads/cvs/`.
 4. Approve or edit the rubric and set the cut-off when the screener shows it.
 5. Read the table, and ask "Why did C04 get this score?" to see the reasoning for any decision.
+
+If you added the two skills on their own (not the plugin), leave out `hr-hiring:`, or just ask in plain words, such as "write a JD for a Data Analyst".
 
 ## How a JD is built
 

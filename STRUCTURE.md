@@ -8,6 +8,8 @@ hiring/
 ├── STRUCTURE.md                    this file
 ├── ROADMAP.md                      what's built, what's next
 ├── .claude-plugin/marketplace.json the marketplace that lists hr-hiring
+├── install/                        jd-builder.zip, resume-screener.zip: the skills for upload or chat install
+├── tools/build_skill_zips.py       rebuilds install/ from the skill folders (run_checks.sh fails if stale)
 ├── plugins/hr-hiring/
 │   ├── .claude-plugin/plugin.json
 │   ├── hooks/hooks.json            runs ensure_deps.py when Claude starts

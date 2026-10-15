@@ -1,6 +1,6 @@
 ---
 name: help
-description: Show the HR Hiring getting-started guide in simple steps. Use for "/hr-hiring:help", "how do I use the hiring plugin", "how do I write a JD", "how do I screen CVs".
+description: Show the HR Hiring getting-started guide in simple steps. Use for /hr-hiring:help or "how do I use the hiring skills".
 ---
 
 # help
