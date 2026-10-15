@@ -4,7 +4,7 @@
 
 ![Page 1 of the house JD layout, with every word replaced by a bar so only the layout shows](plugins/hr-hiring/skills/jd-builder/brand/reference/layout-page-1.png)
 
-It runs in the Claude desktop app, claude.ai, Cowork and Claude Code. Version 0.5.0 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
+It runs in the Claude desktop app, claude.ai, Cowork and Claude Code. Version 0.5.1 passes both test suites and was last changed on 15 October 2026. The first command after installing is one line:
 
 ```
 /hr-hiring:jd-builder Customer Success Manager, Pune, must know HubSpot
@@ -120,6 +120,7 @@ A demo screen of 5 invented CVs took 4 min 22 s and 11 agent runs in October 202
 |---|---|---|
 | The JD skill asks to use your browser | Claude's own page reader could not open some sites | Click Allow; the skill reads those pages through the browser and carries on |
 | A skill says Python needs an administrator | Linux computers need admin rights to install Python | Ask IT to install Python 3 once |
+| A link in the JD does not open on click | Word on Windows opens links only with Ctrl+click | Hold Ctrl (Cmd on a Mac) and click, or save the JD as a PDF, where a plain click works |
 | A CV shows `needs_manual_read` | The PDF is a scan with no text layer | No action is needed, because the extractor reads the original file |
 
 ## For maintainers
